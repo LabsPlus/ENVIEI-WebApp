@@ -1,0 +1,18 @@
+.button {
+  display: flex;
+  width: 262px;
+  height: 44px;
+  padding: 12px 8px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  flex-shrink: 0;
+  border-radius: 12px;
+  background: #6c747e;
+  color: #fff;
+  font-family: Inter;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
