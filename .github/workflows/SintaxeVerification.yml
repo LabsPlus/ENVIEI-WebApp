@@ -1,0 +1,29 @@
+name: Angular 17 - CI/CD com Verificação de Sintaxe
+
+on:
+  pull_request:
+    branches:
+      - main
+      - dev
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - uses: actions/checkout@v2
+
+      - name: Instalar Node.js
+        uses: actions/setup-node@v2
+        with:
+          node-version: 16
+
+      - name: Instalar dependências
+        run: npm install
+
+      - name: Verificação de sintaxe
+        run: npm run lint
+
+      - name: Exibir erros de sintaxe
+        if: ${{ failure() }}
+        run: echo "Erros de sintaxe encontrados!"
