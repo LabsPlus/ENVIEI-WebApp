@@ -1,4 +1,5 @@
 export interface IInput {
+  image?: any;
   type?: string;
   placeholder?: string;
   text?: string;

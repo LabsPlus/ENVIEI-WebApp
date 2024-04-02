@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Inter-Bold';
+  src: url('../../../../assets/fonts/Inter-Bold.ttf') format('truetype');
+}
+
 .login-container {
   display: flex;
   flex-direction: column;
@@ -29,7 +34,7 @@
 .title-first-part {
   color: #6c747e;
   text-align: center;
-  font-family: Inter;
+  font-family: 'Inter-Bold';
   font-size: 26px;
   font-style: normal;
   font-weight: 700;
@@ -38,7 +43,7 @@
 
 .title-second-part {
   color: #1791c8;
-  font-family: Inter;
+  font-family: 'Inter-Bold';
   font-size: 26px;
   font-style: normal;
   font-weight: 700;
@@ -63,7 +68,7 @@
 .span-checkbox {
   color: #000;
   text-align: center;
-  font-family: Inter;
+  font-family: 'Inter-Bold';
   font-size: 14px;
   font-style: normal;
   font-weight: 600;
