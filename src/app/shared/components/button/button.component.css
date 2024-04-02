@@ -1,3 +1,8 @@
+@font-face {
+  font-family: 'Inter-Bold';
+  src: url('../../../../assets/fonts/Inter-Bold.ttf') format('truetype');
+}
+
 .button {
   display: flex;
   width: 262px;
@@ -10,9 +15,10 @@
   border-radius: 12px;
   background: #6c747e;
   color: #fff;
-  font-family: Inter;
+  font-family: 'Inter-Bold';
   font-size: 14px;
   font-style: normal;
   font-weight: 700;
   line-height: normal;
+  border: none;
 }
