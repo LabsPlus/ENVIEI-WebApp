@@ -9,4 +9,5 @@ export interface IInput {
   class?: string;
   required?: boolean;
   disabled?: boolean;
+  inputName?: string;
 }

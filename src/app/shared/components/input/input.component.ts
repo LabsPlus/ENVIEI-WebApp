@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IInput } from '../../interfaces/input.interfaces';
+import { IInput } from '../../interfaces/input/input.interfaces';
 
 @Component({
   selector: 'app-input',

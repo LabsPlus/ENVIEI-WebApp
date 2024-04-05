@@ -1,13 +1,52 @@
-import { Component, Input } from '@angular/core';
-import { IInput } from '../../interfaces/input.interfaces';
+import { Component, Input, forwardRef } from '@angular/core';
+import {
+  NG_VALUE_ACCESSOR,
+  ControlValueAccessor,
+  FormGroup,
+  ReactiveFormsModule,
+} from '@angular/forms';
+import { IInput } from '../../interfaces/input/input.interfaces';
 
 @Component({
   selector: 'app-input-login',
   standalone: true,
-  imports: [],
+  imports: [ReactiveFormsModule],
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => InputLoginComponent),
+      multi: true,
+    },
+  ],
   templateUrl: './input-login.component.html',
-  styleUrl: './input-login.component.css'
+  styleUrl: './input-login.component.css',
 })
 export class InputLoginComponent {
   @Input() props!: IInput;
+
+  value: string = '';
+  onChange: any = () => {};
+  onTouched: any = () => {};
+
+  onInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.onChange(value);
+    console.log(value);
+  }
+
+  writeValue(value: string) {
+    this.value = value;
+  }
+
+  registerOnChange(fn: any) {
+    this.onChange = fn;
+  }
+
+  registerOnTouched(fn: any) {
+    this.onTouched = fn;
+  }
+
+  setDisabledState(isDisabled: boolean) {
+    // console.log(isDisabled);
+  }
 }
