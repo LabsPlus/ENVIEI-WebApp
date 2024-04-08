@@ -1,6 +1,6 @@
 import { Component, Input, forwardRef } from '@angular/core';
 import { FormsModule, NgModel } from '@angular/forms';
-import { IInput } from '../../interfaces/input.interfaces';
+import { IInput } from '../../../shared/interfaces/input/input.interfaces';
 import { CommonModule, NgIf } from '@angular/common';
 import {
   ControlValueAccessor,

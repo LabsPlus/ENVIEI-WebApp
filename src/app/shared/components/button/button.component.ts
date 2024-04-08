@@ -1,5 +1,5 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { IButton } from '../../interfaces/button.interfaces';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
+import { IButton } from '../../interfaces/button/button.interfaces';
 
 @Component({
   selector: 'app-button',
@@ -11,19 +11,10 @@ import { IButton } from '../../interfaces/button.interfaces';
 export class ButtonComponent {
   @Input()
   props!: IButton;
+  @Output('submit') onSubmit = new EventEmitter();
 
-  @Output("submit") onSubmit = new EventEmitter();
-
-  @Output("navigate") onNavigate = new EventEmitter();
-  
-  submit(){
+  submit() {
     this.onSubmit.emit();
-  }
-
-  navigate(){
-    this.onNavigate.emit();
-  }
-  onClick() {
-    this.submit();
+    console.log('Button clicked');
   }
 }

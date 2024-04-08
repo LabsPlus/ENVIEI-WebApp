@@ -9,6 +9,6 @@ export interface IInput {
   class?: string;
   required?: boolean;
   disabled?: boolean;
-  error?: any;
   inputName?: string;
+  error?: any;
 }

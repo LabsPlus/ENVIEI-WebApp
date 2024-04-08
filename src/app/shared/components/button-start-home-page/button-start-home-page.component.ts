@@ -1,5 +1,5 @@
 import { Component, Input } from '@angular/core';
-import { IButton } from '../../interfaces/button.interfaces';
+import { IButton } from '../../interfaces/button/button.interfaces';
 
 @Component({
   selector: 'app-button-start-home-page',

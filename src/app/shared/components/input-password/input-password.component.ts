@@ -1,5 +1,5 @@
 import { Component, Input, forwardRef } from '@angular/core';
-import { IInput } from '../../interfaces/input.interfaces';
+import { IInput } from '../../interfaces/input/input.interfaces';
 import {
   ControlValueAccessor,
   FormGroup,
@@ -19,41 +19,45 @@ import {
     },
   ],
   templateUrl: './input-password.component.html',
-  styleUrl: './input-password.component.css'
+  styleUrl: './input-password.component.css',
 })
-export class InputPasswordComponent implements ControlValueAccessor{
+export class InputPasswordComponent {
+  public passwordVisible: boolean = false;
+
   @Input() props!: IInput;
 
-  public passwordVisible: boolean = false;
+  value: string = '';
+  onChange: any = () => {};
+  onTouched: any = () => {};
 
   // Função para alternar a visibilidade da senha
   public togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;
-    const inputElement = document.querySelector('.input-password') as HTMLInputElement;
+    const inputElement = document.querySelector(
+      '.input-password'
+    ) as HTMLInputElement;
     inputElement.type = this.passwordVisible ? 'text' : 'password';
   }
 
-  value: string = ''
-  onChange: any = () => {}
-  onTouched: any = () => {}
-
-  onInput(event: Event){
-    const value = (event.target as HTMLInputElement).value
-    this.onChange(value)
+  onInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.onChange(value);
+    console.log(value);
   }
 
-  writeValue(value: any): void {
-    this.value = value
+  writeValue(value: string) {
+    this.value = value;
   }
 
-  registerOnChange(fn: any): void {
-    this.onChange = fn
+  registerOnChange(fn: any) {
+    this.onChange = fn;
   }
 
-  registerOnTouched(fn: any): void {
-    this.onTouched = fn
+  registerOnTouched(fn: any) {
+    this.onTouched = fn;
   }
 
-  setDisabledState(isDisabled: boolean): void {}
-
+  setDisabledState(isDisabled: boolean) {
+    console.log(isDisabled);
+  }
 }
