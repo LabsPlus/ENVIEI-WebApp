@@ -1,0 +1,36 @@
+@font-face {
+  font-family: 'Inter-Bold';
+  src: url('../../../../assets/fonts/Inter-Bold.ttf') format('truetype');
+}
+
+.input {
+  display: flex;
+  width: 369px;
+  height: 50px;
+  justify-content: center;
+  align-items: center;
+  flex-shrink: 0;
+  color: #0d0d0d;
+  border-radius: 10px;
+  padding: 3px 8px;
+  text-indent: 10%;
+}
+
+.input::placeholder {
+  color: #0d0d0d;
+  font-family: 'Inter-Bold';
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+  opacity: 0.5;
+}
+
+.checkbox {
+  width: 24px;
+  height: 24px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 1px solid #d9e3f5;
+  background-color: #b0b0b0;
+}

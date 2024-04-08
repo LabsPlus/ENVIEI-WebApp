@@ -1,0 +1,20 @@
+<div class="input-login-container">
+  <input
+    [type]="props.type"
+    [placeholder]="props.placeholder"
+    [value]="props.value"
+    [id]="props.id"
+    [name]="props.name"
+    [class]="props.class"
+    [required]="props.required"
+    [disabled]="props.disabled"
+    class="input-login"
+    (input)="onInput($event)"
+  />
+
+  <img
+    src="../../../../assets/images/shared/login.svg"
+    alt="login icon"
+    class="input-login-icon"
+  />
+</div>
