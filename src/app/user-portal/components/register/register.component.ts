@@ -68,7 +68,7 @@ export class RegisterComponent {
 
       this.registerService.registerUser(user as any);
 
-      // this.router.navigate(['/login']);
+      this.router.navigate(['/login']);
 
 
   }

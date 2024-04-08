@@ -16,7 +16,7 @@ export class LoginService {
     console.log('login service');
 
     return this.http
-      .post<IToken>(`${this.apiUrl}/api/auth/login`, { email, password })
+      .post<IToken>(`${this.apiUrl}/api/user/login`, { email, password })
       .pipe(
         tap((value) => {
           console.log('token', value.token);
