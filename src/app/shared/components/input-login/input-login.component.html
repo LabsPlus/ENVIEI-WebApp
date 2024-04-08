@@ -8,8 +8,7 @@
       [class]="props.class"
       [required]="props.required"
       [disabled]="props.disabled"
-    
-      class="input-login"/>
+      (input)="onInput($event)"/>
     
     <img src="../../../../assets/images/shared/login.svg" alt="login icon" class="input-login-icon" />
         

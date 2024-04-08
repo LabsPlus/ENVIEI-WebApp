@@ -1,0 +1,88 @@
+<div class="login-container">
+    <form [formGroup]="registerForm" class="form-container">
+      <img src="assets/images/logo.svg" alt="Logo" class="logo" />
+      <h2>
+        <span class="title-first-part">Regis</span
+        ><span class="title-second-part">trar</span>
+      </h2>
+      <div class="input-container">
+        <div class="form-group">
+          <app-input
+            
+            [props]="{
+              type: 'text',
+              placeholder: 'Nome Completo',
+              id: 'name',
+              name: 'name',
+              inputName: 'name',
+              class: 'input',
+              required: true,
+              value: ''
+            }"
+            formControlName="name"
+          />
+        </div>
+        <div class="form-group">
+            <app-input-cpf-cnpj
+              formControlName="cpf_cnpj"
+              [props]="{
+                type: 'text',
+                placeholder: 'CPF ou CNPJ',
+                id: 'CPF',
+                name: 'CPF',
+                class: 'input',
+                required: true,
+                value: ''
+              }"
+            />
+          </div>
+          <div class="form-group">
+            <app-input
+            formControlName="phone_number"
+              [props]="{
+                type: 'text',
+                placeholder: 'Telefone',
+                id: 'phone_number',
+                name: 'phone_number',
+                class: 'input',
+                required: true,
+                value: ''
+              }"
+            />
+          </div>
+          <div class="form-group">
+            <app-input
+              
+              [props]="{
+                type: 'text',
+                placeholder: 'Email',
+                id: 'email',
+                name: 'email',
+                class: 'input',
+                required: true,
+                value: ''
+              }"
+              formControlName="email"
+            />
+          </div>
+        <div class="form-group">
+          <app-input-password
+            formControlName="password"
+            [props]="{
+              type: 'password',
+              placeholder: 'Senha',
+              id: 'password',
+              name: 'password',
+              class: 'input',
+              required: true,
+              value: '',
+              image: '../../../../assets/images/login/password.svg'
+            }"
+          />
+        </div>
+      </div>
+  
+      <app-button [props]="{ text: 'Registrar', class: 'button' }" (click)="submit()"></app-button>
+    </form>
+  </div>
+  

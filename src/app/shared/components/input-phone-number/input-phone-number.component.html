@@ -1,0 +1,17 @@
+<input 
+  type="text" 
+  [placeholder]="props.placeholder" 
+  [id]="props.id" 
+  [name]="props.name" 
+  [class]="props.class" 
+  [required]="props.required" 
+  [disabled]="props.disabled" 
+  (blur)="onBlur($event)" 
+  (input)="onInput($event)" 
+  (focus)="onFocus($event)" 
+  mask="(00) 0000-0000" 
+/>
+
+<div *ngIf="props.error">
+    <p>{{ props.error }}</p>
+</div>
