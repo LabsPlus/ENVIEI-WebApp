@@ -1,4 +1,4 @@
-<input 
+<input
   [type]="props.type"
   [placeholder]="props.placeholder"
   [value]="props.value"
@@ -7,7 +7,6 @@
   [class]="props.class"
   [required]="props.required"
   [disabled]="props.disabled"
+  [mask]="props.mask"
   (input)="onInput($event)"
-  mask="000.000.000-99"
- 
 />

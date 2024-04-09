@@ -6,11 +6,12 @@ import {
   NG_VALUE_ACCESSOR,
   ReactiveFormsModule,
 } from '@angular/forms';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 
 @Component({
   selector: 'app-input-cpf-cnpj',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgxMaskDirective, NgxMaskPipe],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -19,23 +20,21 @@ import {
     },
   ],
   templateUrl: './input-cpf-cnpj.component.html',
-  styleUrl: './input-cpf-cnpj.component.css'
+  styleUrl: './input-cpf-cnpj.component.css',
 })
-export class InputCpfCnpjComponent implements ControlValueAccessor{
-
+export class InputCpfCnpjComponent implements ControlValueAccessor {
   @Input() props!: IInput;
-  
-  value: string = ''
-  onChange: any = () => {}
-  onTouched: any = () => {}
-  
 
-  constructor(){
+  value: string = '';
+  onChange: any = () => {};
+  onTouched: any = () => {};
+
+  constructor() {
     this.onChange = this.onChange.bind(this);
     this.onTouched = this.onTouched.bind(this);
     this.onInput = this.onInput.bind(this);
   }
-  onInput(event: Event){
+  onInput(event: Event) {
     const value = (event.target as HTMLInputElement).value;
     this.onChange(value);
   }
