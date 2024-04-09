@@ -17,7 +17,6 @@ import {
 } from '@angular/forms';
 import { RegisterService } from '../../services/register/register.service';
 import { Router } from '@angular/router';
-import IUser from '../../interfaces/IUser';
 import { IRegisterData } from '../../../shared/interfaces/register/register-date-interface';
 import { ToastrService } from 'ngx-toastr';
 

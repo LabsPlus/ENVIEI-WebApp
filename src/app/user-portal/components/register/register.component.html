@@ -37,16 +37,17 @@
         />
       </div>
       <div class="form-group">
-        <app-input
+        <app-input-phone-number
           formControlName="phone_number"
           [props]="{
-            type: 'tel',
+            type: 'text',
             placeholder: 'Telefone',
             id: 'phone_number',
             name: 'phone_number',
             class: 'input',
             required: true,
-            value: ''
+            value: '',
+            mask:'(00) 00000-0000'
           }"
         />
       </div>

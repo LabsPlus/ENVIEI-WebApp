@@ -1,7 +1,7 @@
 import { Component, Input, forwardRef } from '@angular/core';
+import { NgxMaskDirective, NgxMaskPipe } from 'ngx-mask';
 import { FormsModule, NgModel } from '@angular/forms';
 import { IInput } from '../../../shared/interfaces/input/input.interfaces';
-import { CommonModule, NgIf } from '@angular/common';
 import {
   ControlValueAccessor,
   FormGroup,
@@ -12,7 +12,7 @@ import {
 @Component({
   selector: 'app-input-phone-number',
   standalone: true,
-  imports: [CommonModule, NgIf, ReactiveFormsModule],
+  imports: [ReactiveFormsModule, NgxMaskDirective, NgxMaskPipe],
   providers: [
     {
       provide: NG_VALUE_ACCESSOR,
@@ -26,75 +26,35 @@ import {
 
 export class InputPhoneNumberComponent implements ControlValueAccessor{
 
-  ///fix Can't bind to 'ngModelOptions' since it isn't a known property of 'input'.
-  @Input() ngModelOptions: FormsModule;
-  @Input() ngModel: any;
   @Input() props!: IInput;
 
-  phoneNumber: string = '';
-  messageError: string = '';
+  value: string = '';
+  onChange: any = () => {};
+  onTouched: any = () => {};
 
   constructor() {
-
-    this.ngModelOptions = {
-      standalone: true
-    };
-
-    this.ngModel = this.phoneNumber;
+    this.onChange = this.onChange.bind(this);
+    this.onTouched = this.onTouched.bind(this);
+    this.onInput = this.onInput.bind(this);
   }
-  writeValue(obj: any): void {
-    throw new Error('Method not implemented.');
+  onInput(event: Event) {
+    const value = (event.target as HTMLInputElement).value;
+    this.onChange(value);
   }
+
+  writeValue(value: any): void {
+    this.value = value;
+  }
+
   registerOnChange(fn: any): void {
-    throw new Error('Method not implemented.');
+    this.onChange = fn;
   }
+
   registerOnTouched(fn: any): void {
-    throw new Error('Method not implemented.');
-  }
-  setDisabledState?(isDisabled: boolean): void {
-    throw new Error('Method not implemented.');
+    this.onTouched = fn;
   }
 
-  validatePhoneNumberFormat(phoneNumber: string) {
-
-    const regex = /^(\d{2})(\d{4})(\d{4})$/;
-
-    if (!regex.test(phoneNumber)) {
-      return "Número de telefone inválido!";
-    }
-
-    if (phoneNumber.length !== 12) {
-      return "Número de telefone precisa ter 11 dígitos!";
-    }
-
-    return null;
+  setDisabledState(isDisabled: boolean): void {
+    this.props.disabled = isDisabled;
   }
-
-
-  validateInput() {
-    const error = this.validatePhoneNumberFormat(this.phoneNumber);
-
-    if (error) {
-      this.props.error = error;
-      return;
-    }
-
-    this.props.error = null;
-  }
-
-
-  onInput(event: any) {
-    this.phoneNumber = event.target.value;
-    this.validateInput();
-  }
-
-  onBlur(event: any) {
-    this.validateInput();
-  }
-
-  onFocus(event: any) {
-    this.props.error = null;
-  }
-
-  mensagemError = this.validatePhoneNumberFormat(this.phoneNumber);
 }
