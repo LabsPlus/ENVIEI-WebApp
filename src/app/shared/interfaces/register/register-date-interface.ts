@@ -7,5 +7,6 @@ export interface IRegisterData {
     company_name?: FormControl;
     email: FormControl;
     password: FormControl;
+    confirmPassword: FormControl;
     email_recovery: FormControl;
 }

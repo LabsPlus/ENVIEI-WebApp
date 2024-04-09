@@ -22,9 +22,7 @@ export class RegisterService {
         throw new Error("Nenhum dado passado para o registro de usuário!");
       }
 
-      alert('Vou tentar fazer um post do usuario!');
       this.httpClient.post(this.registerUrl, user).subscribe((response: any) => {
-        console.log(response);
         alert('Usuário cadastrado com sucesso!');
       });
 

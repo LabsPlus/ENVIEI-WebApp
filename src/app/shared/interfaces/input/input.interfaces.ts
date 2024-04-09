@@ -11,4 +11,8 @@ export interface IInput {
   disabled?: boolean;
   inputName?: string;
   error?: any;
+  mask?: string;
+  textMask?: string;
+  onChange?: (value: string) => void;
+  onTouched?: () => void;
 }

@@ -25,6 +25,7 @@
         <div class="form-group">
             <app-input-cpf-cnpj
               formControlName="cpf_cnpj"
+              mask="000.000.000-99"
               [props]="{
                 type: 'text',
                 placeholder: 'CPF ou CNPJ',
@@ -32,7 +33,8 @@
                 name: 'CPF',
                 class: 'input',
                 required: true,
-                value: ''
+                value: '',
+                mask: 'CPF'
               }"
             />
           </div>
@@ -74,6 +76,19 @@
               id: 'password',
               name: 'password',
               class: 'input',
+              required: true,
+              value: '',
+              image: '../../../../assets/images/login/password.svg'
+            }"
+          />
+          <app-input-confirm-password
+            formControlName="confirmPassword"
+            [props]="{
+              type: 'password',
+              placeholder: 'Confirmar senha',
+              id: 'confirmPassword',
+              name: 'confirmPassword',
+              class: 'input-confirm-password',
               required: true,
               value: '',
               image: '../../../../assets/images/login/password.svg'

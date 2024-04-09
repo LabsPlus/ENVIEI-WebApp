@@ -28,6 +28,7 @@ export class InputCpfCnpjComponent implements ControlValueAccessor{
   value: string = ''
   onChange: any = () => {}
   onTouched: any = () => {}
+  
 
   constructor(){
     this.onChange = this.onChange.bind(this);

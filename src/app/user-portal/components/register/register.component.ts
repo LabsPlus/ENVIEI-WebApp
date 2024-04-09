@@ -3,8 +3,10 @@ import { ButtonComponent } from '../../../shared/components/button/button.compon
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { InputPasswordComponent } from '../../../shared/components/input-password/input-password.component';
 import { InputLoginComponent } from '../../../shared/components/input-login/input-login.component';
+import { InputDoublePasswordComponent } from '../../../shared/components/input-double-password/input-double-password.component';
 import { InputPhoneNumberComponent } from '../../../shared/components/input-phone-number/input-phone-number.component';
 import { InputCpfCnpjComponent } from '../../../shared/components/input-cpf-cnpj/input-cpf-cnpj.component';
+import { InputConfirmPasswordComponent } from '../../../shared/components/input-confirm-password/input-confirm-password.component';
 import { FormControl, FormGroup, FormRecord, ReactiveFormsModule, Validators, ControlValueAccessor } from '@angular/forms';
 import { RegisterService } from '../../services/register/register.service';
 import { Router } from '@angular/router';
@@ -15,7 +17,7 @@ import { ToastrService } from 'ngx-toastr';
 @Component({
   selector: 'app-register',
   standalone: true,
-  imports: [ButtonComponent, InputComponent, InputPasswordComponent,InputLoginComponent, InputPhoneNumberComponent,InputCpfCnpjComponent, ReactiveFormsModule],
+  imports: [ButtonComponent, InputComponent, InputPasswordComponent,InputLoginComponent, InputPhoneNumberComponent,InputCpfCnpjComponent, ReactiveFormsModule, InputDoublePasswordComponent, InputConfirmPasswordComponent],
   providers: [RegisterService],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css'
@@ -38,6 +40,7 @@ export class RegisterComponent {
       email: new FormControl('', [Validators.required, Validators.email]),
       email_recovery: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl(''),
+      confirmPassword: new FormControl(''),
       cpf_cnpj: new FormControl(''),
       phone_number: new FormControl('')
     });
@@ -45,31 +48,45 @@ export class RegisterComponent {
 
   }
 
-  submit(){
-    //this.onSubmit.emit();
-    this.registerUser();
-  }
-
   navigate(){
     this.onNavigate.emit();
   }
 
-  public registerUser(): void {
+  submit() {
+    if (this.isValidForm()) {
+      this.registerUser();
+    } else {
+      alert('Formulário inválido');
+    }
+  }
 
-      const user: IRegisterData = {
+  isValidForm(): boolean {
+    return this.registerForm.value.name !== '' && this.registerForm.value.email !== '' && this.registerForm.value.password !== '' && this.registerForm.value.confirmPassword !== '' && this.registerForm.value.cpf_cnpj !== '' && this.registerForm.value.phone_number !== '';
+  }
+
+  validatePasswords(): boolean {
+    return this.registerForm.value.password === this.registerForm.value.confirmPassword;
+  }
+
+  registerUser() {
+
+    if (this.validatePasswords()) {
+      const user = {
         name: this.registerForm.value.name,
         email: this.registerForm.value.email,
         email_recovery: this.registerForm.value.email,
         password: this.registerForm.value.password,
         cpf_cnpj: this.registerForm.value.cpf_cnpj,
-        phone_number: this.registerForm.value.phone_number,
-        
+        phone_number: this.registerForm.value.phone_number
       };
-
+      
       this.registerService.registerUser(user as any);
 
       this.router.navigate(['/login']);
-
-
+      
+    } else {
+      alert('As senhas não coincidem');
+    }
   }
+  
 }
