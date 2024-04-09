@@ -27,7 +27,6 @@ export class RegisterService {
       });
 
     } catch (error) {
-      console.log(error);
       alert('Erro ao cadastrar usuário!');
     }
 

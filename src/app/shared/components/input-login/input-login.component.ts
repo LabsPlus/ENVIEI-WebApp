@@ -31,7 +31,6 @@ export class InputLoginComponent implements ControlValueAccessor{
   onInput(event: Event) {
     const value = (event.target as HTMLInputElement).value;
     this.onChange(value);
-    console.log(value);
   }
 
   writeValue(value: string) {
@@ -47,6 +46,6 @@ export class InputLoginComponent implements ControlValueAccessor{
   }
 
   setDisabledState(isDisabled: boolean) {
-    // console.log(isDisabled);
+    this.props.disabled = isDisabled;
   }
 }

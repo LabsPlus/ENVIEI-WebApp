@@ -13,6 +13,6 @@ export class ButtonStartHomePageComponent {
   props!: IButton;
 
   onClick() {
-    console.log('Button clicked');
+    
   }
 }

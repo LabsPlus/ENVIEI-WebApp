@@ -15,6 +15,5 @@ export class ButtonComponent {
 
   submit() {
     this.onSubmit.emit();
-    console.log('Button clicked');
   }
 }

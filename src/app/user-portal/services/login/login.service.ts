@@ -13,13 +13,11 @@ export class LoginService {
   constructor(private http: HttpClient) {}
 
   login({ email, password }: ILoginData) {
-    console.log('login service');
 
     return this.http
       .post<IToken>(`${this.apiUrl}/api/user/login`, { email, password })
       .pipe(
         tap((value) => {
-          console.log('token', value.token);
           sessionStorage.setItem('token', JSON.stringify(value.token));
         })
       );
