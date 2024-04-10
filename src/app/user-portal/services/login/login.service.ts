@@ -15,7 +15,7 @@ export class LoginService {
   login({ email, password }: ILoginData) {
 
     return this.http
-      .post<IToken>(`${this.apiUrl}/api/user/login`, { email, password })
+      .post<IToken>(`${this.apiUrl}/user/login`, { email, password })
       .pipe(
         tap((value) => {
           sessionStorage.setItem('token', JSON.stringify(value.token));
