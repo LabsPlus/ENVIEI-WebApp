@@ -1,8 +1,8 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import IUser from '../../interfaces/IUser';
-import { tap } from 'rxjs';
-import { Request, Response } from 'express';
+import { catchError, map, Observable, tap, throwError } from 'rxjs';
+import { environment } from '../../../../environments/environment';
 
 @Injectable({
   providedIn: 'root',
@@ -10,26 +10,23 @@ import { Request, Response } from 'express';
 
 export class RegisterService {
 
-  private registerUrl = 'http://localhost:3003/api/user/create';
+  private registerUrl = environment.apiUrl;
 
-  constructor(private httpClient: HttpClient) {  }
+  constructor(private httpClient: HttpClient) { }
 
-  registerUser(user: IUser): void {
+  registerUser(user: IUser): Observable<boolean> {
 
-    try {
+    const transaction = this.httpClient.post(this.registerUrl+'user/create', user).pipe(
+      map((response: any) => {
+        if (response.success) {
+          return true;
+        } else {
+          return false;
+        }
+      }),
+    );
 
-      if (!user) {
-        throw new Error("Nenhum dado passado para o registro de usuário!");
-      }
-
-      this.httpClient.post(this.registerUrl, user).subscribe((response: any) => {
-        alert('Usuário cadastrado com sucesso!');
-      });
-
-    } catch (error) {
-      alert('Erro ao cadastrar usuário!');
-    }
-
+    return transaction;
   }
 
 }

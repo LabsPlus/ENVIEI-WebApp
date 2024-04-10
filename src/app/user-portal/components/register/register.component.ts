@@ -19,6 +19,7 @@ import { RegisterService } from '../../services/register/register.service';
 import { Router } from '@angular/router';
 import { IRegisterData } from '../../../shared/interfaces/register/register-date-interface';
 import { ToastrService } from 'ngx-toastr';
+import { HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -33,8 +34,9 @@ import { ToastrService } from 'ngx-toastr';
     ReactiveFormsModule,
     InputDoublePasswordComponent,
     InputConfirmPasswordComponent,
+
   ],
-  providers: [RegisterService],
+  providers: [RegisterService, ToastrService],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -48,7 +50,8 @@ export class RegisterComponent {
 
   constructor(
     private registerService: RegisterService,
-    private router: Router
+    private router: Router,
+    private toastr: ToastrService
   ) {
     this.registerForm = new FormGroup({
       name: new FormControl(''),
@@ -87,29 +90,110 @@ export class RegisterComponent {
     );
   }
 
-  validatePasswords(): boolean {
-    return (
-      this.registerForm.value.password ===
-      this.registerForm.value.confirmPassword
+  isPasswordFormatValid(): boolean {
+    const password = this.registerForm.value.password;
+
+    const passwordRegex = new RegExp(
+      '^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[@$!%*#?&])[A-Za-z0-9@$!%*#?&]{8,}$'
     );
+
+    return passwordRegex.test(password);
+  }
+
+  validatePasswords(): boolean {
+
+    if(!this.isPasswordFormatValid()){
+      this.showWarning('A senha deve conter ao menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial!');
+      return false;
+    }
+    
+    if (this.registerForm.value.password !== this.registerForm.value.confirmPassword) {
+      this.showWarning('As senhas não conferem!');
+      return false;
+    }
+
+    return true;
+  }
+
+  showSuccess(message: string) {
+    this.toastr.success(message, 'Success', {
+      timeOut: 5000,
+      positionClass: 'toast-top-center',
+      messageClass: 'toast-message',
+      tapToDismiss: true,
+      newestOnTop: true,
+      progressAnimation: 'decreasing',
+    });
+  }
+
+  showError(message: string) {
+    this.toastr.error(message, 'Failed', {
+      timeOut: 5000,
+      positionClass: 'toast-top-center',
+      messageClass: 'toast-message',
+      tapToDismiss: true,
+      newestOnTop: true,
+      progressAnimation: 'decreasing',
+    });
+  }
+
+  showWarning(message: string) {
+    this.toastr.warning(message, 'Warning', {
+      timeOut: 5000,
+      positionClass: 'toast-top-center',
+      messageClass: 'toast-message',
+      tapToDismiss: true,
+      newestOnTop: true,
+      progressAnimation: 'decreasing',
+    });
+  }
+
+  showInfo(message: string) {
+    this.toastr.info(message, 'Info', {
+      timeOut: 5000,
+      positionClass: 'toast-top-center',
+      messageClass: 'toast-message',
+      tapToDismiss: true,
+      newestOnTop: true,
+      progressAnimation: 'decreasing',
+    });
   }
 
   registerUser() {
-    if (this.validatePasswords()) {
-      const user = {
-        name: this.registerForm.value.name,
-        email: this.registerForm.value.email,
-        email_recovery: this.registerForm.value.email,
-        password: this.registerForm.value.password,
-        cpf_cnpj: this.registerForm.value.cpf_cnpj,
-        phone_number: this.registerForm.value.phone_number,
-      };
 
-      this.registerService.registerUser(user as any);
-
-      this.router.navigate(['/login']);
-    } else {
-      alert('As senhas não coincidem');
+    if (!this.isValidForm()) {
+      this.showError('Verifique se os dados inseridos estão corretos!');
+      return;
     }
+
+    if (!this.validatePasswords()) {
+      return;
+    }
+
+    const user = this.getFormData();
+
+    if (this.registerService.registerUser(user)) {
+      this.showSuccess('Deu bom! Usuário cadastrado com sucesso!');
+      this.router.navigate(['/login']);
+    }
+    else {
+      this.showError('Deu ruim! Usuário não cadastrado! \n Tente Novamente!');
+    }
+
+    
+
+
+  }
+
+  getFormData(): any {
+    const user = {
+      name: this.registerForm.value.name,
+      email: this.registerForm.value.email,
+      email_recovery: this.registerForm.value.email,
+      password: this.registerForm.value.password,
+      cpf_cnpj: this.registerForm.value.cpf_cnpj,
+      phone_number: this.registerForm.value.phone_number,
+    };
+    return user;
   }
 }
