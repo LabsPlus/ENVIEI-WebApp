@@ -1,0 +1,31 @@
+@font-face {
+    font-family: 'Inter-Bold';
+    src: url('../../../../assets/fonts/Inter-Bold.ttf') format('truetype');
+    font-family: 'Inter-Regular';
+    src: url('../../../../assets/fonts/Inter-Regular.ttf') format('truetype');
+  }
+  
+  .input {
+    display: flex;
+    width: 350px;
+    height: 40px;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    color: #0d0d0d;
+    border-radius: 10px;
+    padding: 3px 8px;
+    text-indent: 10%;
+    font-family: 'Inter-Regular', sans-serif;
+  }
+  
+  .input::placeholder {
+    color: #0d0d0d;
+    font-family: 'Inter-Regular', sans-serif;
+    font-size: 14px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: normal;
+    opacity: 0.5;
+  }
+  

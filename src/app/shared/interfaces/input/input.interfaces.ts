@@ -10,4 +10,9 @@ export interface IInput {
   required?: boolean;
   disabled?: boolean;
   inputName?: string;
+  error?: any;
+  mask?: any;
+  textMask?: string;
+  onChange?: (value: string) => void;
+  onTouched?: () => void;
 }

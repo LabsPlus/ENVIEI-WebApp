@@ -3,23 +3,21 @@ import { HttpClient } from '@angular/common/http';
 import { tap } from 'rxjs/operators';
 import { IToken } from '../../../shared/interfaces/Token/token.interfaces';
 import { ILoginData } from '../../../shared/interfaces/login-data/login-data.interfaces';
-
+import { environment } from '../../../../environments/environment';
 @Injectable({
   providedIn: 'root',
 })
 export class LoginService {
-  private apiUrl = 'http://localhost:3003';
+  private apiUrl = environment.apiUrl;
 
   constructor(private http: HttpClient) {}
 
   login({ email, password }: ILoginData) {
-    console.log('login service');
 
     return this.http
-      .post<IToken>(`${this.apiUrl}/api/auth/login`, { email, password })
+      .post<IToken>(`${this.apiUrl}/api/user/login`, { email, password })
       .pipe(
         tap((value) => {
-          console.log('token', value.token);
           sessionStorage.setItem('token', JSON.stringify(value.token));
         })
       );

@@ -37,19 +37,16 @@ export class LoginComponent {
   }
 
   submit() {
-    console.log('Login form submitted');
+    
 
     this.loginService
       .login({
         email: this.loginForm.value.email,
         password: this.loginForm.value.password,
       })
-      .subscribe(
+      .pipe(
         (response) => {
-          console.log(response);
-        },
-        (error) => {
-          console.log(error);
+          return response;
         }
       );
   }

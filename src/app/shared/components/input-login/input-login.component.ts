@@ -21,7 +21,7 @@ import { IInput } from '../../interfaces/input/input.interfaces';
   templateUrl: './input-login.component.html',
   styleUrl: './input-login.component.css',
 })
-export class InputLoginComponent {
+export class InputLoginComponent implements ControlValueAccessor{
   @Input() props!: IInput;
 
   value: string = '';
@@ -31,7 +31,6 @@ export class InputLoginComponent {
   onInput(event: Event) {
     const value = (event.target as HTMLInputElement).value;
     this.onChange(value);
-    console.log(value);
   }
 
   writeValue(value: string) {
@@ -47,6 +46,6 @@ export class InputLoginComponent {
   }
 
   setDisabledState(isDisabled: boolean) {
-    // console.log(isDisabled);
+    this.props.disabled = isDisabled;
   }
 }
