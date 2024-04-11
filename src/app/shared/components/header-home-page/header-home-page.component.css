@@ -1,0 +1,49 @@
+@font-face {
+    font-family: 'Inter-Bold';
+    src: url('../../../../assets/fonts/Inter-Bold.ttf') format('truetype');
+    font-family: 'Inter-Regular';
+    src: url('../../../../assets/fonts/Inter-Regular.ttf') format('truetype');
+}
+
+*{
+    text-decoration: none;
+    color: #2C3F47;
+    font-family: 'Inter-Bold';
+    font-size: 14px;
+    font-style: normal;
+}
+
+.header-home-page {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 5% 0 5%;
+    background-color: #fff;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+.header-home-page > a {
+    text-decoration: none;
+    color: #2C3F47;
+}
+
+.second-column {
+    display: flex;
+    justify-content: row;
+    width: 35%;
+    gap: 20%;
+}
+
+.third-column {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20%;
+    padding: 0 0% 0 0;
+    width: 35%;
+}
+
+.third-column > a {
+    text-decoration: none;
+    color: #2C3F47;
+    padding: 2% 0 0 0;
+}

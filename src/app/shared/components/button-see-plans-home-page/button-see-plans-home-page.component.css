@@ -13,14 +13,14 @@
     gap: 10px;
     flex-shrink: 0;
     border-radius: 12px;
-    background: #1791C8;
-    color: #fff;
+    background: #ffffff;
+    color: #1791C8;
     font-family: 'Inter-Bold';
     font-size: 14px;
     font-style: normal;
     font-weight: 700;
     line-height: normal;
-    border: none;
+    border-color: #1791C8;
     
   }
   

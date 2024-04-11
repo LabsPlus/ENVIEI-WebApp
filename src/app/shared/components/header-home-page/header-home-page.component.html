@@ -1,28 +1,23 @@
 <div>
     <div class="header-home-page">
-        <div class="header-home-page__logo">
+        <div class="header-home-page_logo">
             <img src="../../../../assets/images/logo.svg" alt="logo" />
         </div>
-        <div class="header-home-page__menu">
-            <ul>
-                <li>
-                    <a href="/login"  routerLinkActive="active">Home</a>
-                </li>
-                <li>
-                    <a routerLink="/about" routerLinkActive="active">Recursos</a>
-                </li>
-                <li>
-                    <a routerLink="/contact" routerLinkActive="active">Devs</a>
-                </li>
-                <li>
-                    <a routerLink="/contact" routerLinkActive="active">Contate-nos</a>
-                </li>
-                <li>
-                    <a routerLink="/contact" routerLinkActive="active">Logar</a>
-                </li>
-            </ul>
-            <app-button-start-home-page/>
-        </div>
-    </div>
-</div>
 
+            <div class="second-column">
+                <a routerLink="/" routerLinkActive="active">Home</a>
+                <a routerLink="/about" routerLinkActive="active">Recursos</a>
+                <a routerLink="/devs"  routerLinkActive="active" (onClick)="onClick">Devs</a>
+            </div>
+
+            <div class="third-column">
+                <a routerLink="/contact" href="/Contact" routerLinkActive="active">Contate-nos</a>
+                <a routerLink="/login" routerLinkActive="active">Logar</a>
+                <app-button-start-home-page
+                    routerLink="/register"
+                    [props]="{ text: 'Inicie Gratis', disabled: false }"
+                />
+            </div>
+    </div>
+    <router-outlet></router-outlet>
+</div>

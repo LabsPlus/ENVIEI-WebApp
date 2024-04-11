@@ -1,0 +1,26 @@
+<section>
+    <div class="texts">
+        <h1>
+            E-mails Transacionais que Chegam: Aumente a Confiança e a Satisfação do Cliente
+        </h1>
+    
+        <p>Nunca mais se preocupe com e-mails transacionais perdidos
+             na caixa de spam! O Email-Service garante entregas confiáveis
+              e automatiza seus processos para que você possa
+            focar no que realmente importa: encantar seus clientes.</p>
+    
+    
+    
+        <div class="buttons">
+            <app-button-start-home-page
+            routerLink="/register"
+            [props]="{ text: 'Inicie Gratis', disabled: false }"/>
+            <app-button-see-plans-home-page
+            routerLink="/plans"
+            [props]="{ text: 'Veja Nossos Planos', disabled: false }"/>
+        </div>
+    </div>
+    
+    <img src="../../../../assets/images/landing page/girl.svg" alt="Girl Sending a Email">
+    <router-outlet></router-outlet>
+</section>
