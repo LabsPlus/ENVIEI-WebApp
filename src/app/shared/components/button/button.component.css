@@ -21,4 +21,9 @@
   font-weight: 700;
   line-height: normal;
   border: none;
+  cursor: pointer;
+}
+
+.button:hover {
+  background: #51585f;
 }
