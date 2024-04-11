@@ -1,16 +1,17 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { ButtonStartHomePageComponent } from '../button-start-home-page/button-start-home-page.component';
-import { Router } from '@angular/router';
+import { Router, RouterLink, RouterOutlet } from '@angular/router';
+import { CommonModule } from '@angular/common';
 @Component({
   selector: 'app-header-home-page',
   standalone: true,
-  imports: [ButtonStartHomePageComponent],
+  imports: [ButtonStartHomePageComponent,CommonModule, RouterLink, RouterOutlet],
   templateUrl: './header-home-page.component.html',
   styleUrl: './header-home-page.component.css'
 })
 export class HeaderHomePageComponent {
 
-  constructor(private router: Router) {}
+  constructor(private route: Router) {}
 
   @Output('submit') onSubmit = new EventEmitter();
   @Output('navigate') onNavigate = new EventEmitter();
@@ -21,16 +22,16 @@ export class HeaderHomePageComponent {
   }
   onSignIn() {
     alert('Sign In');
-    this.router.navigate(['/register']);
+    this.route.navigate(['/register']);
   }
 
   onClick() {
     alert('Click');
-    this.router.navigate(['/register']);
+    this.route.navigate(['/register']);
   }
   submit() {
     alert('Submit');
-    this.router.navigate(['/register']);
+    this.route.navigate(['/register']);
   }
   onSignUp() {
 

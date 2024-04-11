@@ -13,11 +13,14 @@
     
         <div class="buttons">
             <app-button-start-home-page
+            routerLink="/register"
             [props]="{ text: 'Inicie Gratis', disabled: false }"/>
             <app-button-see-plans-home-page
+            routerLink="/plans"
             [props]="{ text: 'Veja Nossos Planos', disabled: false }"/>
         </div>
     </div>
     
     <img src="../../../../assets/images/landing page/girl.svg" alt="Girl Sending a Email">
+    <router-outlet></router-outlet>
 </section>

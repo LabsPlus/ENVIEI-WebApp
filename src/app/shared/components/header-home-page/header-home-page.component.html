@@ -5,17 +5,19 @@
         </div>
 
             <div class="second-column">
-                <a href="/Home" routerLinkActive="active">Home</a>
-                <a routerLink="/about" href="/Resources" routerLinkActive="active">Recursos</a>
-                <a routerLink="/devs" href="/Devs" routerLinkActive="active" (onClick)="onClick">Devs</a>
+                <a routerLink="/" routerLinkActive="active">Home</a>
+                <a routerLink="/about" routerLinkActive="active">Recursos</a>
+                <a routerLink="/devs"  routerLinkActive="active" (onClick)="onClick">Devs</a>
             </div>
 
             <div class="third-column">
                 <a routerLink="/contact" href="/Contact" routerLinkActive="active">Contate-nos</a>
-                <a routerLink="/Login" href="/login" routerLinkActive="active" (onClick)="onSignIn">Logar</a>
+                <a routerLink="/login" routerLinkActive="active">Logar</a>
                 <app-button-start-home-page
+                    routerLink="/register"
                     [props]="{ text: 'Inicie Gratis', disabled: false }"
                 />
             </div>
     </div>
+    <router-outlet></router-outlet>
 </div>
