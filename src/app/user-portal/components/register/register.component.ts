@@ -1,25 +1,23 @@
-import { Component, EventEmitter, Input, Output } from '@angular/core';
-import { ButtonComponent } from '../../../shared/components/button/button.component';
-import { InputComponent } from '../../../shared/components/input/input.component';
-import { InputPasswordComponent } from '../../../shared/components/input-password/input-password.component';
-import { InputLoginComponent } from '../../../shared/components/input-login/input-login.component';
-import { InputDoublePasswordComponent } from '../../../shared/components/input-double-password/input-double-password.component';
-import { InputPhoneNumberComponent } from '../../../shared/components/input-phone-number/input-phone-number.component';
-import { InputCpfCnpjComponent } from '../../../shared/components/input-cpf-cnpj/input-cpf-cnpj.component';
-import { InputConfirmPasswordComponent } from '../../../shared/components/input-confirm-password/input-confirm-password.component';
+import { Component, EventEmitter, Output } from '@angular/core';
 import {
   FormControl,
   FormGroup,
-  FormRecord,
   ReactiveFormsModule,
-  Validators,
-  ControlValueAccessor,
+  Validators
 } from '@angular/forms';
-import { RegisterService } from '../../services/register/register.service';
 import { Router } from '@angular/router';
-import { IRegisterData } from '../../../shared/interfaces/register/register-date-interface';
 import { ToastrService } from 'ngx-toastr';
-import { HttpResponse } from '@angular/common/http';
+import { ButtonComponent } from '../../../shared/components/button/button.component';
+import { InputConfirmPasswordComponent } from '../../../shared/components/input-confirm-password/input-confirm-password.component';
+import { InputCpfCnpjComponent } from '../../../shared/components/input-cpf-cnpj/input-cpf-cnpj.component';
+import { InputDoublePasswordComponent } from '../../../shared/components/input-double-password/input-double-password.component';
+import { InputLoginComponent } from '../../../shared/components/input-login/input-login.component';
+import { InputPasswordComponent } from '../../../shared/components/input-password/input-password.component';
+import { InputPhoneNumberComponent } from '../../../shared/components/input-phone-number/input-phone-number.component';
+import { InputComponent } from '../../../shared/components/input/input.component';
+import { IRegisterData } from '../../../shared/interfaces/register/register-date-interface';
+import { ToastrNotificationService } from '../../../user-portal/services/toastr/toastr.service';
+import { RegisterService } from '../../services/register/register.service';
 
 @Component({
   selector: 'app-register',
@@ -36,7 +34,7 @@ import { HttpResponse } from '@angular/common/http';
     InputConfirmPasswordComponent,
 
   ],
-  providers: [RegisterService, ToastrService],
+  providers: [RegisterService, ToastrService, ToastrNotificationService],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -51,7 +49,7 @@ export class RegisterComponent {
   constructor(
     private registerService: RegisterService,
     private router: Router,
-    private toastr: ToastrService
+    private toastr: ToastrNotificationService
   ) {
     this.registerForm = new FormGroup({
       name: new FormControl(''),
@@ -75,7 +73,7 @@ export class RegisterComponent {
     if (this.isValidForm()) {
       this.registerUser();
     } else {
-      alert('Formulário inválido');
+      this.toastr.showWarning('Preencha todos os campos!', 'Warning');
     }
   }
 
@@ -102,11 +100,11 @@ export class RegisterComponent {
 
   validatePasswords(): boolean {
 
-    if(!this.isPasswordFormatValid()){
+    if (!this.isPasswordFormatValid()) {
       this.showWarning('A senha deve conter ao menos 8 caracteres, uma letra maiúscula, uma letra minúscula, um número e um caractere especial!');
       return false;
     }
-    
+
     if (this.registerForm.value.password !== this.registerForm.value.confirmPassword) {
       this.showWarning('As senhas não conferem!');
       return false;
@@ -116,46 +114,42 @@ export class RegisterComponent {
   }
 
   showSuccess(message: string) {
-    this.toastr.success(message, 'Success', {
+    this.toastr.showSuccess(message, 'Success', {
       timeOut: 5000,
       positionClass: 'toast-top-center',
       messageClass: 'toast-message',
       tapToDismiss: true,
       newestOnTop: true,
-      progressAnimation: 'decreasing',
     });
   }
 
   showError(message: string) {
-    this.toastr.error(message, 'Failed', {
+    this.toastr.showError(message, 'Failed', {
       timeOut: 5000,
       positionClass: 'toast-top-center',
       messageClass: 'toast-message',
       tapToDismiss: true,
       newestOnTop: true,
-      progressAnimation: 'decreasing',
     });
   }
 
   showWarning(message: string) {
-    this.toastr.warning(message, 'Warning', {
+    this.toastr.showWarning(message, 'Warning', {
       timeOut: 5000,
       positionClass: 'toast-top-center',
       messageClass: 'toast-message',
       tapToDismiss: true,
       newestOnTop: true,
-      progressAnimation: 'decreasing',
     });
   }
 
   showInfo(message: string) {
-    this.toastr.info(message, 'Info', {
+    this.toastr.showInfo(message, 'Info', {
       timeOut: 5000,
       positionClass: 'toast-top-center',
       messageClass: 'toast-message',
       tapToDismiss: true,
       newestOnTop: true,
-      progressAnimation: 'decreasing',
     });
   }
 
@@ -180,7 +174,7 @@ export class RegisterComponent {
       this.showError('Deu ruim! Usuário não cadastrado! \n Tente Novamente!');
     }
 
-    
+
 
 
   }
