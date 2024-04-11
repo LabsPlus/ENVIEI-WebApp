@@ -1,0 +1,68 @@
+@font-face {
+  font-family: 'Inter-Bold';
+  src: url('../../../../assets/fonts/Inter-Bold.ttf') format('truetype');
+  font-family: 'Inter-Regular';
+  src: url('../../../../assets/fonts/Inter-Regular.ttf') format('truetype');
+}
+
+footer {
+  display: flex;
+  flex-direction: column;
+  background-color: #2C3F47;
+  color: #fff;
+}
+
+.columns {
+  
+  padding: 5% 5% 0 5%;
+  text-align: left;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+  align-items: flex-start;
+  
+}
+
+.Title {
+  margin-bottom: 15px;
+  font-family: 'Inter-Regular';
+  font-size: 20px;
+}
+
+
+footer ul {
+  list-style: none;
+  /* Remove default bullet points */
+  padding: 0;
+  /* Remove default padding */
+}
+
+footer li {
+  margin-bottom: 10px;
+  /* Add space between list items */
+}
+
+footer a {
+  font-family: 'Inter-Regular';
+  font-size: 14px;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.2s ease-in-out;
+
+}
+
+footer a:hover {
+  color: #000;
+  /* Black color on hover */
+}
+
+.copy {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 20px;
+  font-size: 12px;
+  font-family: 'Inter-Regular';
+  color: #fff;
+  padding: 0 0 5% 0;
+}
