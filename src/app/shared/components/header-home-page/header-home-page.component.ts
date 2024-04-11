@@ -14,17 +14,24 @@ export class HeaderHomePageComponent {
 
   @Output('submit') onSubmit = new EventEmitter();
   @Output('navigate') onNavigate = new EventEmitter();
-  onClick() {
-    
-  }
+
 
   navigate() {
     this.onNavigate.emit();
   }
   onSignIn() {
-    this.router.navigate(['/login']);
+    alert('Sign In');
+    this.router.navigate(['/register']);
   }
 
+  onClick() {
+    alert('Click');
+    this.router.navigate(['/register']);
+  }
+  submit() {
+    alert('Submit');
+    this.router.navigate(['/register']);
+  }
   onSignUp() {
 
   }

@@ -12,10 +12,9 @@
 
             <div class="third-column">
                 <a routerLink="/contact" href="/Contact" routerLinkActive="active">Contate-nos</a>
-                <a routerLink="/Login" href="" routerLinkActive="active" (onClick)="onSignIn">Logar</a>
+                <a routerLink="/Login" href="/login" routerLinkActive="active" (onClick)="onSignIn">Logar</a>
                 <app-button-start-home-page
                     [props]="{ text: 'Inicie Gratis', disabled: false }"
-                    (onClick)="onSignIn()"
                 />
             </div>
     </div>

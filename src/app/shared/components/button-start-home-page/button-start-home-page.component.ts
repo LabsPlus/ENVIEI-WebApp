@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component, Input, EventEmitter, Output } from '@angular/core';
 import { IButton } from '../../interfaces/button/button.interfaces';
 
 @Component({
@@ -11,8 +11,9 @@ import { IButton } from '../../interfaces/button/button.interfaces';
 export class ButtonStartHomePageComponent {
   @Input()
   props!: IButton;
+  @Output('submit') onSubmit = new EventEmitter();
 
   onClick() {
-    
+    this.onSubmit.emit();
   }
 }
