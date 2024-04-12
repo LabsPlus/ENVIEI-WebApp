@@ -1,6 +1,6 @@
 @font-face {
-  font-family: 'Inter-Bold';
-  src: url('../../../../assets/fonts/Inter-Bold.ttf') format('truetype');
+  font-family: "Inter-Bold";
+  src: url("../../../../assets/fonts/Inter-Bold.ttf") format("truetype");
 }
 
 .login-container {
@@ -12,12 +12,27 @@
   height: 100vh;
   background: #fff;
 }
+.links-container {
+  display: flex;
+  justify-content: space-between;
+  width: 95%;
+  color: #000;
+  font-family: Inter-Bold;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
+}
+
+.links-container a {
+  text-decoration: none;
+}
 
 .form-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 20px;
+  gap: 13px;
   align-items: center;
   width: 550px;
   height: 580px;
@@ -34,7 +49,7 @@
 .title-first-part {
   color: #6c747e;
   text-align: center;
-  font-family: 'Inter-Bold';
+  font-family: "Inter-Bold";
   font-size: 26px;
   font-style: normal;
   font-weight: 700;
@@ -43,7 +58,7 @@
 
 .title-second-part {
   color: #1791c8;
-  font-family: 'Inter-Bold';
+  font-family: "Inter-Bold";
   font-size: 26px;
   font-style: normal;
   font-weight: 700;
@@ -68,7 +83,7 @@
 .span-checkbox {
   color: #000;
   text-align: center;
-  font-family: 'Inter-Bold';
+  font-family: "Inter-Bold";
   font-size: 14px;
   font-style: normal;
   font-weight: 600;

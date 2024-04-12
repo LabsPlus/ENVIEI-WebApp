@@ -9,15 +9,15 @@
       <div class="form-group">
         <app-input-login
           [props]="{
-            type: 'email',
-            placeholder: 'Login',
-            id: 'email',
-            name: 'email',
-            inputName: 'email',
-            class: 'input',
-            required: true,
-            value: '',
-          }"
+          type: 'email',
+          placeholder: 'Login',
+          id: 'email',
+          name: 'email',
+          inputName: 'email',
+          class: 'input',
+          required: true,
+          value: '',
+        }"
           formControlName="email"
         />
       </div>
@@ -36,6 +36,10 @@
           }"
           formControlName="password"
         />
+      </div>
+      <div class="links-container">
+        <a routerLink="/register">Novo aqui? Criar Conta</a>
+        <a routerLink="/forgot-password">Esqueceu sua senha?</a>
       </div>
       <div class="checkbox-container">
         <app-input
