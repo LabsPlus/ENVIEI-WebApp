@@ -2,28 +2,23 @@
   <form class="form-container" (submit)="submit()" [formGroup]="loginForm">
     <img src="assets/images/logo.svg" alt="Logo" class="logo" />
     <h2>
-      <span class="title-first-part">Lo</span
-      ><span class="title-second-part">gin</span>
+      <span class="title-first-part">Lo</span><span class="title-second-part">gin</span>
     </h2>
     <div class="input-container">
       <div class="form-group">
-        <app-input-login
-          [props]="{
-            type: 'email',
-            placeholder: 'Login',
-            id: 'email',
-            name: 'email',
-            inputName: 'email',
-            class: 'input',
-            required: true,
-            value: '',
-          }"
-          formControlName="email"
-        />
+        <app-input-login [props]="{
+          type: 'email',
+          placeholder: 'Login',
+          id: 'email',
+          name: 'email',
+          inputName: 'email',
+          class: 'input',
+          required: true,
+          value: '',
+        }" formControlName="email" />
       </div>
       <div class="form-group">
-        <app-input-password
-          [props]="{
+        <app-input-password [props]="{
             type: 'password',
             placeholder: 'Senha',
             id: 'password',
@@ -33,22 +28,23 @@
             required: true,
             value: '',
             image: '../../../../assets/images/login/password.svg'
-          }"
-          formControlName="password"
-        />
+          }" formControlName="password" />
+      </div>
+      <div class="links-container">
+        <a routerLink="/register">Novo aqui? Criar Conta</a>
+        <a routerLink="/forgot-password">Esqueceu sua senha?</a>
       </div>
       <div class="checkbox-container">
-        <app-input
-          [props]="{
+        <app-input [props]="{
           name: 'remember',
           class: 'checkbox',
           type: 'checkbox',
-        }"
-        />
+        }" />
         <span class="span-checkbox">Manter Conectado</span>
       </div>
     </div>
-
-    <app-button [props]="{ text: 'Entrar', class: 'button' }"></app-button>
+    <div class="div-button">
+      <app-button [props]="{ text: 'Entrar', class: 'button' }"></app-button>
+    </div>
   </form>
 </div>
