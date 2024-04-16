@@ -98,6 +98,19 @@ export class RegisterComponent {
     return passwordRegex.test(password);
   }
 
+  emailHasValidFormat(): boolean {
+    const email = this.registerForm.value.email;
+
+    const emailRegex = new RegExp(
+      /^w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+    );
+
+    this.showWarning('E- mail inválido. Por favor, insira um e-mail válido.');
+
+    return emailRegex.test(email);
+
+  }
+
   validatePasswords(): boolean {
 
     if (!this.isPasswordFormatValid()) {
@@ -157,6 +170,10 @@ export class RegisterComponent {
 
     if (!this.isValidForm()) {
       this.showError('Verifique se os dados inseridos estão corretos!');
+      return;
+    }
+
+    if (!this.emailHasValidFormat()) {
       return;
     }
 

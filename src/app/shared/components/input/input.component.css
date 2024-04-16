@@ -17,6 +17,7 @@
   padding: 3px 8px;
   text-indent: 10%;
   font-family: "Inter-Regular";
+  border: 1.8px solid #000;
 }
 
 .input::placeholder {
