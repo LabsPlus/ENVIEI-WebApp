@@ -26,13 +26,19 @@
 
 .links-container a {
   text-decoration: none;
+  color: #000;
+  color: #000;
+  font-size: 12px;
+  font-style: normal;
+  font-weight: 700;
+  line-height: normal;
 }
 
 .form-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
-  gap: 13px;
+  gap: 8px;
   align-items: center;
   width: 550px;
   height: 580px;
@@ -72,6 +78,7 @@
   width: 100%;
   gap: 10px;
 }
+
 .input-container {
   display: flex;
   justify-content: center;
@@ -88,4 +95,11 @@
   font-style: normal;
   font-weight: 600;
   line-height: 140%;
+}
+
+.div-button {
+  padding-top: 23px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
