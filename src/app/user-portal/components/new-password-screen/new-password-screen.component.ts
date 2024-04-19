@@ -1,16 +1,19 @@
 import { Component } from '@angular/core';
+import { ActivatedRoute, Router } from '@angular/router';
 import { ButtonComponent } from '../../../shared/components/button/button.component';
 import { InputComponent } from '../../../shared/components/input/input.component';
 import { InputPasswordComponent } from '../../../shared/components/input-password/input-password.component';
 import { InputLoginComponent } from '../../../shared/components/input-login/input-login.component';
 import { InputConfirmPasswordComponent } from '../../../shared/components/input-confirm-password/input-confirm-password.component';
 import { ToastrNotificationService } from '../../services/toastr/toastr.service';
+import { NewPasswordService } from '../../services/new-password/new-password.service';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validator,
 } from '@angular/forms';
+import { Observable } from 'rxjs';
 
 
 @Component({
@@ -23,14 +26,19 @@ import {
     InputLoginComponent,
     ReactiveFormsModule,
     InputConfirmPasswordComponent],
-  providers: [ToastrNotificationService],
+  providers: [ToastrNotificationService, NewPasswordService],
   templateUrl: './new-password-screen.component.html',
   styleUrl: './new-password-screen.component.css'
 })
 export class NewPasswordScreenComponent {
   newPasswordForm!: FormGroup;
-
-  constructor(private toastr: ToastrNotificationService) {
+  token: string | null = null;
+  constructor(
+    private toastr: ToastrNotificationService,
+    private newPasswordService: NewPasswordService,
+    private activatedRoute: ActivatedRoute,
+    private router: Router
+  ) {
 
     this.newPasswordForm = new FormGroup({
       password: new FormControl(''),
@@ -38,20 +46,31 @@ export class NewPasswordScreenComponent {
     });
   }
 
-  
+
   submit() {
     if (!this.isValidForm()) {
       this.toastr.showWarning('Preencha todos os campos!', 'Warning');
       return;
     }
-  
+
     if (!this.validatePasswords()) {
       this.showError('As senhas não conferem!');
       return;
     }
-    
-    this.showSuccess('Senha alterada com sucesso!');
 
+    const newPasswordChangedPayload = this.newPasswordService.newPassword(this.newPasswordForm.value.password, this.getToken()) as Observable<Response>;
+
+    newPasswordChangedPayload.subscribe(
+      (response) => {
+        if (response.status === 200 || response.status === 201) {
+          this.showSuccess('Senha alterada com sucesso!');
+          this.router.navigate(['/login']);
+        } else {
+          this.showError('Erro ao alterar a senha!');
+        }
+      }
+    
+    );
   }
 
   isValidForm(): boolean {
@@ -124,5 +143,16 @@ export class NewPasswordScreenComponent {
       tapToDismiss: true,
       newestOnTop: true,
     });
+  }
+
+  getToken(): string {
+
+    const token = this.activatedRoute.snapshot.queryParams['token'];
+
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.token = params['token'];
+    });
+
+    return token;
   }
 }
