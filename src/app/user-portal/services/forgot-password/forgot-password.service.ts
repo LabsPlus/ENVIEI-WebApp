@@ -7,14 +7,26 @@ import GetClientIp  from '../get-client-ip/get-client-ip';
   providedIn: 'root',
 })
 export class ForgotPasswordService {
-  private apiUrl = environment.apiUrl;
-  private getClientIp: GetClientIp;
   
-  constructor(private http: HttpClient ) {
-    this.getClientIp = new GetClientIp(this.http);
+  private apiUrl = environment.apiUrl;
+  private getClientIp: any;
+  
+  constructor(private http: HttpClient) {
+    this.getClientIp = new GetClientIp(http);
+   }
+
+  forgotPassword(email_recovery: string) {
+
+    this.setIpOnLocalStorage();
+    const ip = localStorage.getItem('ip');
+    this.http.post(`${this.apiUrl}user/forgot-password`, { ip, email_recovery }).subscribe((response) => {
+      console.log(response);
+    });
+  
   }
 
-  forgotPassword(email: string) {
-    return this.http.post(`${this.apiUrl}/api/user/forgot-password`, { email, ip: this.getClientIp.verifyIp()});
+  setIpOnLocalStorage() {
+    this.getClientIp.verifyIp();
   }
+
 }

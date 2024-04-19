@@ -9,11 +9,11 @@ export default class GetClientIp {
 
     constructor(private http: HttpClient) {}
 
-    verifyIp(): string {
-        let ip = '';
+    verifyIp(): Promise<string>{
+        let ip : any = null;
         
         this.http.get('https://api.ipify.org?format=json').subscribe((response: any) => {
-            ip = response.ip;
+            localStorage.setItem('ip', response.ip);
         });
         
         return ip;

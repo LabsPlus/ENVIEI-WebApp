@@ -7,13 +7,14 @@ import { InputLoginComponent } from '../../../shared/components/input-login/inpu
 import { InputConfirmPasswordComponent } from '../../../shared/components/input-confirm-password/input-confirm-password.component';
 import { ToastrNotificationService } from '../../services/toastr/toastr.service';
 import { NewPasswordService } from '../../services/new-password/new-password.service';
+import { ResetPasswordTokenService } from '../../../modules/authorization/ResetPasswordTokenService';
 import {
   FormControl,
   FormGroup,
   ReactiveFormsModule,
   Validator,
 } from '@angular/forms';
-import { Observable } from 'rxjs';
+import { Observable, map } from 'rxjs';
 
 
 @Component({
@@ -26,7 +27,7 @@ import { Observable } from 'rxjs';
     InputLoginComponent,
     ReactiveFormsModule,
     InputConfirmPasswordComponent],
-  providers: [ToastrNotificationService, NewPasswordService],
+  providers: [ToastrNotificationService, NewPasswordService, ResetPasswordTokenService],
   templateUrl: './new-password-screen.component.html',
   styleUrl: './new-password-screen.component.css'
 })
@@ -37,7 +38,8 @@ export class NewPasswordScreenComponent {
     private toastr: ToastrNotificationService,
     private newPasswordService: NewPasswordService,
     private activatedRoute: ActivatedRoute,
-    private router: Router
+    private router: Router,
+    private resetPasswordTokenService: ResetPasswordTokenService
   ) {
 
     this.newPasswordForm = new FormGroup({
@@ -58,19 +60,15 @@ export class NewPasswordScreenComponent {
       return;
     }
 
-    const newPasswordChangedPayload = this.newPasswordService.newPassword(this.newPasswordForm.value.password, this.getToken()) as Observable<Response>;
-
-    newPasswordChangedPayload.subscribe(
-      (response) => {
-        if (response.status === 200 || response.status === 201) {
+    const newPasswordChangedPayload = this.newPasswordService.newPassword(this.newPasswordForm.value.password, this.getToken()).pipe(
+      map((response) => {
+        if (response) {
           this.showSuccess('Senha alterada com sucesso!');
           this.router.navigate(['/login']);
-        } else {
-          this.showError('Erro ao alterar a senha!');
         }
-      }
-    
+      })
     );
+
   }
 
   isValidForm(): boolean {
@@ -147,10 +145,10 @@ export class NewPasswordScreenComponent {
 
   getToken(): string {
 
-    const token = this.activatedRoute.snapshot.queryParams['token'];
+    const token = this.activatedRoute.snapshot.queryParams['ResetPasswordToken'];
 
     this.activatedRoute.queryParams.subscribe((params) => {
-      this.token = params['token'];
+      this.token = params['ResetPasswordToken'];
     });
 
     return token;
