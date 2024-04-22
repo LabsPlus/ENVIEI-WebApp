@@ -19,7 +19,10 @@ export class ForgotPasswordComponent {
 
   @Output('submit') onSubmit = new EventEmitter();
 
-  constructor(private forgotPasswordService: ForgotPasswordService) {
+  constructor(
+    private forgotPasswordService: ForgotPasswordService,
+    private toastrNotificationService: ToastrNotificationService
+  ) {
     this.loginForm = new FormGroup({
       email: new FormControl(''),
     });
@@ -27,6 +30,27 @@ export class ForgotPasswordComponent {
 
   public submit() {
     console.log(this.loginForm.value.email);
-    this.forgotPasswordService.forgotPassword(this.loginForm.value.email);
+    this.sendEmail();
+  }
+
+  public sendEmail() {
+    this.forgotPasswordService
+      .forgotPassword(this.loginForm.value.email)
+      .toPromise()
+      .then((response: any) => {
+        console.log(response);
+        response.message == 'E-mail sent with success' &&
+          this.toastrNotificationService.showSuccess(
+            'Verifique seu email para redefinir sua senha.',
+            'success'
+          );
+      })
+      .catch((error: any) => {
+        error.status === 404 &&
+          this.toastrNotificationService.showError(
+            'Email não encontrado.',
+            'error'
+          );
+      });
   }
 }
