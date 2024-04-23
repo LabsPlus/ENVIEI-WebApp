@@ -185,7 +185,7 @@ export class RegisterComponent {
 
     this.registerService.registerUser(user)
     .toPromise()
-    .then((response: HttpResponse<Object> | undefined) => {
+    .then((response: HttpResponse<Object | any> | undefined) => {
       
       if (response?.status == 200 || response?.status == 201) {
         this.toastr.showSuccess('Usuario cadastrado com sucesso','success');
@@ -194,9 +194,9 @@ export class RegisterComponent {
 
     })
     .catch((error: HttpErrorResponse) => {
-      
+
       if (error.status >= 400 && error.status < 500) {
-        this.toastr.showError('Falha ao cadastrar usuario','error');
+        this.toastr.showError(error.error.error,'error');
       }
 
       if (error.status >= 500) {

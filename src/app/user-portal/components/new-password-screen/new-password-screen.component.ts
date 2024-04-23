@@ -67,7 +67,7 @@ export class NewPasswordScreenComponent {
     .catch((error: HttpErrorResponse) => {
 
       if (error.status >= 400 && error.status < 500) {
-        this.toastr.showError('Falha ao cadastrar nova senha','error');
+        this.toastr.showError(error.error.error,'error');
       }
 
       if (error.status >= 500) {
