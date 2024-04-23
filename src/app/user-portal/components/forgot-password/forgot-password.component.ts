@@ -5,6 +5,7 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ForgotPasswordService } from '../../services/forgot-password/forgot-password.service';
 import { IEmail } from '../../interfaces/IEmail';
 import { ToastrNotificationService } from '../../services/toastr/toastr.service';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 @Component({
   selector: 'app-forgot-password',
   standalone: true,
@@ -37,20 +38,21 @@ export class ForgotPasswordComponent {
     this.forgotPasswordService
       .forgotPassword(this.loginForm.value.email)
       .toPromise()
-      .then((response: any) => {
-        console.log(response);
-        response.message == 'E-mail sent with success' &&
+      .then((response: HttpResponse<Object> | undefined) => {
+        if (response?.status == 200) {
           this.toastrNotificationService.showSuccess(
             'Verifique seu email para redefinir sua senha.',
             'success'
           );
+        }
       })
       .catch((error: any) => {
-        error.status === 404 &&
+        if (error.status == 404 || error.status == 400) {
           this.toastrNotificationService.showError(
-            'Email não encontrado.',
+            `${error.statusText}`,
             'error'
           );
+        }
       });
   }
 }

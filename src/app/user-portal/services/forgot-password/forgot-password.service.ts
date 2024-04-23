@@ -17,10 +17,14 @@ export class ForgotPasswordService {
   forgotPassword(email_recovery: string) {
     this.setIpOnLocalStorage();
     const ip = localStorage.getItem('ip');
-    return this.http.post(`${this.apiUrl}user/forgot-password`, {
-      ip,
-      email_recovery,
-    });
+    return this.http.post(
+      `${this.apiUrl}user/forgot-password`,
+      {
+        ip,
+        email_recovery,
+      },
+      { observe: 'response' }
+    );
   }
 
   setIpOnLocalStorage() {
