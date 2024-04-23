@@ -23,3 +23,7 @@
   border: none;
   cursor: pointer;
 }
+
+.button:hover {
+  background: #51585f;
+}
