@@ -8,12 +8,8 @@ import { InputConfirmPasswordComponent } from '../../../shared/components/input-
 import { ToastrNotificationService } from '../../services/toastr/toastr.service';
 import { NewPasswordService } from '../../services/new-password/new-password.service';
 import { ResetPasswordTokenService } from '../../../modules/authorization/ResetPasswordTokenService';
-import {
-  FormControl,
-  FormGroup,
-  ReactiveFormsModule,
-  Validator,
-} from '@angular/forms';
+import { FormControl, FormGroup, ReactiveFormsModule } from '@angular/forms';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 
 @Component({
@@ -49,6 +45,7 @@ export class NewPasswordScreenComponent {
 
 
   submit() {
+    
     if (!this.isValidForm()) {
       this.toastr.showWarning('Preencha todos os campos!', 'Warning');
       return;
@@ -61,13 +58,13 @@ export class NewPasswordScreenComponent {
 
     this.newPasswordService.newPassword(this.newPasswordForm.value.password, this.getToken())
     .toPromise()
-    .then((response: any) => {
-      if (response.status == 200 || response.status == 201) {
+    .then((response: HttpResponse<Object> | undefined) => {
+      if (response?.status == 200 || response?.status == 201) {
         this.toastr.showSuccess('Usuario cadastrado com sucesso','success');
         this.router.navigate(['/login']);
       }
     })
-    .catch((error: any) => {
+    .catch((error: HttpErrorResponse) => {
 
       if (error.status >= 400 && error.status < 500) {
         this.toastr.showError('Falha ao cadastrar usuario','error');
@@ -112,6 +109,17 @@ export class NewPasswordScreenComponent {
     return true;
   }
 
+  getToken(): string {
+
+    const token = this.activatedRoute.snapshot.queryParams['ResetPasswordToken'];
+
+    this.activatedRoute.queryParams.subscribe((params) => {
+      this.token = params['ResetPasswordToken'];
+    });
+
+    return token;
+  }
+
   showSuccess(message: string) {
     this.toastr.showSuccess(message, 'Success', {
       timeOut: 5000,
@@ -150,16 +158,5 @@ export class NewPasswordScreenComponent {
       tapToDismiss: true,
       newestOnTop: true,
     });
-  }
-
-  getToken(): string {
-
-    const token = this.activatedRoute.snapshot.queryParams['ResetPasswordToken'];
-
-    this.activatedRoute.queryParams.subscribe((params) => {
-      this.token = params['ResetPasswordToken'];
-    });
-
-    return token;
   }
 }
