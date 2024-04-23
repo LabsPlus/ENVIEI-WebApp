@@ -1,7 +1,6 @@
 import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import IUser from '../../interfaces/IUser';
-import { catchError, map, Observable, tap, throwError } from 'rxjs';
 import { environment } from '../../../../environments/environment';
 
 @Injectable({
@@ -14,19 +13,10 @@ export class RegisterService {
 
   constructor(private httpClient: HttpClient) { }
 
-  registerUser(user: IUser): Observable<boolean> {
+  registerUser(user: IUser) {
 
-    const transaction = this.httpClient.post(this.registerUrl+'user/create', user).pipe(
-      map((response: any) => {
-        if (response.success) {
-          return true;
-        } else {
-          return false;
-        }
-      }),
-    );
-
-    return transaction;
+    return this.httpClient.post(this.registerUrl+'user/create', user);
+    
   }
 
 }

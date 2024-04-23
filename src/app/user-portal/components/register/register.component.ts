@@ -105,8 +105,6 @@ export class RegisterComponent {
       /^w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
     );
 
-    this.showWarning('E- mail inválido. Por favor, insira um e-mail válido.');
-
     return emailRegex.test(email);
 
   }
@@ -174,6 +172,7 @@ export class RegisterComponent {
     }
 
     if (!this.emailHasValidFormat()) {
+      this.showWarning('E- mail inválido. Por favor, insira um e-mail válido.');
       return;
     }
 
@@ -183,6 +182,22 @@ export class RegisterComponent {
 
     const user = this.getFormData();
 
+    this.registerService.registerUser(user)
+    .toPromise()
+    .then((response: any) => {
+      response.message == 'E-mail sent with success' &&
+        this.toastr.showSuccess(
+          'Verifique seu email para redefinir sua senha.',
+          'success'
+        );
+    })
+    .catch((error: any) => {
+      error.status === 404 &&
+        this.toastr.showError(
+          'Email não encontrado.',
+          'error'
+        );
+    });
     if (this.registerService.registerUser(user)) {
       this.showSuccess('Deu bom! Usuário cadastrado com sucesso!');
       this.router.navigate(['/login']);
