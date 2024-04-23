@@ -60,14 +60,24 @@ export class NewPasswordScreenComponent {
       return;
     }
 
-    const newPasswordChangedPayload = this.newPasswordService.newPassword(this.newPasswordForm.value.password, this.getToken()).pipe(
-      map((response) => {
-        if (response) {
-          this.showSuccess('Senha alterada com sucesso!');
-          this.router.navigate(['/login']);
-        }
-      })
-    );
+    this.newPasswordService.newPassword(this.newPasswordForm.value.password, this.getToken())
+    .toPromise()
+    .then((response: any) => {
+      if (response.message == 'Senha alterada com sucesso') {
+        this.toastr.showSuccess('Senha alterada com sucesso','success');
+        this.router.navigate(['/login']);
+      }
+    })
+    .catch((error: any) => {
+
+      if (error.status === 401) {
+        this.toastr.showError('Token inválido.','error');
+      }
+
+      if (error.status === 400) {
+        this.toastr.showError('Token Expirado.','error');
+      }
+    });
 
   }
 
