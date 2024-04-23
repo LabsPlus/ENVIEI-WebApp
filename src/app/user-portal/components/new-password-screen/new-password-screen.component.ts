@@ -14,7 +14,6 @@ import {
   ReactiveFormsModule,
   Validator,
 } from '@angular/forms';
-import { Observable, map } from 'rxjs';
 
 
 @Component({
@@ -60,14 +59,24 @@ export class NewPasswordScreenComponent {
       return;
     }
 
-    const newPasswordChangedPayload = this.newPasswordService.newPassword(this.newPasswordForm.value.password, this.getToken()).pipe(
-      map((response) => {
-        if (response) {
-          this.showSuccess('Senha alterada com sucesso!');
-          this.router.navigate(['/login']);
-        }
-      })
-    );
+    this.newPasswordService.newPassword(this.newPasswordForm.value.password, this.getToken())
+    .toPromise()
+    .then((response: any) => {
+      if (response.status == 200 || response.status == 201) {
+        this.toastr.showSuccess('Usuario cadastrado com sucesso','success');
+        this.router.navigate(['/login']);
+      }
+    })
+    .catch((error: any) => {
+
+      if (error.status >= 400 && error.status < 500) {
+        this.toastr.showError('Falha ao cadastrar usuario','error');
+      }
+
+      if (error.status >= 500) {
+        this.toastr.showError('Erro interno no servidor.','error');
+      }
+    });
 
   }
 
