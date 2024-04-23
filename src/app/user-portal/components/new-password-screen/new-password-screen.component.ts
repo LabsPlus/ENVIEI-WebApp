@@ -60,14 +60,14 @@ export class NewPasswordScreenComponent {
     .toPromise()
     .then((response: HttpResponse<Object> | undefined) => {
       if (response?.status == 200 || response?.status == 201) {
-        this.toastr.showSuccess('Usuario cadastrado com sucesso','success');
+        this.toastr.showSuccess('Nova senha cadastrada com sucesso','success');
         this.router.navigate(['/login']);
       }
     })
     .catch((error: HttpErrorResponse) => {
 
       if (error.status >= 400 && error.status < 500) {
-        this.toastr.showError('Falha ao cadastrar usuario','error');
+        this.toastr.showError('Falha ao cadastrar nova senha','error');
       }
 
       if (error.status >= 500) {

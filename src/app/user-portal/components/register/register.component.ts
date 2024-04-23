@@ -18,6 +18,7 @@ import { InputComponent } from '../../../shared/components/input/input.component
 import { IRegisterData } from '../../../shared/interfaces/register/register-date-interface';
 import { ToastrNotificationService } from '../../../user-portal/services/toastr/toastr.service';
 import { RegisterService } from '../../services/register/register.service';
+import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -98,11 +99,10 @@ export class RegisterComponent {
     return passwordRegex.test(password);
   }
 
-  emailHasValidFormat(): boolean {
-    const email = this.registerForm.value.email;
-
+  emailHasValidFormat(email: string): boolean {
+    
     const emailRegex = new RegExp(
-      /^w+([\.-]?\w+)*@\w+([\.-]?\w+)*(\.\w{2,3})+$/
+      /^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$/
     );
 
     return emailRegex.test(email);
@@ -171,45 +171,39 @@ export class RegisterComponent {
       return;
     }
 
-    if (!this.emailHasValidFormat()) {
-      this.showWarning('E- mail inválido. Por favor, insira um e-mail válido.');
-      return;
-    }
-
     if (!this.validatePasswords()) {
       return;
     }
 
     const user = this.getFormData();
 
+    if (!this.emailHasValidFormat(user.email)) {
+
+      this.showWarning('E- mail inválido. Por favor, insira um e-mail válido.');
+      return;
+    }
+
     this.registerService.registerUser(user)
     .toPromise()
-    .then((response: any) => {
-      response.message == 'E-mail sent with success' &&
-        this.toastr.showSuccess(
-          'Verifique seu email para redefinir sua senha.',
-          'success'
-        );
+    .then((response: HttpResponse<Object> | undefined) => {
+      
+      if (response?.status == 200 || response?.status == 201) {
+        this.toastr.showSuccess('Usuario cadastrado com sucesso','success');
+        this.router.navigate(['/login']);
+      }
+
     })
-    .catch((error: any) => {
-      error.status === 404 &&
-        this.toastr.showError(
-          'Email não encontrado.',
-          'error'
-        );
+    .catch((error: HttpErrorResponse) => {
+      
+      if (error.status >= 400 && error.status < 500) {
+        this.toastr.showError('Falha ao cadastrar usuario','error');
+      }
+
+      if (error.status >= 500) {
+        this.toastr.showError('Erro interno no servidor.','error');
+      }
     });
-    if (this.registerService.registerUser(user)) {
-      this.showSuccess('Deu bom! Usuário cadastrado com sucesso!');
-      this.router.navigate(['/login']);
-    }
-    else {
-      this.showError('Deu ruim! Usuário não cadastrado! \n Tente Novamente!');
-    }
-
-
-
-
-  }
+ }
 
   getFormData(): any {
     const user = {
