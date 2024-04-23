@@ -18,7 +18,7 @@ export class NewPasswordService {
   constructor(private http: HttpClient, private toarst: ToastrNotificationService) { }
 
   newPassword(password: string, token: string){
-    return this.http.post(`${this.apiUrl}user/update-password`, { password, token });
+    return this.http.post(`${this.apiUrl}user/update-password`, { password, token }, { observe: 'response' });
   }
 
 }

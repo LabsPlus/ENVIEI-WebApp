@@ -1,4 +1,4 @@
-import { IButton } from "./button.interfaces";
+import { IButton } from "./button/button.interfaces";
 
 export default interface IHeader {
     image: any;
