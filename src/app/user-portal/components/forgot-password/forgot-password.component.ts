@@ -39,7 +39,7 @@ export class ForgotPasswordComponent {
       .forgotPassword(this.loginForm.value.email)
       .toPromise()
       .then((response: HttpResponse<Object> | undefined) => {
-        if (response?.status == 200) {
+        if (response?.status == 200 || response?.status == 201) {
           this.toastrNotificationService.showSuccess(
             'Verifique seu email para redefinir sua senha.',
             'success'
@@ -47,9 +47,15 @@ export class ForgotPasswordComponent {
         }
       })
       .catch((error: any) => {
-        if (error.status == 404 || error.status == 400) {
+        if (error.status >= 400 && error.status < 500) {
           this.toastrNotificationService.showError(
-            `${error.statusText}`,
+            `${error.error.error}`,
+            'error'
+          );
+        }
+        if (error.status >= 500) {
+          this.toastrNotificationService.showError(
+            'Erro interno no servidor.',
             'error'
           );
         }
