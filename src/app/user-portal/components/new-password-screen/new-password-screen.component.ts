@@ -52,7 +52,6 @@ export class NewPasswordScreenComponent {
     }
 
     if (!this.validatePasswords()) {
-      this.showError('As senhas não conferem!');
       return;
     }
 
