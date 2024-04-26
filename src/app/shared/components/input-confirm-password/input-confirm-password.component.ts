@@ -26,6 +26,7 @@ export class InputConfirmPasswordComponent {
 
   @Input() props!: IInput;
 
+  image: any = '';
   value: string = '';
   onChange: any = () => { };
   onTouched: any = () => { };
