@@ -18,6 +18,7 @@ import { InputComponent } from '../../../shared/components/input/input.component
 import { IRegisterData } from '../../../shared/interfaces/register/register-date-interface';
 import { ToastrNotificationService } from '../../../user-portal/services/toastr/toastr.service';
 import { RegisterService } from '../../services/register/register.service';
+import { IdentificationNumberValidatorService } from '../../../shared/services/cpf-validator/cpf-validator.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 
 @Component({
@@ -35,7 +36,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
     InputConfirmPasswordComponent,
 
   ],
-  providers: [RegisterService, ToastrService, ToastrNotificationService],
+  providers: [RegisterService, ToastrService, ToastrNotificationService, IdentificationNumberValidatorService],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -50,7 +51,8 @@ export class RegisterComponent {
   constructor(
     private registerService: RegisterService,
     private router: Router,
-    private toastr: ToastrNotificationService
+    private toastr: ToastrNotificationService,
+    private identificationNumberValidator: IdentificationNumberValidatorService,
   ) {
     this.registerForm = new FormGroup({
       name: new FormControl(''),
@@ -124,6 +126,25 @@ export class RegisterComponent {
     return true;
   }
 
+  validateCpfCnpj(): boolean {
+    const cpfCnpj = this.registerForm.value.cpf_cnpj;
+
+    if(this.identificationNumberValidator.validateCpfOrCnpj(cpfCnpj)) {
+      return true;
+    }
+
+    const isCpf = cpfCnpj.replace(/[^\d]+/g, '').length <= 11;
+
+    if(isCpf) {
+      this.showWarning('CPF inválido!');
+    } else {
+      this.showWarning('CNPJ inválido!');
+    }
+
+    return false;
+  }
+
+
   showSuccess(message: string) {
     this.toastr.showSuccess(message, 'Success', {
       timeOut: 5000,
@@ -176,6 +197,10 @@ export class RegisterComponent {
     }
 
     const user = this.getFormData();
+
+    if (!this.validateCpfCnpj()) {
+      return;
+    }
 
     if (!this.emailHasValidFormat(user.email)) {
 
