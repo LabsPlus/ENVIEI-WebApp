@@ -1,5 +1,5 @@
 <div class="login-container">
-  <form class="form-container" (submit)="submit()" [formGroup]="loginForm">
+  <form class="form-container" [formGroup]="loginForm">
     <img src="assets/images/logo.svg" alt="Logo" class="logo" />
     <h2>
       <span class="title-first-part">Log</span><span class="title-second-part">in</span>
@@ -44,7 +44,7 @@
       </div>
     </div>
     <div class="div-button">
-      <app-button [props]="{ text: 'Entrar', class: 'button' }"></app-button>
+      <app-button  (submit)="submit()" [props]="{ text: 'Entrar', class: 'button' }"></app-button>
     </div>
   </form>
 </div>
