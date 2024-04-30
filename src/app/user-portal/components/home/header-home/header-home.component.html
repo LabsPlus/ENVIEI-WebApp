@@ -1,10 +1,31 @@
-<header> 
-    <div class="container" >
-        <div class="row">
-        <div class="col-md-12">
-            <h1 class="text-center">Welcome to the User Portal</h1>
-        </div>
-        </div>
-    </div>
+<!-- header.component.html -->
+<header>
 
+    <nav class="header">
+        <div class="logo">
+            <img src="../../../../../assets/images/shared/logo.svg" alt="Logo">
+        </div>
+    
+        <div class="second-half">
+            <div class="profile-info">
+                <img [src]="user.profile_photo" alt="Profile Picture">
+                <span>{{ user.name }}</span>
+            </div>
+            <div class="menu-dropdown">
+                <img src="../../../../../assets/images/shared/down-arrow.svg" alt="Dropdown Icon" (click)="toggleMenu()">
+                <div *ngIf="menuOpen" class="dropdown-content">
+                    <div class="item-menu-dropdown">
+                        <img src="../../../../../assets/images/shared/profile-button-image.svg" alt="Profile Picture">
+                        <a (click)="goToProfile()">Perfil</a>
+                    </div>
+                    <div class="item-menu-dropdown">
+                        <img src="../../../../../assets/images/shared/logout.svg" alt="Settings Icon">
+                        <a (click)="logout()">Sair</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+    </nav>
+    
 </header>
