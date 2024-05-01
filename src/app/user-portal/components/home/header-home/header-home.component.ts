@@ -2,6 +2,7 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { HomeService } from '../../../services/home/home.service';
 import IUser from '../../../interfaces/IUser';
+import { ToastrNotificationService } from '../../../services/toastr/toastr.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Router } from '@angular/router';
 
@@ -9,7 +10,7 @@ import { Router } from '@angular/router';
   selector: 'app-header-home',
   standalone: true,
   imports: [CommonModule],
-  providers: [HomeService],
+  providers: [HomeService, ToastrNotificationService],
   templateUrl: './header-home.component.html',
   styleUrl: './header-home.component.css'
 })
@@ -19,7 +20,7 @@ export class HeaderHomeComponent {
   defaultProfilePhoto: string = '../../../../../assets/images/shared/not-registred-user-photo.png';
   menuOpen: boolean = false;
   acessToken: string ;
-  constructor(private homeService: HomeService, private router: Router) { 
+  constructor(private homeService: HomeService, private router: Router, private toastr: ToastrNotificationService) { 
     
     if (typeof localStorage !== 'undefined') {
       this.acessToken = sessionStorage.getItem('accessToken') as string;
@@ -79,7 +80,28 @@ export class HeaderHomeComponent {
 
   logout(): void {
     sessionStorage.removeItem('accessToken');
-    this.router.navigate(['/login']);  
+    this.homeService.logout(this.acessToken).
+    toPromise().
+    then((response: HttpResponse<Object | any> | undefined) => {
+      
+      if (response?.status == 200 || response?.status == 201) {
+        this.toastr.showSuccess('Usuário deslogado com sucesso','success');
+        this.router.navigate(['/login']);
+      }
+
+    }).catch((error: HttpErrorResponse) => {
+      if (error.status >= 400 && error.status < 500) {
+        console.error(error.error.error);
+      }
+
+      if (error.status >= 500) {
+        console.error('Internal server error.');
+      }
+
+      this.toastr.showError('Erro ao deslogar usuário','error');
+    });
+
+    
   }
 
   

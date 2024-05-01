@@ -33,5 +33,9 @@ export class HomeService {
     return this.httpClient.delete(this.registerUrl+'user/delete', { observe: 'response', headers: { 'Authorization': 'Bearer ' + access_token } });
   }
 
+  logout(accessToken: string) {
+    const tokenObject = { accessToken: accessToken };
+    return this.httpClient.post(this.registerUrl+'user/logout',  tokenObject, { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
+  }
 
 }
