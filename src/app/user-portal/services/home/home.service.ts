@@ -12,9 +12,9 @@ export class HomeService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getUserData(access_token: string) {
-    return this.httpClient.get(this.registerUrl+'user/get', { observe: 'response', headers: { 'Authorization': 'Bearer ' + access_token }}, );
-
+  getUserData(accessToken: string) {
+    console.log(accessToken);
+    return this.httpClient.get<IUser>(this.registerUrl+'user/getUserByAccessToken', { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
   }
 
   updateUser(user: IUser, access_token: string) {
