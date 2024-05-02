@@ -5,6 +5,7 @@ import { CommonModule } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { SideBarComponent } from './user-portal/components/home/side-bar/side-bar.component';
+import { Routes, RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-root',
@@ -14,7 +15,7 @@ import { SideBarComponent } from './user-portal/components/home/side-bar/side-ba
     HttpClientModule,
     CommonModule,
     ReactiveFormsModule,
-    SideBarComponent,
+    SideBarComponent,RouterModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

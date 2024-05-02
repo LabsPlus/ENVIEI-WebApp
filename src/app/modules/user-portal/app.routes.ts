@@ -7,6 +7,7 @@ import { HomeComponent } from '../../user-portal/components/home/home.component'
 import { ForgotPasswordComponent } from '../../user-portal/components/forgot-password/forgot-password.component';
 import { routeGuardGuard } from '../../user-portal/services/route-guard/route-guard.guard';
 import { DashboardComponent } from '../../user-portal/components/dashboard/dashboard.component';
+import { authGuard } from '../../shared/services/guard/auth/auth.guard';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },

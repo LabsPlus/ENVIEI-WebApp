@@ -141,8 +141,7 @@ export class LoginComponent {
       })
       .toPromise()
       .then((response) => {
-        console.log(response);
-
+        
         this.showSuccess('Login realizado com sucesso!');
         this.router.navigate(['/home']);
       })
