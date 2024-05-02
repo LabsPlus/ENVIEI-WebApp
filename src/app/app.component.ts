@@ -4,7 +4,6 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SideBarComponent } from './user-portal/components/home/side-bar/side-bar.component';
 import { Routes, RouterModule } from '@angular/router';
 
 @Component({
@@ -15,7 +14,7 @@ import { Routes, RouterModule } from '@angular/router';
     HttpClientModule,
     CommonModule,
     ReactiveFormsModule,
-    SideBarComponent,RouterModule
+    RouterModule
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

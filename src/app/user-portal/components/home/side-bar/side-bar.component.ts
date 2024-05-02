@@ -31,7 +31,7 @@ export class SideBarComponent {
     this.drawer = {} as MatDrawer;
   }
 
-  private hiddenRoutes = ['/', '/login', '/register'];
+  private hiddenRoutes = ['', '/login', '/register'];
 
   public isSidebarVisibleOnOtherComponents() {
     return !this.hiddenRoutes.includes(this.router.url);

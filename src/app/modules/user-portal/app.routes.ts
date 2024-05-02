@@ -5,7 +5,6 @@ import { LandingPageComponent } from '../../user-portal/components/landing-page/
 import { NewPasswordScreenComponent } from '../../user-portal/components/new-password-screen/new-password-screen.component';
 import { HomeComponent } from '../../user-portal/components/home/home.component';
 import { ForgotPasswordComponent } from '../../user-portal/components/forgot-password/forgot-password.component';
-import { routeGuardGuard } from '../../user-portal/services/route-guard/route-guard.guard';
 import { DashboardComponent } from '../../user-portal/components/dashboard/dashboard.component';
 import { authGuard } from '../../shared/services/guard/auth/auth.guard';
 
@@ -14,7 +13,8 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: '', component: LandingPageComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'home', component: HomeComponent },
+  { path: 'home', component: HomeComponent, canActivate: [authGuard]},
   { path: 'new-password', component: NewPasswordScreenComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
+  
 ];
