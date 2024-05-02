@@ -17,18 +17,18 @@ export class LoginService {
       .post<IToken>(`${this.apiUrl}user/login`, { email, password })
       .pipe(
         tap((value) => {
-          sessionStorage.setItem('token', JSON.stringify(value.token));
+          sessionStorage.setItem('accessToken', JSON.stringify(value.token));
         })
       );
   }
 
   // Método para obtener el token almacenado
   getToken(): string | null {
-    return sessionStorage.getItem('token');
+    return sessionStorage.getItem('accessToken');
   }
 
   // Método para limpiar el token almacenado
   logout(): void {
-    sessionStorage.removeItem('token');
+    sessionStorage.removeItem('accessToken');
   }
 }
