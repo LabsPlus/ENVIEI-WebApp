@@ -4,7 +4,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
-import { SideBarComponent } from './user-portal/components/landing-page/side-bar/side-bar.component';
+import { SideBarComponent } from './user-portal/components/home/side-bar/side-bar.component';
 
 @Component({
   selector: 'app-root',
