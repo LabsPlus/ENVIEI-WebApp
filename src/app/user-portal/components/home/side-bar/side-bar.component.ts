@@ -6,6 +6,7 @@ import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
+import { SidebarService } from '../../../services/sidebar/sidebar.service';
 
 @Component({
   selector: 'app-side-bar',
@@ -27,7 +28,11 @@ export class SideBarComponent {
   @ViewChild('drawer') drawer!: MatDrawer;
   isSidebarOpen: boolean = false;
 
-  constructor(public router: Router, private route: ActivatedRoute) {
+  constructor(
+    public router: Router,
+    private route: ActivatedRoute,
+    private sidebarService: SidebarService
+  ) {
     this.drawer = {} as MatDrawer;
   }
 
@@ -40,5 +45,6 @@ export class SideBarComponent {
   public toggleSidebar() {
     this.drawer.toggle();
     this.isSidebarOpen = !this.isSidebarOpen;
+    this.sidebarService.toggleSidebar();
   }
 }
