@@ -1,18 +1,19 @@
 <!-- header.component.html -->
 <header>
 
-    <nav class="header">
+    <nav [ngClass]="{'navbar-expanded': isNavOpen}">
         <div class="logo">
             <img src="../../../../../assets/images/shared/logo.svg" alt="Logo">
         </div>
-    
+
         <div class="second-half">
             <div class="profile-info">
                 <img [src]="user.profile_photo" alt="Profile Picture">
                 <span>{{ user.name }}</span>
             </div>
             <div class="menu-dropdown">
-                <img src="../../../../../assets/images/shared/down-arrow.svg" alt="Dropdown Icon" (click)="toggleMenu()">
+                <img src="../../../../../assets/images/shared/down-arrow.svg" alt="Dropdown Icon"
+                    (click)="toggleMenu()">
                 <div *ngIf="menuOpen" class="dropdown-content">
                     <div class="item-menu-dropdown">
                         <img src="../../../../../assets/images/shared/profile-button-image.svg" alt="Profile Picture">
@@ -27,5 +28,5 @@
         </div>
 
     </nav>
-    
+
 </header>

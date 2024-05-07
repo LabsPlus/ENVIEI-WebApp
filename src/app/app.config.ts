@@ -10,6 +10,7 @@ import { provideEnvironmentNgxMask } from 'ngx-mask';
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { ToastrModule } from 'ngx-toastr';
 import { CommonModule } from '@angular/common';
+import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -22,6 +23,6 @@ export const appConfig: ApplicationConfig = {
     CommonModule,
     BrowserAnimationsModule,
     provideAnimations(), // required animations providers
-    provideToastr(),
+    provideToastr(), provideAnimationsAsync('noop'),
   ],
 };
