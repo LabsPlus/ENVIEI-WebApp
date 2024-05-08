@@ -20,6 +20,7 @@ import { ToastrNotificationService } from '../../../user-portal/services/toastr/
 import { RegisterService } from '../../services/register/register.service';
 import { IdentificationNumberValidatorService } from '../../../shared/services/cpf-validator/cpf-validator.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { NameValidatorService } from '../../../shared/services/name-validator/name-validator.service';
 
 @Component({
   selector: 'app-register',
@@ -36,7 +37,7 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
     InputConfirmPasswordComponent,
 
   ],
-  providers: [RegisterService, ToastrService, ToastrNotificationService, IdentificationNumberValidatorService],
+  providers: [RegisterService, ToastrService, ToastrNotificationService, IdentificationNumberValidatorService, NameValidatorService],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -53,6 +54,7 @@ export class RegisterComponent {
     private router: Router,
     private toastr: ToastrNotificationService,
     private identificationNumberValidator: IdentificationNumberValidatorService,
+    private nameValidator: NameValidatorService
   ) {
     this.registerForm = new FormGroup({
       name: new FormControl(''),
@@ -144,6 +146,9 @@ export class RegisterComponent {
     return false;
   }
 
+  isNameValid(): boolean {
+    return this.nameValidator.validateName(this.registerForm.value.name);
+  }
 
   showSuccess(message: string) {
     this.toastr.showSuccess(message, 'Success', {
@@ -208,6 +213,11 @@ export class RegisterComponent {
       return;
     }
 
+    if(!this.isNameValid()) {
+      this.showWarning('Nome inválido. Por favor, insira um nome válido.');
+      return;
+    }
+    
     this.registerService.registerUser(user)
     .toPromise()
     .then((response: HttpResponse<Object | any> | undefined) => {
