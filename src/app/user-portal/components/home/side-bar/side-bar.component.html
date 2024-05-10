@@ -7,7 +7,7 @@
         </button>
     </div>
     <div class="icon-container">
-        <a routerLink="/account" mat-list-item routerLinkActive="active">
+        <a routerLink="/profile" mat-list-item routerLinkActive="active">
             <img *ngIf="!isSidebarOpen" class="icon" src="/assets/shared/Account.svg" />
         </a>
         <a routerLink="/keys" mat-list-item routerLinkActive="active">
@@ -20,7 +20,7 @@
     <mat-drawer #drawer class="sidenav-content" mode="side" [opened]="isSidebarOpen">
         <mat-nav-list class="list-content">
             <!-- links with sidebar open -->
-            <a routerLink="/account" class="link-content" mat-list-item routerLinkActive="active">
+            <a routerLink="/profile" class="link-content" mat-list-item routerLinkActive="active">
                 <img class="link" *ngIf="isSidebarOpen" src="/assets/shared/Account.svg" />
                 <span class="link" ngClass="span" *ngIf="isSidebarOpen">Perfil</span>
             </a>

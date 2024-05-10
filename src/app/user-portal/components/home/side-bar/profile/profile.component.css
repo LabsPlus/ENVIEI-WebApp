@@ -1,0 +1,27 @@
+@font-face {
+  font-family: "Inter-SemiBold";
+  src: url("../../../../../../assets/fonts/Inter-SemiBold.ttf")
+    format("truetype");
+}
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  padding: 4% 7%;
+  color: #000;
+  background: #f1f1f1;
+  height: 200vh;
+  gap: 6em;
+}
+
+.title {
+  color: #000;
+  font-size: 24px;
+  font-style: normal;
+  font-weight: 600;
+  font-family: "Inter-SemiBold";
+  line-height: 20px;
+  width: 386px;
+  height: 35px;
+  flex-shrink: 0;
+}
