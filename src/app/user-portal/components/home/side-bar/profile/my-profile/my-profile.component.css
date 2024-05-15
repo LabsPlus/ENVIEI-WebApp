@@ -1,0 +1,153 @@
+@font-face {
+  font-family: "Inter-Bold";
+  src: url("../../../../../../../assets/fonts/Inter-Bold.ttf")
+    format("truetype");
+}
+
+.container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  gap: 2em;
+  background: #fff;
+  padding: 2% 5%;
+}
+
+.container h2 {
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 900;
+  font-family: "Inter-Bold";
+  line-height: 20px; /* 125% */
+  padding-bottom: 1.5em;
+}
+
+.container span {
+  color: #000;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: 20px;
+}
+
+.container-photo {
+  background: #d9d9d9;
+  width: 84px;
+  height: 88px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.info-basic {
+  display: flex;
+  gap: 2em;
+  width: 100%;
+  flex-direction: column;
+  border-bottom: 1.5px solid #c9c7c7;
+  padding-bottom: 1.5em;
+}
+
+.section-photo {
+  display: flex;
+  gap: 2em;
+  align-items: center;
+  padding-left: 2em;
+}
+
+.section-photo article {
+  display: flex;
+  flex-direction: column;
+}
+
+.section-name {
+  display: flex;
+  width: 100%;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.container-input {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.input-name {
+  width: 300px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 1px solid #2c3f47;
+  padding-left: 10px;
+}
+
+.input-phone {
+  width: 200px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 5px;
+  border: 1px solid #2c3f47;
+  padding-left: 10px;
+}
+
+.button {
+  display: flex;
+  height: 40px;
+  padding: 12px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  border-radius: 5px;
+  border: 1px solid #2c3f47;
+  color: #2c3f47;
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  margin-top: 25px;
+}
+
+.container-login {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+
+.container-email {
+  display: flex;
+  gap: 2em;
+  flex-direction: column;
+  padding-bottom: 1.5em;
+}
+
+.input {
+  width: 250px;
+  height: 40px;
+  flex-shrink: 0;
+  border-radius: 5px 0 0 5px;
+  border: 1px solid #2c3f47;
+  border-right: none;
+  padding-left: 5px;
+}
+
+.container-login button {
+  display: flex;
+  height: 40px;
+  padding: 12px 24px;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  font-weight: 600;
+  border-radius: 0 5px 5px 0;
+  border: 1px solid #2c3f47;
+}
+
+.input-content {
+  display: flex;
+}
+
+.checkbox {
+  margin-right: 12px;
+}
