@@ -154,4 +154,8 @@ export class LoginComponent {
           : null;
       });
   }
+
+  stayConnected(){
+    //your code
+  }
 }
