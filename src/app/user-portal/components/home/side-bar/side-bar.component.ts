@@ -1,12 +1,13 @@
 import { CommonModule } from '@angular/common';
-import { Component, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { RouterLink, RouterLinkActive } from '@angular/router';
-import { ActivatedRoute, Router } from '@angular/router';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SidebarService } from '../../../services/sidebar/sidebar.service';
+import { Location } from '@angular/common';
+import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-side-bar',
@@ -23,24 +24,32 @@ import { SidebarService } from '../../../services/sidebar/sidebar.service';
   templateUrl: './side-bar.component.html',
   styleUrl: './side-bar.component.css',
 })
-export class SideBarComponent {
+
+export class SideBarComponent implements OnInit{
   showFiller = false;
   @ViewChild('drawer') drawer!: MatDrawer;
   isSidebarOpen: boolean = false;
+  isVisible: boolean = true;
+  hiddenRoutes = ['/login', '/register', '/forgot-password', '/new-password', ''];
 
+  
   constructor(
-    public router: Router,
-    private route: ActivatedRoute,
-    private sidebarService: SidebarService
+    private sidebarService: SidebarService,
+    private location: Location,
+    private router: Router,
   ) {
     this.drawer = {} as MatDrawer;
+    this.isVisible = false;
   }
-
-  private hiddenRoutes = ['', '/login', '/register'];
-
-  public isSidebarVisibleOnOtherComponents() {
-    return !this.hiddenRoutes.includes(this.router.url);
-  }
+  
+  ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const currentPath = this.location.path();
+        this.isVisible = !this.hiddenRoutes.includes(currentPath);
+      }
+    });
+  }  
 
   public toggleSidebar() {
     this.drawer.toggle();
@@ -48,3 +57,4 @@ export class SideBarComponent {
     this.sidebarService.toggleSidebar();
   }
 }
+
