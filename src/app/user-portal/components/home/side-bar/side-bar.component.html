@@ -1,4 +1,4 @@
-<mat-drawer-container class="sidebar-container">
+<mat-drawer-container class="sidebar-container" *ngIf="isVisible">
     <!-- links with sidebar closed -->
     <div class="container-button">
         <button type="button" (click)="toggleSidebar()">
@@ -7,7 +7,7 @@
         </button>
     </div>
     <div class="icon-container">
-        <a routerLink="/profile" mat-list-item routerLinkActive="active">
+        <a [routerLink]="['home/profile']" mat-list-item routerLinkActive="active">
             <img *ngIf="!isSidebarOpen" class="icon" src="/assets/shared/Account.svg" />
         </a>
         <a routerLink="/keys" mat-list-item routerLinkActive="active">
@@ -20,7 +20,7 @@
     <mat-drawer #drawer class="sidenav-content" mode="side" [opened]="isSidebarOpen">
         <mat-nav-list class="list-content">
             <!-- links with sidebar open -->
-            <a routerLink="/profile" class="link-content" mat-list-item routerLinkActive="active">
+            <a [routerLink]="['home/profile']" class="link-content" mat-list-item routerLinkActive="active">
                 <img class="link" *ngIf="isSidebarOpen" src="/assets/shared/Account.svg" />
                 <span class="link" ngClass="span" *ngIf="isSidebarOpen">Perfil</span>
             </a>

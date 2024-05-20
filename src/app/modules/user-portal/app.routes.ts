@@ -14,8 +14,11 @@ export const routes: Routes = [
   { path: 'register', component: RegisterComponent },
   { path: '', component: LandingPageComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'home', component: HomeComponent, canActivate: [authGuard] },
+  { path: 'home', canActivate: [authGuard], children: [
+    { path: '', component: HomeComponent },
+    { path: 'profile', component: ProfileComponent },
+  ]
+  },
   { path: 'new-password', component: NewPasswordScreenComponent },
-  { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard],},
-  { path: 'profile', component: ProfileComponent },
+ 
 ];

@@ -1,7 +1,7 @@
 <!-- header.component.html -->
 <header>
 
-    <nav [ngClass]="{'navbar-expanded': isNavOpen}">
+    <nav [ngClass]="{'navbar-expanded': isNavOpen}" *ngIf="isVisible">
         <div class="logo">
             <img src="../../../../../assets/images/shared/logo.svg" alt="Logo">
         </div>

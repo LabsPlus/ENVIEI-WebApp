@@ -1,12 +1,12 @@
-import { CommonModule } from '@angular/common';
+import { CommonModule, Location } from '@angular/common';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Component, OnDestroy } from '@angular/core';
-import { Router } from '@angular/router';
+import { Component, OnDestroy, OnInit } from '@angular/core';
+import { NavigationEnd, Router } from '@angular/router';
+import { Subscription } from 'rxjs';
 import IUser from '../../../interfaces/IUser';
 import { HomeService } from '../../../services/home/home.service';
-import { ToastrNotificationService } from '../../../services/toastr/toastr.service';
-import { Subscription } from 'rxjs';
 import { SidebarService } from '../../../services/sidebar/sidebar.service';
+import { ToastrNotificationService } from '../../../services/toastr/toastr.service';
 
 @Component({
   selector: 'app-header-home',
@@ -16,7 +16,7 @@ import { SidebarService } from '../../../services/sidebar/sidebar.service';
   templateUrl: './header-home.component.html',
   styleUrl: './header-home.component.css',
 })
-export class HeaderHomeComponent implements OnDestroy {
+export class HeaderHomeComponent implements OnDestroy, OnInit {
   user: IUser = {};
   defaultProfilePhoto: string =
     '../../../../../assets/images/shared/not-registred-user-photo.png';
@@ -24,13 +24,18 @@ export class HeaderHomeComponent implements OnDestroy {
   acessToken: string;
   isNavOpen = false;
   sidebarOpenSubscription: Subscription;
+  isVisible: boolean = true;
+  hiddenRoutes = ['/login', '/register', '/forgot-password', '/new-password', ''];
+
 
   constructor(
     private sidebarService: SidebarService,
     private homeService: HomeService,
     private router: Router,
-    private toastr: ToastrNotificationService
+    private toastr: ToastrNotificationService,
+    private location: Location,
   ) {
+    this.isVisible = false;
     this.sidebarOpenSubscription = this.sidebarService.sidebarOpen$.subscribe(
       (isOpen) => {
         this.isNavOpen = isOpen;
@@ -46,6 +51,15 @@ export class HeaderHomeComponent implements OnDestroy {
     this.getUserData();
     this.getUserData();
   }
+
+  ngOnInit() {
+    this.router.events.subscribe(event => {
+      if (event instanceof NavigationEnd) {
+        const currentPath = this.location.path();
+        this.isVisible = !this.hiddenRoutes.includes(currentPath);
+      }
+    });
+  } 
   toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
   }

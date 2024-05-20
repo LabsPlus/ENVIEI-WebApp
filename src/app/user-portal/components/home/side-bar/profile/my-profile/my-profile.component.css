@@ -1,7 +1,16 @@
 @font-face {
   font-family: "Inter-Bold";
-  src: url("../../../../../../../assets/fonts/Inter-Bold.ttf")
-    format("truetype");
+  src: url("../../../../../../../assets/fonts/Inter-Bold.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Inter-Regular";
+  src: url("../../../../../../../assets/fonts/Inter-Regular.ttf") format("truetype");
+}
+
+@font-face {
+  font-family: "Inter-Medium";
+  src: url("../../../../../../../assets/fonts/Inter-Medium.ttf") format("truetype");
 }
 
 .container {
@@ -12,6 +21,7 @@
   gap: 2em;
   background: #fff;
   padding: 2% 5%;
+  font-family: 'Inter-Regular';
 }
 
 .container h2 {
@@ -20,7 +30,8 @@
   font-style: normal;
   font-weight: 900;
   font-family: "Inter-Bold";
-  line-height: 20px; /* 125% */
+  line-height: 20px;
+  /* 125% */
   padding-bottom: 1.5em;
 }
 
@@ -32,6 +43,13 @@
   line-height: 20px;
 }
 
+.btn-upload {
+
+  font-family: 'Inter-Medium';
+  font-size: 20px;
+  cursor: pointer;
+}
+
 .container-photo {
   background: #d9d9d9;
   width: 84px;
@@ -41,6 +59,9 @@
   justify-content: center;
 }
 
+.container-photo  img {
+  max-width: 100px;
+}
 .info-basic {
   display: flex;
   gap: 2em;
@@ -61,6 +82,7 @@
   display: flex;
   flex-direction: column;
 }
+
 
 .section-name {
   display: flex;

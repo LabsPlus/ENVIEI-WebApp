@@ -2,23 +2,27 @@
     <div>
         <h2>Informações básicas</h2>
         <div class="info-basic">
-            <section class="section-photo">
-                <div class="container-photo">
-                    <img src="/assets/images/shared/profile-photo.svg" alt="photo-profile">
-                </div>
-                <article>
-                    <span>Você pode enviar sua foto a partir do seu dispositivo</span>
-                    <span>Upload photo</span>
-                </article>
-            </section>
+          <section class="section-photo">
+            <div class="container-photo">
+                <img *ngIf="userProfile.profile_photo; else defaultPhoto" [src]="userProfile.profile_photo" alt="photo-profile">
+                <ng-template #defaultPhoto>
+                    <img src="../../../../../../../assets/images/shared/profile-photo.svg" alt="photo-profile">
+                </ng-template>
+            </div>
+            <article>
+                <span>Você pode enviar sua foto a partir do seu dispositivo</span>
+                <span class="btn-upload">Upload photo</span>
+            </article>
+        </section>
+
             <section class="section-name">
                 <div class="container-input">
                     <span>Nome Completo</span>
-                    <input class="input-name" type="text" value="Amanda Oliveira">
+                    <input class="input-name" type="text" value={{userProfile.name}}>
                 </div>
                 <div class="container-input">
                     <span>Telefone</span>
-                    <input class="input-phone" type="text" value="77 981515-5445">
+                    <input class="input-phone" type="text" value={{userProfile.phone_number}}>
                 </div>
                 <button class="button">Mudar Dados</button>
             </section>
@@ -31,7 +35,7 @@
                 <div class="container-input">
                     <span>Email</span>
                     <div class="input-content">
-                        <input class="input" type="text" value="AmandaOliveira@gmail.com">
+                        <input class="input" type="text" value={{userProfile.email}}>
                         <button>Mudar Email</button>
                     </div>
                 </div>
@@ -50,7 +54,7 @@
             <div class="container-input">
                 <span>Email de Recuperação </span>
                 <div class="input-content">
-                    <input class="input" type="text" value="AmandaOliveira@gmail.com">
+                    <input class="input" type="text" value={{userProfile.email_recovery}}>
                     <button>Mudar Email</button>
                 </div>
             </div>
