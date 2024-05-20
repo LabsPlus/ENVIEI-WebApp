@@ -3,6 +3,10 @@
   src: url("../../../../../../../assets/fonts/Inter-Bold.ttf")
     format("truetype");
 }
+@font-face {
+  font-family: "Inter-Regular";
+  src: url("../../../../../../../assets/fonts/Inter-Regular.ttf") format("truetype");
+}
 
 .container {
   display: flex;
@@ -12,6 +16,7 @@
   gap: 2em;
   background: #fff;
   padding: 2% 5%;
+  font-family: 'Inter-Regular';
 }
 
 .container h2 {
