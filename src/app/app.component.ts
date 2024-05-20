@@ -6,6 +6,7 @@ import { provideHttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
 import { SideBarComponent } from './user-portal/components/home/side-bar/side-bar.component';
+import { HeaderHomeComponent } from './user-portal/components/home/header-home/header-home.component';
 
 @Component({
   selector: 'app-root',
@@ -15,7 +16,7 @@ import { SideBarComponent } from './user-portal/components/home/side-bar/side-ba
     HttpClientModule,
     CommonModule,
     ReactiveFormsModule,
-    RouterModule,SideBarComponent
+    RouterModule,SideBarComponent, HeaderHomeComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',
@@ -23,9 +24,6 @@ import { SideBarComponent } from './user-portal/components/home/side-bar/side-ba
 export class AppComponent {
   title = 'enviei';
 
+  constructor() {}
 
-  constructor() {
-   
-  }
-  
 }
