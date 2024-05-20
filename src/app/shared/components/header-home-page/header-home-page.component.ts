@@ -2,16 +2,18 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { ButtonStartHomePageComponent } from '../button-start-home-page/button-start-home-page.component';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { StayConnectedService } from '../../../user-portal/services/stay-connected/stay-connected.service';
 @Component({
   selector: 'app-header-home-page',
   standalone: true,
   imports: [ButtonStartHomePageComponent,CommonModule, RouterLink, RouterOutlet],
   templateUrl: './header-home-page.component.html',
+  providers: [StayConnectedService],
   styleUrl: './header-home-page.component.css'
 })
 export class HeaderHomePageComponent {
 
-  constructor(private route: Router) {}
+  constructor(private route: Router, private stayConnectedService: StayConnectedService) {}
 
   @Output('submit') onSubmit = new EventEmitter();
   @Output('navigate') onNavigate = new EventEmitter();
@@ -41,5 +43,14 @@ export class HeaderHomePageComponent {
 
   }
 
+  accessLogin() {
+
+    if (this.stayConnectedService.hasAlreadyConnected()) {
+      this.route.navigate(['/home']);
+      return;
+    }
+
+    this.route.navigate(['/login']);
+  }
   
 }

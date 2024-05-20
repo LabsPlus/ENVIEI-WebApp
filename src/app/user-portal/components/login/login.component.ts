@@ -13,6 +13,7 @@ import { InputComponent } from '../../../shared/components/input/input.component
 import { ILoginData } from '../../../shared/interfaces/login-data/login-data.interfaces';
 import { LoginService } from '../../services/login/login.service';
 import { ToastrNotificationService } from '../../services/toastr/toastr.service';
+import { StayConnectedService } from '../../services/stay-connected/stay-connected.service';
 
 @Component({
   selector: 'app-login',
@@ -25,22 +26,27 @@ import { ToastrNotificationService } from '../../services/toastr/toastr.service'
     ReactiveFormsModule,
     RouterLink,
   ],
-  providers: [LoginService, ToastrNotificationService],
+  providers: [LoginService, ToastrNotificationService, StayConnectedService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
 export class LoginComponent {
+
   loginForm!: FormGroup<ILoginData>;
+  stayConnected: boolean = false;
 
   constructor(
     private loginService: LoginService,
     private router: Router,
-    private toastr: ToastrNotificationService
+    private toastr: ToastrNotificationService,
+    private stayConnectedService: StayConnectedService,
+
   ) {
     this.loginForm = new FormGroup({
       email: new FormControl('', [Validators.required, Validators.email]),
       password: new FormControl('', [Validators.required]),
     });
+
   }
 
   submit() {
@@ -70,6 +76,11 @@ export class LoginComponent {
       return null;
     }
     return true;
+  }
+
+
+  stayConnectedSelected() {
+    this.stayConnected = true;
   }
 
   isPasswordFormatValid(): boolean {
@@ -134,14 +145,15 @@ export class LoginComponent {
   }
 
   loginUser() {
+
     this.loginService
       .login({
         email: this.loginForm.value.email,
         password: this.loginForm.value.password,
-      })
+      }, this.stayConnected)
       .toPromise()
       .then((response) => {
-        
+
         this.showSuccess('Login realizado com sucesso!');
         this.router.navigate(['/home']);
       })
@@ -155,7 +167,4 @@ export class LoginComponent {
       });
   }
 
-  stayConnected(){
-    //your code
-  }
 }

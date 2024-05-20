@@ -35,7 +35,8 @@
         <a routerLink="/forgot-password">Esqueceu sua senha?</a>
       </div>
       <div class="checkbox-container">
-        <app-input [props]="{
+        <app-input (change)="stayConnectedSelected()"
+        [props]="{
           name: 'remember',
           class: 'checkbox',
           type: 'checkbox',

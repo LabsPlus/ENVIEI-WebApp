@@ -12,7 +12,7 @@
 
             <div class="third-column">
                 <a routerLink="/contact" href="/Contact" routerLinkActive="active">Contate-nos</a>
-                <a routerLink="/login" routerLinkActive="active">Logar</a>
+                <a class="singInLink" (click)="accessLogin()" routerLinkActive="active">Logar</a>
                 <app-button-start-home-page
                     routerLink="/register"
                     [props]="{ text: 'Inicie Gratis', disabled: false }"

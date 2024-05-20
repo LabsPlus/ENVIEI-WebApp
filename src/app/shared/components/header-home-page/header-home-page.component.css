@@ -47,3 +47,7 @@
     color: #2C3F47;
     padding: 2% 0 0 0;
 }
+
+.singInLink {
+    cursor: pointer;
+}
