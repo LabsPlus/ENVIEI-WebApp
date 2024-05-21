@@ -2,18 +2,19 @@
     <div>
         <h2>Informações básicas</h2>
         <div class="info-basic">
-          <section class="section-photo">
-            <div class="container-photo">
-                <img *ngIf="userProfile.profile_photo; else defaultPhoto" [src]="userProfile.profile_photo" alt="photo-profile">
-                <ng-template #defaultPhoto>
-                    <img src="../../../../../../../assets/images/shared/profile-photo.svg" alt="photo-profile">
-                </ng-template>
-            </div>
-            <article>
-                <span>Você pode enviar sua foto a partir do seu dispositivo</span>
-                <span class="btn-upload">Upload photo</span>
-            </article>
-        </section>
+            <section class="section-photo">
+                <div class="container-photo">
+                    <img *ngIf="userProfile.profile_photo; else defaultPhoto" [src]="userProfile.profile_photo"
+                        alt="photo-profile">
+                    <ng-template #defaultPhoto>
+                        <img src="../../../../../../../assets/images/shared/profile-photo.svg" alt="photo-profile">
+                    </ng-template>
+                </div>
+                <article>
+                    <span>Você pode enviar sua foto a partir do seu dispositivo</span>
+                    <button class="btn-upload">Upload photo</button>
+                </article>
+            </section>
 
             <section class="section-name">
                 <div class="container-input">
@@ -47,7 +48,7 @@
                     </div>
                 </div>
                 <div>
-                    <input type="checkbox" class="checkbox">
+                    <input type="checkbox" class="checkbox-own">
                     <span>Solicitar mudança de senha com ao completar 60 dias?</span>
                 </div>
             </div>
@@ -63,9 +64,8 @@
     <div>
         <h2>Autenticação de dois fatores</h2>
         <div>
-            <mat-slide-toggle [color]="color" class="checkbox" ngModel name="acceptTerms" required>Habilite a
-                autenticação de dois
-                fatores</mat-slide-toggle>
+            <mat-slide-toggle [color]="color" class="checkbox" ngModel name="acceptTerms" required></mat-slide-toggle>
+            <span>Habilite a autenticação de dois fatores</span>
         </div>
     </div>
 </div>

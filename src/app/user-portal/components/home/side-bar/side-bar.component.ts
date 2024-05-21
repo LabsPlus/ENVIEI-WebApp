@@ -1,13 +1,12 @@
 import { CommonModule } from '@angular/common';
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink, RouterLinkActive,Router, NavigationEnd } from '@angular/router';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { SidebarService } from '../../../services/sidebar/sidebar.service';
 import { Location } from '@angular/common';
-import { Router, NavigationEnd } from '@angular/router';
 
 @Component({
   selector: 'app-side-bar',

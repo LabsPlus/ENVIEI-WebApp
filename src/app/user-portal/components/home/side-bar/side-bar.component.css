@@ -10,13 +10,19 @@
   padding-top: 10px;
 }
 
+.icon-container a{
+  cursor: pointer;
+}
+
 .container-button {
   display: flex;
   justify-content: center;
   align-items: center;
+  margin-right: 5px;
   padding-top: 10px;
   padding-bottom: 4em;
 }
+
 
 .sidebar-container button {
   background-color: transparent;
@@ -25,6 +31,10 @@
   justify-content: center;
   align-items: center;
   cursor: pointer;
+}
+
+.btn-open-back{
+ 
 }
 
 .sidenav-content {
@@ -58,4 +68,14 @@
 
 .link {
   margin-bottom: -7px !important;
+}
+
+.active {
+  border-radius: 0px 50px 50px 0px;
+  background: #316C87;
+}
+.active-open {
+  border-radius: 0px 50px 50px 0px;
+  background: #316C87;
+  width: 170px !important;
 }
