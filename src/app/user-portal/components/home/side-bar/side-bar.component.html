@@ -1,12 +1,12 @@
 <mat-drawer-container class="sidebar-container" *ngIf="isVisible">
     <!-- links with sidebar closed -->
     <div class="container-button">
-        <button type="button" (click)="toggleSidebar()">
-            <img class="img" *ngIf="isSidebarOpen" src="/assets/shared/BackTo.svg" />
+        <button class="btn-open-back" type="button" (click)="toggleSidebar()">
+            <img class="img img-open" *ngIf="isSidebarOpen" src="/assets/shared/BackTo.svg" />
             <img class="img" *ngIf="!isSidebarOpen" src="/assets/shared/Menu.svg" />
         </button>
     </div>
-    <div class="icon-container">
+    <div *ngIf="!isSidebarOpen" class="icon-container">
         <a [routerLink]="['home/profile']" mat-list-item routerLinkActive="active">
             <img *ngIf="!isSidebarOpen" class="icon" src="/assets/shared/Account.svg" />
         </a>
@@ -17,18 +17,18 @@
             <img *ngIf="!isSidebarOpen" class="icon" src="/assets/shared/Severity.svg" />
         </a>
     </div>
+    <!-- links with sidebar open -->
     <mat-drawer #drawer class="sidenav-content" mode="side" [opened]="isSidebarOpen">
         <mat-nav-list class="list-content">
-            <!-- links with sidebar open -->
-            <a [routerLink]="['home/profile']" class="link-content" mat-list-item routerLinkActive="active">
+            <a [routerLink]="['home/profile']" class="link-content" mat-list-item routerLinkActive="active-open">
                 <img class="link" *ngIf="isSidebarOpen" src="/assets/shared/Account.svg" />
                 <span class="link" ngClass="span" *ngIf="isSidebarOpen">Perfil</span>
             </a>
-            <a routerLink="/keys" class="link-content" mat-list-item routerLinkActive="active">
+            <a routerLink="/keys" class="link-content" mat-list-item routerLinkActive="active-open">
                 <img class="link" *ngIf="isSidebarOpen" src="/assets/shared/Key.svg" />
                 <span class="link" ngClass="span" *ngIf="isSidebarOpen">Chaves</span>
             </a>
-            <a routerLink="/dashboard" class="link-content" mat-list-item routerLinkActive="active">
+            <a routerLink="/dashboard" class="link-content" mat-list-item routerLinkActive="active-open">
                 <img class="link" *ngIf="isSidebarOpen" src="/assets/shared/Severity.svg" />
                 <span class="link" ngClass="span" *ngIf="isSidebarOpen">Dashboard</span>
             </a>
