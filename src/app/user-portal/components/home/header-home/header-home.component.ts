@@ -106,6 +106,7 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
 
   logout(): void {
     sessionStorage.removeItem('accessToken');
+    localStorage.removeItem('stayConnectedToken');
     this.homeService
       .logout(this.acessToken)
       .toPromise()
