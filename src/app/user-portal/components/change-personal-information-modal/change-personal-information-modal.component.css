@@ -1,0 +1,15 @@
+.form-control {
+    width: 500px;
+    height: 40px;
+}
+
+.form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.mat-typography {
+    width: 560px;
+    height: 450px;
+}
