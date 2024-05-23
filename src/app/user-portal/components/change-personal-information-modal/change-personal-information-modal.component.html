@@ -1,14 +1,30 @@
 <mat-dialog-content class="mat-typography">
-    <form action="">
+    
+    <button class="close-button" mat-dialog-close>
+        <img src="../../../../assets/images/shared/close.svg" alt="close-button">
+    </button>
+    
         <div class="form-group">
-            <label for="Mudar Dados">Mudar dados</label>
-            <input type="text" class="form-control" id="firstName" placeholder="Nome" required>
-            <input type="text" class="form-control" placeholder="Telefone">
-            <input type="password" class="form-control" placeholder="Senha">
+            <h2>Mudar Dados</h2>
+
+            <div class="input-container">
+                <label for="Digitar Nome">Digitar o nome</label>
+                <input type="text" class="form-control" id="firstName" placeholder="Nome" required>
+            </div>
+
+            <div class="input-container">
+                <label for="Telefone">Telefone</label>
+                <input type="text" class="form-control" placeholder="Telefone">
+            </div>
+            <div class="input-container">
+                <label for="Digite Sua Senha">Digite sua senha</label>
+                <input type="password" class="form-control" placeholder="Senha">
+            </div>
+
+            <div class="button-container">
+                <button class="save-button" >Mudar</button>
+                <button class="cancel-button" mat-dialog-close>Cancelar</button>
+            </div>
+
         </div>
-        <div class="form-group">
-            <label for="lastName">Last Name</label>
-            <input type="text" class="form-control" id="lastName" placeholder="Last Name" required>
-        </div>
-    </form>
 </mat-dialog-content>
