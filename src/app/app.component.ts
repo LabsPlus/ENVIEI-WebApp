@@ -5,8 +5,8 @@ import { CommonModule } from '@angular/common';
 import { provideHttpClient } from '@angular/common/http';
 import { ReactiveFormsModule } from '@angular/forms';
 import { Routes, RouterModule } from '@angular/router';
-import { SideBarComponent } from './user-portal/components/home/side-bar/side-bar.component';
-import { HeaderHomeComponent } from './user-portal/components/home/header-home/header-home.component';
+import { HeaderHomeComponent } from './user-portal/components/header-home/header-home.component';
+import { SideBarComponent } from './user-portal/components/side-bar/side-bar.component';
 
 @Component({
   selector: 'app-root',
@@ -16,7 +16,9 @@ import { HeaderHomeComponent } from './user-portal/components/home/header-home/h
     HttpClientModule,
     CommonModule,
     ReactiveFormsModule,
-    RouterModule,SideBarComponent, HeaderHomeComponent
+    RouterModule,
+    SideBarComponent,
+    HeaderHomeComponent
   ],
   templateUrl: './app.component.html',
   styleUrl: './app.component.css',

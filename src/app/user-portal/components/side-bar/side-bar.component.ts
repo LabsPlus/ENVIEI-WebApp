@@ -5,8 +5,8 @@ import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
-import { SidebarService } from '../../../services/sidebar/sidebar.service';
 import { Location } from '@angular/common';
+import { SidebarService } from '../../services/sidebar/sidebar.service';
 
 @Component({
   selector: 'app-side-bar',
