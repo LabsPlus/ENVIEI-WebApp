@@ -2,8 +2,8 @@ import { Component, OnDestroy } from '@angular/core';
 import { DangerZoneComponent } from './danger-zone/danger-zone.component';
 import { MyProfileComponent } from './my-profile/my-profile.component';
 import { Subscription } from 'rxjs';
-import { SidebarService } from '../../../../services/sidebar/sidebar.service';
 import { CommonModule } from '@angular/common';
+import { SidebarService } from '../../../services/sidebar/sidebar.service';
 
 @Component({
   selector: 'app-profile',

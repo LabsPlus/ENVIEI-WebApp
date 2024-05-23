@@ -7,7 +7,7 @@ import { HomeComponent } from '../../user-portal/views/home/home.component';
 import { ForgotPasswordComponent } from '../../user-portal/views/forgot-password/forgot-password.component';
 import { DashboardComponent } from '../../user-portal/views/dashboard/dashboard.component';
 import { authGuard } from '../../shared/services/guard/auth/auth.guard';
-import { ProfileComponent } from '../../user-portal/views/home/side-bar/profile/profile.component';
+import { ProfileComponent } from '../../user-portal/views/home/profile/profile.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },

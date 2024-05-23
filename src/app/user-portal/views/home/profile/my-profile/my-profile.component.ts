@@ -1,10 +1,10 @@
 import { Component } from '@angular/core';
 import { MatSlideToggleModule, _MatSlideToggleRequiredValidatorModule, } from '@angular/material/slide-toggle';
 import { ThemePalette } from '@angular/material/core';
-import { UserService } from '../../../../../services/user-service/user.service';
-import IUser from '../../../../../interfaces/IUser';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
+import { UserService } from '../../../../services/user-service/user.service';
+import IUser from '../../../../interfaces/IUser';
 
 @Component({
   selector: 'app-my-profile',
@@ -17,7 +17,7 @@ import { CommonModule } from '@angular/common';
 export class MyProfileComponent {
   color: ThemePalette = 'primary';
 
-  defaultProfilePhoto: string = '../../../../../../../../src/assets/images/shared/profile-photo.svg';
+  defaultProfilePhoto: string = '../../../../../../../src/assets/images/shared/profile-photo.svg';
   userProfile: IUser = {}
   acessToken: string;
 

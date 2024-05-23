@@ -3,10 +3,10 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { Component, OnDestroy, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
-import IUser from '../../../interfaces/IUser';
-import { HomeService } from '../../../services/home/home.service';
-import { SidebarService } from '../../../services/sidebar/sidebar.service';
-import { ToastrNotificationService } from '../../../services/toastr/toastr.service';
+import { HomeService } from '../../services/home/home.service';
+import { ToastrNotificationService } from '../../services/toastr/toastr.service';
+import IUser from '../../interfaces/IUser';
+import { SidebarService } from '../../services/sidebar/sidebar.service';
 
 @Component({
   selector: 'app-header-home',
