@@ -4,20 +4,37 @@ import { MatButtonModule } from '@angular/material/button';
 import { UserService } from '../../services/user-service/user.service';
 import  IUser from '../../interfaces/IUser';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
+import { CommonModule } from '@angular/common';
+import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-change-email-modal',
   standalone: true,
-  imports: [MatButtonModule, MatDialogModule],
+  imports: [MatButtonModule, MatDialogModule, CommonModule, ReactiveFormsModule],
   providers: [UserService],
   templateUrl: './change-email-modal.component.html',
   styleUrl: './change-email-modal.component.css'
 })
 export class ChangeEmailModalComponent {
 
-  constructor(public dialog: MatDialog, private userService: UserService) { }
+  userForm! : FormGroup
+  userProfile: IUser = {};
+  acessToken: string = '';
 
-  openDialog() {
+  constructor(
+    public dialog: MatDialog,
+    private userService: UserService
+  ) {
+
+    this.getToken();
+
+    this.userForm = new FormGroup({
+      email: new FormControl(''),
+      password: new FormControl('')
+    });
+  }
+
+  public openDialog() {
     const dialogRef = this.dialog.open(ChangeEmailModalComponent,{
         panelClass: 'mat-typography-container'
     });
@@ -26,26 +43,17 @@ export class ChangeEmailModalComponent {
     });
   }
 
-
-  userProfile: IUser = {};
-  acessToken: string = '';
-
-  updateProfileData(): void {
-    this.userService
-      .updateUser( this.userProfile, this.acessToken,)
-      .toPromise()
-      .then((response: HttpResponse<IUser> | any) => {
-        if (response?.status == 200 || response?.status == 201) {
-          this.userProfile.name = response.body.name;
-          this.userProfile.email = response.body.email;
-          this.userProfile.profile_photo = response.body.profile_photo;
-          this.userProfile.email_recovery = response.body.email_recovery;
-          this.userProfile.cpf_cnpj = response.body.cpf_cnpj;
-          this.userProfile.phone_number = response.body.phone_number;
-        }
-      })
-      .catch((error: HttpErrorResponse) => {
-        console.error(error);
-      });
+  public getFormValue() : void{
+    this.userProfile.email = this.userForm.get('email')?.value;
+    this.userProfile.password = this.userForm.get('password')?.value;
   }
+
+   public getToken(): void {
+    this.acessToken = localStorage.getItem('accessToken') || '';
+  }
+
+  public submit(){
+
+  }
+
 }

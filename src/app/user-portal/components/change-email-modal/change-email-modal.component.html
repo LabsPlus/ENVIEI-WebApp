@@ -1,26 +1,26 @@
 <mat-dialog-content class="mat-typography">
 
-    <button class="close-button" mat-dialog-close>
-        <img src="../../../../assets/images/shared/close.svg" alt="close-button">
-    </button>
+  <button class="close-button" mat-dialog-close>
+    <img src="../../../../assets/images/shared/close.svg" alt="close-button">
+  </button>
 
-    <div class="form-group">
-        <h2>Mudar Email</h2>
+  <form (ngSubmit)="submit()" class="form-group" [formGroup]="userForm">
+    <h2>Mudar Email</h2>
 
-        <div class="input-container">
-            <label for="Digitar Nome">Digitar seu novo email</label>
-            <input type="email" class="form-control" id="firstName" placeholder="Email" required>
-        </div>
-
-        <div class="input-container">
-            <label for="Digite Sua Senha">Digite sua senha</label>
-            <input type="password" class="form-control" placeholder="Senha">
-        </div>
-
-        <div class="button-container">
-            <button class="save-button">Mudar</button>
-            <button class="cancel-button" mat-dialog-close>Cancelar</button>
-        </div>
-
+    <div class="input-container">
+      <label for="Digitar Nome">Digitar seu novo email</label>
+      <input formControlName="email" type="email" class="form-control" id="firstName" placeholder="Email" required>
     </div>
+
+    <div class="input-container">
+      <label for="Digite Sua Senha">Digite sua senha</label>
+      <input formControlName="password" type="password" class="form-control" placeholder="Senha">
+    </div>
+
+    <div class="button-container">
+      <button class="save-button">Mudar</button>
+      <button type="submit" class="cancel-button" mat-dialog-close>Cancelar</button>
+    </div>
+
+  </form>
 </mat-dialog-content>
