@@ -64,7 +64,7 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
     this.menuOpen = !this.menuOpen;
   }
 
-  getUserData(): void {
+  async getUserData(): Promise<void> {
     this.homeService
       .getUserData(this.acessToken)
       .toPromise()
@@ -98,6 +98,9 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
         this.user.profile_photo = this.defaultProfilePhoto;
         this.user.phone_number = '';
       });
+
+
+      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   goToProfile(): void {
