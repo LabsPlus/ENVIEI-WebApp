@@ -6,13 +6,14 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../../../../services/user-service/user.service';
 import IUser from '../../../../interfaces/IUser';
 import { ChangePersonalInformationModalComponent } from '../../../../components/change-personal-information-modal/change-personal-information-modal.component';
+import { ChangeEmailModalComponent } from '../../../../components/change-email-modal/change-email-modal.component';
 
 @Component({
   selector: 'app-my-profile',
   standalone: true,
   imports: [MatSlideToggleModule, CommonModule],
   templateUrl: './my-profile.component.html',
-  providers: [UserService, ChangePersonalInformationModalComponent],
+  providers: [UserService, ChangePersonalInformationModalComponent,ChangeEmailModalComponent],
   styleUrl: './my-profile.component.css',
 })
 export class MyProfileComponent {
@@ -22,7 +23,11 @@ export class MyProfileComponent {
   userProfile: IUser = {}
   acessToken: string;
 
-  constructor(private userService: UserService, private changePersonalInformationModalComponent: ChangePersonalInformationModalComponent) {
+  constructor(
+    private userService: UserService,
+    private changePersonalInformationModalComponent: ChangePersonalInformationModalComponent,
+    private changeEmailModalComponent: ChangeEmailModalComponent
+  ) {
 
     if (typeof localStorage !== 'undefined') {
       this.acessToken = sessionStorage.getItem('accessToken') as string;
@@ -40,7 +45,11 @@ export class MyProfileComponent {
   openChangePersonalInformationModal() {
     this.changePersonalInformationModalComponent.openDialog();
   }
-  
+
+  openChangeEmailModal() {
+    this.changeEmailModalComponent.openDialog();
+  }
+
   getProfileData(): void {
     this.userService
       .getUserData(this.acessToken)
