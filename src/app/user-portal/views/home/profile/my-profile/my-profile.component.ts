@@ -5,13 +5,14 @@ import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { UserService } from '../../../../services/user-service/user.service';
 import IUser from '../../../../interfaces/IUser';
+import { ChangePersonalInformationModalComponent } from '../../../../components/change-personal-information-modal/change-personal-information-modal.component';
 
 @Component({
   selector: 'app-my-profile',
   standalone: true,
   imports: [MatSlideToggleModule, CommonModule],
   templateUrl: './my-profile.component.html',
-  providers: [UserService],
+  providers: [UserService, ChangePersonalInformationModalComponent],
   styleUrl: './my-profile.component.css',
 })
 export class MyProfileComponent {
@@ -21,7 +22,7 @@ export class MyProfileComponent {
   userProfile: IUser = {}
   acessToken: string;
 
-  constructor(private userService: UserService) {
+  constructor(private userService: UserService, private changePersonalInformationModalComponent: ChangePersonalInformationModalComponent) {
 
     if (typeof localStorage !== 'undefined') {
       this.acessToken = sessionStorage.getItem('accessToken') as string;
@@ -36,6 +37,10 @@ export class MyProfileComponent {
 
   }
 
+  openChangePersonalInformationModal() {
+    this.changePersonalInformationModalComponent.openDialog();
+  }
+  
   getProfileData(): void {
     this.userService
       .getUserData(this.acessToken)
