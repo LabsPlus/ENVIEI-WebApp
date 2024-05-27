@@ -4,27 +4,27 @@
         <img src="../../../../assets/images/shared/close.svg" alt="close-button">
     </button>
     
-        <div class="form-group">
+        <form class="form-group" [formGroup]="userForm">
             <h2>Mudar Dados</h2>
 
             <div class="input-container">
                 <label for="Digitar Nome">Digitar o nome</label>
-                <input type="text" class="form-control" id="firstName" placeholder="Nome" required>
+                <input formControlName="name" type="text" class="form-control" id="firstName" placeholder="Nome" required>
             </div>
 
             <div class="input-container">
                 <label for="Telefone">Telefone</label>
-                <input type="text" class="form-control" placeholder="Telefone">
+                <input formControlName="phone_number" type="text" class="form-control" placeholder="Telefone">
             </div>
             <div class="input-container">
                 <label for="Digite Sua Senha">Digite sua senha</label>
-                <input type="password" class="form-control" placeholder="Senha">
+                <input formControlName="password" type="password" class="form-control" placeholder="Senha">
             </div>
 
             <div class="button-container">
-                <button class="save-button" >Mudar</button>
+                <button (click)="submit()" class="save-button" >Mudar</button>
                 <button class="cancel-button" mat-dialog-close>Cancelar</button>
             </div>
 
-        </div>
+        </form>
 </mat-dialog-content>
