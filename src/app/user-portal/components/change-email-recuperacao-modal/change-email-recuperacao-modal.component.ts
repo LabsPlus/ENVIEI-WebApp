@@ -19,9 +19,10 @@ import { EmailValidatorService } from '../../../shared/services/email-validator/
   styleUrl: './change-email-recuperacao-modal.component.css'
 })
 export class ChangeEmailRecuperacaoModalComponent {
+
   userForm!: FormGroup
   userProfile: IUser = {};
-  acessToken: string = '';
+  accessToken: string = '';
   password: string = '';
 
   constructor(
@@ -39,49 +40,57 @@ export class ChangeEmailRecuperacaoModalComponent {
       password: new FormControl('')
     });
   }
+
+
   openDialog() {
     const dialogRef = this.dialog.open(ChangeEmailRecuperacaoModalComponent);
-
-    dialogRef.afterClosed().subscribe(result => {
-    });
+    dialogRef.afterClosed().subscribe(result => { });
   }
 
 
-
-  updateProfileData(): void {
-    this.userService
-      .updateUser(this.userProfile, this.acessToken)
-      .toPromise()
-      .then((response: HttpResponse<IUser> | any) => {
-        if (response?.status == 200 || response?.status == 201) {
-          this.userProfile.name = response.body.name;
-          this.userProfile.email = response.body.email;
-          this.userProfile.profile_photo = response.body.profile_photo;
-          this.userProfile.email_recovery = response.body.email_recovery;
-          this.userProfile.cpf_cnpj = response.body.cpf_cnpj;
-          this.userProfile.phone_number = response.body.phone_number;
-        }
-      })
-      .catch((error: HttpErrorResponse) => {
-        console.error(error);
-      });
-
-  }
   getFormValue(): void {
-    this.userProfile.email_recovery= this.userForm.get('email_recovery')?.value;
+    this.userProfile.email_recovery = this.userForm.get('email_recovery')?.value;
     this.password = this.userForm.get('password')?.value;
   }
 
   getToken(): void {
     if (sessionStorage.getItem('accessToken') == null) {
-      this.acessToken = '';
+      this.accessToken = '';
       return;
     }
-    this.acessToken = sessionStorage.getItem('accessToken') as string;
+    this.accessToken = sessionStorage.getItem('accessToken') as string;
   }
-  updateEmail(userProfileData: IUser): void {
+
+  async isFormValid(): Promise<boolean> {
+
+    this.getFormValue();
+
+    if (this.userForm.get('email_recovery')?.value == '' || this.userForm.get('password')?.value == '') {
+      this.toarstNotification.showError('Preencha todos os campos', 'Erro');
+      return false;
+    }
+
+    if (!this.emailValidator.isValidateEmail(this.userProfile.email_recovery as string)) {
+      this.toarstNotification.showError('Email inválido', 'Erro');
+      return false;
+    }
+
+    if (!this.passwordValidator.isPasswordFormatValid(this.password)) {
+      this.toarstNotification.showError('Senha inválida', 'Erro');
+      return false;
+    }
+
+    if (!await this.validateUserPassword(this.password)) {
+      this.toarstNotification.showError('Senha inválida', 'Erro');
+      return false;
+    }
+
+    return true;
+  }
+
+  async updateEmailRecovery(userProfileData: IUser): Promise<void> {
     this.userService
-      .updateUser(userProfileData, this.acessToken)
+      .updateUser(userProfileData, this.accessToken)
       .toPromise()
       .then((response: HttpResponse<IUser> | any) => {
         if (response?.status == 200 || response?.status == 201) {
@@ -93,9 +102,10 @@ export class ChangeEmailRecuperacaoModalComponent {
         console.error(error);
       });
   }
+
   async validateUserPassword(password: string): Promise<boolean> {
     return await this.userService
-      .validateUserPassword(password, this.acessToken)
+      .validateUserPassword(password, this.accessToken)
       .toPromise()
       .then((response: HttpResponse<any> | undefined) => {
 
@@ -119,38 +129,20 @@ export class ChangeEmailRecuperacaoModalComponent {
   }
 
   async submit(): Promise<void> {
-    this.getFormValue();
-  
-    if (!this.isFormValid()) {
-      this.toarstNotification.showError('Preencha todos os campos', 'Erro');
+
+    if (!await this.isFormValid()) {
+      this.toarstNotification.showError('Formulario Invalido', 'Erro');
       return;
     }
-    if (!this.emailValidator.isValidateEmail(this.userProfile.email_recovery as string)) {
-      this.toarstNotification.showError('Email inválido', 'Erro');
-      return;
-    }
-    if (!this.passwordValidator.isPasswordFormatValid(this.password)) {
-      this.toarstNotification.showError('Senha inválida', 'Erro');
-      return;
-    }
-    if (!await this.validateUserPassword(this.password)) {
-      this.toarstNotification.showError('Senha inválida', 'Erro');
-      return;
-    }
-    this.updateEmail(this.userProfile);
+
+    await this.updateEmailRecovery(this.userProfile);
     this.dialog.closeAll();
     this.refreshPage();
+
   }
 
   refreshPage(): void {
     window.location.reload();
   }
 
-  isFormValid(): boolean {
-    if (this.userForm.get('email_recovery')?.value == '' || this.userForm.get('password')?.value == '') {
-      return false;
-    }
-
-    return true;
-  }
 }
