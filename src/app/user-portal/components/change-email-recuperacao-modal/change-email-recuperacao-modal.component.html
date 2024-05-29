@@ -4,23 +4,24 @@
         <img src="../../../../assets/images/shared/close.svg" alt="close-button">
     </button>
 
-    <div class="form-group">
+    <form class="form-group"  [formGroup]="userForm">
+        >
         <h2>Mudar Email de Recuperação</h2>
 
-        <div class="input-container">
+        <div class="input-container">   
             <label for="Digitar Nome">Digitar seu novo email</label>
-            <input type="email" class="form-control" id="firstName" placeholder="Email" required>
+            <input formControlName="email_recovery" type="email" class="form-control" id="firstName" placeholder="Email" required>
         </div>
 
         <div class="input-container">
             <label for="Digite Sua Senha">Digite sua senha</label>
-            <input type="password" class="form-control" placeholder="Senha">
+            <input formControlName="password" type="password" class="form-control" placeholder="Senha">
         </div>
 
         <div class="button-container">
-            <button class="save-button">Mudar</button>
+            <button (click)="submit()" class="save-button">Mudar</button>
             <button class="cancel-button" mat-dialog-close>Cancelar</button>
         </div>
 
-    </div>
+    </form>
 </mat-dialog-content>
