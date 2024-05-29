@@ -7,13 +7,14 @@ import { UserService } from '../../../../services/user-service/user.service';
 import IUser from '../../../../interfaces/IUser';
 import { ChangePersonalInformationModalComponent } from '../../../../components/change-personal-information-modal/change-personal-information-modal.component';
 import { ChangeEmailRecuperacaoModalComponent } from '../../../../components/change-email-recuperacao-modal/change-email-recuperacao-modal.component';
+import { ChangeEmailModalComponent } from '../../../../components/change-email-modal/change-email-modal.component';
 
 @Component({
   selector: 'app-my-profile',
   standalone: true,
   imports: [MatSlideToggleModule, CommonModule],
   templateUrl: './my-profile.component.html',
-  providers: [UserService, ChangePersonalInformationModalComponent,ChangeEmailRecuperacaoModalComponent],
+  providers: [UserService, ChangePersonalInformationModalComponent, ChangeEmailModalComponent, ChangeEmailRecuperacaoModalComponent],
   styleUrl: './my-profile.component.css',
 })
 export class MyProfileComponent {
@@ -24,9 +25,11 @@ export class MyProfileComponent {
   acessToken: string;
 
   constructor(
-    private userService: UserService, 
+    private userService: UserService,
     private changePersonalInformationModalComponent: ChangePersonalInformationModalComponent,
-    private changeEmailRecuperacaoModalComponent : ChangeEmailRecuperacaoModalComponent) {
+    private changeEmailModalComponent: ChangeEmailModalComponent,
+    private changeEmailRecuperacaoModalComponent: ChangeEmailRecuperacaoModalComponent
+  ) {
 
     if (typeof localStorage !== 'undefined') {
       this.acessToken = sessionStorage.getItem('accessToken') as string;
@@ -44,10 +47,15 @@ export class MyProfileComponent {
   openChangePersonalInformationModal() {
     this.changePersonalInformationModalComponent.openDialog();
   }
-  openChangeEmailRecuperacaoModalComponent(){
+  openChangeEmailRecuperacaoModalComponent() {
     this.changeEmailRecuperacaoModalComponent.openDialog();
   }
-  
+
+
+  openChangeEmailModal() {
+    this.changeEmailModalComponent.openDialog();
+  }
+
   getProfileData(): void {
     this.userService
       .getUserData(this.acessToken)
@@ -64,7 +72,7 @@ export class MyProfileComponent {
 
           if (
             response.body.profile_photo == null ||
-            response.body.profile_photo == ''   ||
+            response.body.profile_photo == '' ||
             response.body.profile_photo == undefined
           ) {
             this.userProfile.profile_photo = this.defaultProfilePhoto;
