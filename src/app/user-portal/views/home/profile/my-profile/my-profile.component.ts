@@ -8,13 +8,14 @@ import IUser from '../../../../interfaces/IUser';
 import { ChangePersonalInformationModalComponent } from '../../../../components/change-personal-information-modal/change-personal-information-modal.component';
 import { ChangeEmailRecuperacaoModalComponent } from '../../../../components/change-email-recuperacao-modal/change-email-recuperacao-modal.component';
 import { ChangeEmailModalComponent } from '../../../../components/change-email-modal/change-email-modal.component';
+import { ChangePasswordModalComponent } from '../../../../components/change-password-modal/change-password-modal.component';
 
 @Component({
   selector: 'app-my-profile',
   standalone: true,
   imports: [MatSlideToggleModule, CommonModule],
   templateUrl: './my-profile.component.html',
-  providers: [UserService, ChangePersonalInformationModalComponent, ChangeEmailModalComponent, ChangeEmailRecuperacaoModalComponent],
+  providers: [UserService, ChangePersonalInformationModalComponent,ChangeEmailModalComponent, ChangePasswordModalComponent, ChangeEmailRecuperacaoModalComponent],
   styleUrl: './my-profile.component.css',
 })
 export class MyProfileComponent {
@@ -28,7 +29,7 @@ export class MyProfileComponent {
     private userService: UserService,
     private changePersonalInformationModalComponent: ChangePersonalInformationModalComponent,
     private changeEmailModalComponent: ChangeEmailModalComponent,
-    private changeEmailRecuperacaoModalComponent: ChangeEmailRecuperacaoModalComponent
+    private changePasswordModalComponent: ChangePasswordModalComponent, private changeEmailRecuperacaoModalComponent: ChangeEmailRecuperacaoModalComponent
   ) {
 
     if (typeof localStorage !== 'undefined') {
@@ -54,6 +55,10 @@ export class MyProfileComponent {
 
   openChangeEmailModal() {
     this.changeEmailModalComponent.openDialog();
+  }
+
+  openChangePasswordModal() {
+    this.changePasswordModalComponent.openDialog();
   }
 
   getProfileData(): void {
