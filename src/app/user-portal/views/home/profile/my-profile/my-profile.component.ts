@@ -6,6 +6,7 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../../../../services/user-service/user.service';
 import IUser from '../../../../interfaces/IUser';
 import { ChangePersonalInformationModalComponent } from '../../../../components/change-personal-information-modal/change-personal-information-modal.component';
+import { ChangeEmailRecuperacaoModalComponent } from '../../../../components/change-email-recuperacao-modal/change-email-recuperacao-modal.component';
 import { ChangeEmailModalComponent } from '../../../../components/change-email-modal/change-email-modal.component';
 import { ChangePasswordModalComponent } from '../../../../components/change-password-modal/change-password-modal.component';
 
@@ -14,7 +15,7 @@ import { ChangePasswordModalComponent } from '../../../../components/change-pass
   standalone: true,
   imports: [MatSlideToggleModule, CommonModule],
   templateUrl: './my-profile.component.html',
-  providers: [UserService, ChangePersonalInformationModalComponent,ChangeEmailModalComponent, ChangePasswordModalComponent],
+  providers: [UserService, ChangePersonalInformationModalComponent,ChangeEmailModalComponent, ChangePasswordModalComponent, ChangeEmailRecuperacaoModalComponent],
   styleUrl: './my-profile.component.css',
 })
 export class MyProfileComponent {
@@ -28,7 +29,7 @@ export class MyProfileComponent {
     private userService: UserService,
     private changePersonalInformationModalComponent: ChangePersonalInformationModalComponent,
     private changeEmailModalComponent: ChangeEmailModalComponent,
-    private changePasswordModalComponent: ChangePasswordModalComponent
+    private changePasswordModalComponent: ChangePasswordModalComponent, private changeEmailRecuperacaoModalComponent: ChangeEmailRecuperacaoModalComponent
   ) {
 
     if (typeof localStorage !== 'undefined') {
@@ -47,6 +48,10 @@ export class MyProfileComponent {
   openChangePersonalInformationModal() {
     this.changePersonalInformationModalComponent.openDialog();
   }
+  openChangeEmailRecuperacaoModalComponent() {
+    this.changeEmailRecuperacaoModalComponent.openDialog();
+  }
+
 
   openChangeEmailModal() {
     this.changeEmailModalComponent.openDialog();
@@ -72,7 +77,7 @@ export class MyProfileComponent {
 
           if (
             response.body.profile_photo == null ||
-            response.body.profile_photo == ''   ||
+            response.body.profile_photo == '' ||
             response.body.profile_photo == undefined
           ) {
             this.userProfile.profile_photo = this.defaultProfilePhoto;
