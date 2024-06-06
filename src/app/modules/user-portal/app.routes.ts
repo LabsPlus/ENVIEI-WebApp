@@ -8,6 +8,7 @@ import { ForgotPasswordComponent } from '../../user-portal/views/forgot-password
 import { DashboardComponent } from '../../user-portal/views/dashboard/dashboard.component';
 import { authGuard } from '../../shared/services/guard/auth/auth.guard';
 import { ProfileComponent } from '../../user-portal/views/home/profile/profile.component';
+import { DashboardApiKeysComponent } from '../../user-portal/views/home/dashboard-api-keys/dashboard-api-keys.component';
 
 export const routes: Routes = [
   { path: 'login', component: LoginComponent },
@@ -17,6 +18,7 @@ export const routes: Routes = [
   { path: 'home', canActivate: [authGuard], children: [
     { path: '', component: HomeComponent },
     { path: 'profile', component: ProfileComponent },
+    { path: 'dashboard-api-keys', component: DashboardApiKeysComponent },
   ]
   },
   { path: 'new-password', component: NewPasswordScreenComponent },
