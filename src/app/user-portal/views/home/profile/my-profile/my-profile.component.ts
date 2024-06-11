@@ -6,7 +6,7 @@ import { CommonModule } from '@angular/common';
 import { UserService } from '../../../../services/user-service/user.service';
 import IUser from '../../../../interfaces/IUser';
 import { ChangePersonalInformationModalComponent } from '../../../../components/change-personal-information-modal/change-personal-information-modal.component';
-import { ChangeEmailRecuperacaoModalComponent } from '../../../../components/change-email-recuperacao-modal/change-email-recuperacao-modal.component';
+import { ChangeEmailRecoveryModalComponent } from '../../../../components/change-email-recovery-modal/change-email-recovery-modal.component';
 import { ChangeEmailModalComponent } from '../../../../components/change-email-modal/change-email-modal.component';
 import { ChangePasswordModalComponent } from '../../../../components/change-password-modal/change-password-modal.component';
 
@@ -15,7 +15,7 @@ import { ChangePasswordModalComponent } from '../../../../components/change-pass
   standalone: true,
   imports: [MatSlideToggleModule, CommonModule],
   templateUrl: './my-profile.component.html',
-  providers: [UserService, ChangePersonalInformationModalComponent,ChangeEmailModalComponent, ChangePasswordModalComponent, ChangeEmailRecuperacaoModalComponent],
+  providers: [UserService, ChangePersonalInformationModalComponent,ChangeEmailModalComponent, ChangePasswordModalComponent, ChangeEmailRecoveryModalComponent],
   styleUrl: './my-profile.component.css',
 })
 export class MyProfileComponent {
@@ -29,7 +29,8 @@ export class MyProfileComponent {
     private userService: UserService,
     private changePersonalInformationModalComponent: ChangePersonalInformationModalComponent,
     private changeEmailModalComponent: ChangeEmailModalComponent,
-    private changePasswordModalComponent: ChangePasswordModalComponent, private changeEmailRecuperacaoModalComponent: ChangeEmailRecuperacaoModalComponent
+    private changePasswordModalComponent: ChangePasswordModalComponent, 
+    private changeEmailRecoveryModalComponent: ChangeEmailRecoveryModalComponent,
   ) {
 
     if (typeof localStorage !== 'undefined') {
@@ -48,8 +49,8 @@ export class MyProfileComponent {
   openChangePersonalInformationModal() {
     this.changePersonalInformationModalComponent.openDialog();
   }
-  openChangeEmailRecuperacaoModalComponent() {
-    this.changeEmailRecuperacaoModalComponent.openDialog();
+  openChangeEmailRecoveryModalComponent() {
+    this.changeEmailRecoveryModalComponent.openDialog();
   }
 
 
