@@ -13,6 +13,6 @@ export class ApiKeysService {
   constructor(private httpClient: HttpClient) { }
 
   getApiKeys(accessToken: string) {
-    return this.httpClient.get<IKey[]>(this.apiKeysUrl+'key/list-keys', { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
+    return this.httpClient.get<IKey[]>(this.apiKeysUrl+'user/getAllKeysFromUser', { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
   }
 }

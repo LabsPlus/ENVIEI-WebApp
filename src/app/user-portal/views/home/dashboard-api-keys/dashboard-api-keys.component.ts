@@ -9,12 +9,14 @@ import {MatPaginator, MatPaginatorModule} from '@angular/material/paginator';
 import {MatTableDataSource, MatTableModule} from '@angular/material/table';
 import { ApiKeysService } from '../../../services/api-keys-service/api-keys.service';
 import { IKey } from '../../../interfaces/IKey';
-
+import { InputSearchComponent } from '../../../../shared/components/input-search/input-search.component';
+import { FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
+import { SlideToggleComponent } from '../../../../shared/components/slide-toggle/slide-toggle.component';
 
 @Component({
   selector: 'app-dashboard-api-keys',
   standalone: true,
-  imports: [ButtonComponent,ButtonSeePlansHomePageComponent,ButtonStartHomePageComponent, CommonModule,MatTableModule, MatPaginatorModule],
+  imports: [SlideToggleComponent, FormsModule,ReactiveFormsModule,InputSearchComponent,ButtonComponent,ButtonSeePlansHomePageComponent,ButtonStartHomePageComponent, CommonModule,MatTableModule, MatPaginatorModule],
   providers: [ApiKeysService],
   templateUrl: './dashboard-api-keys.component.html',
   styleUrl: './dashboard-api-keys.component.css'
@@ -27,6 +29,8 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit{
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   #apiKeysService = inject(ApiKeysService);
   acessToken: string;
+  searchForm! : FormGroup;
+  isOn: boolean = false;
 
 
   constructor(private sidebarService: SidebarService) {
@@ -42,6 +46,10 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit{
     } else {
       this.acessToken = '';
     }
+
+    this.searchForm = new FormGroup({
+      search: new FormControl('')
+    });
   }
 
   ngOnInit() {
@@ -57,11 +65,18 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit{
   }
 
   ngAfterViewInit() {
+    console.log(this.#apiKeysService.getApiKeys(this.acessToken));
+    
     this.dataSource.paginator = this.paginator;
   }
 
   Search() {
     console.log('searching');
+  }
+
+  toggleSwitch(){
+    console.log(this.isOn);
+    this.isOn = !this.isOn;
   }
 
   CreateNewKey() {
