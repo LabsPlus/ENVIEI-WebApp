@@ -90,7 +90,7 @@ export class ChangeEmailRecoveryModalComponent {
 
   async updateEmailRecovery(userProfileData: IUser): Promise<void> {
     this.userService
-      .updateUser(userProfileData, this.accessToken)
+      .requestUpdateEmailRecovery(userProfileData, this.accessToken)
       .toPromise()
       .then((response: HttpResponse<IUser> | any) => {
         if (response?.status == 200 || response?.status == 201) {
