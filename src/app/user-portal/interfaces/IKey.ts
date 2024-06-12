@@ -5,4 +5,5 @@ export interface IKey {
 		createdAt?: string,
 		updatedAt?: string,
 		user_id?: number
+		formattedApiKey?: string
 	}

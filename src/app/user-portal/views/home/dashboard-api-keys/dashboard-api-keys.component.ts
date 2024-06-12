@@ -56,7 +56,7 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit{
     this.#apiKeysService.getApiKeys(this.acessToken).subscribe(
       (response) => {
         this.dataSource.data = response.body as IKey[];
-        console.log(this.dataSource.data);
+        this.applyApiKeyFormatting();
       },
       (error) => {
         console.log(error);
@@ -65,9 +65,7 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit{
   }
 
   ngAfterViewInit() {
-    console.log(this.#apiKeysService.getApiKeys(this.acessToken));
-    
-    this.dataSource.paginator = this.paginator;
+    this.dataSource.paginator = this.paginator;  
   }
 
   Search() {
@@ -82,6 +80,29 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit{
   CreateNewKey() {
     console.log('creating new key');
   }
+
+
+  applyApiKeyFormatting() {
+    this.dataSource.data.forEach((element) => {
+      element.formattedApiKey = this.formatApiKey(element.value as string);
+    });
+  }
+  
+  formatApiKey(apiKey: string) {
+    const totalChars = apiKey.length;
+  
+    if (totalChars < 20) {
+        return '*'.repeat(totalChars);
+    }
+  
+    const visibleChars = apiKey.slice(16, 19);
+  
+    const hiddenChars = '*'.repeat(16) + visibleChars + '*'.repeat(totalChars - 19);
+  
+    return hiddenChars;
+}
+  
+  
 
   ngOnDestroy() {
     this.sidebarOpenSubscription.unsubscribe();

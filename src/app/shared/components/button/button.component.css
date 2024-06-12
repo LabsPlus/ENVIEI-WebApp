@@ -39,9 +39,11 @@
   border: 1px solid #316C87;
   background: #316C87;
   color: #FFFFFF;
-}
-
-.button-blue-extended{
+  cursor: pointer;
+  }
+  
+  .button-blue-extended{
+  cursor: pointer;
   display: flex;
   padding: 12px 16px;
   justify-content: center;

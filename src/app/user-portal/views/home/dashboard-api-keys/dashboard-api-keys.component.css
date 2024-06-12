@@ -102,8 +102,22 @@ th, td {
   font-weight: 400;
   line-height: 20px;
   text-align: center;
-  /* font-family: "Inter-Regular"; */
 }
+
+::ng-deep  .mat-mdc-paginator-icon{
+  fill: #0443BD !important;
+  } 
+ ::ng-deep .mat-mdc-text-field-wrapper{
+    fill: #0443BD !important;
+    }
+
+::ng-deep .mat-mdc-select {
+  color: #0443BD !important;
+}
+
+    
+
+
 
 .checkbox {
   margin-right: 16px;
@@ -119,12 +133,33 @@ th, td {
   background: transparent;
   transform: translateY(4px);
   padding-right: 8px;
-} 
-
-.button-delete{
+  cursor: pointer;
+  } 
+  
+  .button-delete{
+  cursor: pointer;
   background: transparent;
   border: none;
 }
+
+.container-api-keys{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+
+}
+.container-api-keys span{
+  width: 80%;
+  font-size: 14px;
+  overflow: hidden;
+  }
+  .container-api-keys button{
+    background: transparent;
+    border: none;
+    padding: 0px;
+    cursor: pointer;
+  }
 
 .slide-toggle-container{
   display: flex;

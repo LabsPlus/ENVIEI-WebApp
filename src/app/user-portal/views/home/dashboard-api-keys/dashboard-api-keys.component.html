@@ -17,7 +17,7 @@
     <div class="mat-elevation-z8">
         <table mat-table [dataSource]="dataSource">
 
-            <!-- Position Column -->
+            <!-- Status Column -->
             <ng-container matColumnDef="Status">
                 <th mat-header-cell *matHeaderCellDef> Status </th>
                 <td mat-cell *matCellDef="let element"> Ativo </td>
@@ -29,13 +29,20 @@
                 <td mat-cell *matCellDef="let element"> {{element.name}} </td>
             </ng-container>
 
-            <!-- Weight Column -->
+            <!-- API Key Column -->
             <ng-container matColumnDef="API Key">
                 <th mat-header-cell *matHeaderCellDef> API Key </th>
-                <td mat-cell *matCellDef="let element"> {{element.value}} </td>
+                <td mat-cell *matCellDef="let element">
+                    <div class="container-api-keys">
+                        <span>{{ element.formattedApiKey }}</span>
+                        <button>
+                            <img src="../../../../../assets/images/shared/Copy-img.svg" alt="copy">
+                        </button>
+                    </div>
+                </td>
             </ng-container>
 
-            <!-- Symbol Column -->
+            <!-- Ativar/Desativar Column -->
             <ng-container matColumnDef="Ativar/Desativar">
                 <th mat-header-cell *matHeaderCellDef> Ativar/Desativar </th>
                 <td mat-cell *matCellDef="let element">
