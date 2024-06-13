@@ -1,0 +1,5 @@
+<div class="input-search-container">
+    <img src="../../../../assets/images/shared/search.svg" alt="login icon" class="input-login-icon" />
+    <input [type]="props.type" [placeholder]="props.placeholder" [required]="props.required" [disabled]="props.disabled"
+        [class]="props.class" (input)="onInput($event)" />
+</div>

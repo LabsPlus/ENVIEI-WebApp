@@ -10,7 +10,7 @@
         <a [routerLink]="['home/profile']" mat-list-item routerLinkActive="active">
             <img *ngIf="!isSidebarOpen" class="icon" src="/assets/shared/Account.svg" />
         </a>
-        <a routerLink="/keys" mat-list-item routerLinkActive="active">
+        <a [routerLink]='["home/dashboard-api-keys"]' mat-list-item routerLinkActive="active">
             <img *ngIf="!isSidebarOpen" class="icon" src="/assets/shared/Key.svg" />
         </a>
         <a routerLink="/dashboard" mat-list-item routerLinkActive="active">
@@ -30,7 +30,8 @@
                 <img class="link" *ngIf="isSidebarOpen" src="/assets/shared/Account.svg" />
                 <span class="link" ngClass="span" *ngIf="isSidebarOpen">Perfil</span>
             </a>
-            <a routerLink="/keys" class="link-content" mat-list-item routerLinkActive="active-open">
+            <a [routerLink]='["home/dashboard-api-keys"]' class="link-content" mat-list-item
+                routerLinkActive="active-open">
                 <img class="link" *ngIf="isSidebarOpen" src="/assets/shared/Key.svg" />
                 <span class="link" ngClass="span" *ngIf="isSidebarOpen">Chaves</span>
             </a>
