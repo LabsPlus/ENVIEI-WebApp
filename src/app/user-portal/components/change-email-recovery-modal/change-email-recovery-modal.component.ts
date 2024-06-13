@@ -89,16 +89,17 @@ export class ChangeEmailRecoveryModalComponent {
   }
 
   async updateEmailRecovery(userProfileData: IUser): Promise<void> {
-    this.userService
+    await this.userService
       .requestUpdateEmailRecovery(userProfileData, this.accessToken)
       .toPromise()
-      .then((response: HttpResponse<IUser> | any) => {
+      .then(async (response: HttpResponse<IUser> | any) => {
         if (response?.status == 200 || response?.status == 201) {
-          this.toarstNotification.showSuccess('Dados atualizados com sucesso', 'Sucesso');
+          await this.toarstNotification.showSuccess('Email de recuperação atualizado com sucesso', 'Sucesso');
         }
       })
-      .catch((error: HttpErrorResponse) => {
-        this.toarstNotification.showError('Erro ao atualizar dados', 'Erro');
+      .catch(async (error: HttpErrorResponse) => {
+
+        await this.toarstNotification.showError('Erro ao atualizar dados', 'Erro');
         console.error(error);
       });
   }

@@ -8,7 +8,7 @@ export class ToastrNotificationService {
 
   constructor(private toastr: ToastrService) { }
 
-  showSuccess(message: string, title: string, {
+  async showSuccess(message: string, title: string, {
     timeOut = 3000,
     progressBar = true,
     closeButton = true,
@@ -31,7 +31,7 @@ export class ToastrNotificationService {
     });
   }
 
-  showError(message: string, title: string, {
+  async showError(message: string, title: string, {
     timeOut = 3000,
     progressBar = true,
     closeButton = true,
@@ -54,7 +54,7 @@ export class ToastrNotificationService {
     });
   }
 
-  showWarning(message: string, title: string, {
+  async showWarning(message: string, title: string, {
     timeOut = 3000,
     progressBar = true,
     closeButton = true,
@@ -73,11 +73,11 @@ export class ToastrNotificationService {
       messageClass: messageClass,
       tapToDismiss: tapToDismiss,
       newestOnTop: newestOnTop,
-      progressAnimation : 'decreasing',
+      progressAnimation: 'decreasing',
     });
   }
 
-  showInfo(message: string, title: string, {
+  async showInfo(message: string, title: string, {
     timeOut = 3000,
     progressBar = true,
     closeButton = true,
