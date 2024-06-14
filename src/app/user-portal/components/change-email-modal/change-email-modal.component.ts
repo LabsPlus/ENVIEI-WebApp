@@ -63,7 +63,7 @@ export class ChangeEmailModalComponent {
 
   updateEmail(userProfileData: IUser): void {
     this.userService
-      .updateUser(userProfileData, this.acessToken)
+      .requestUpdateEmail(userProfileData, this.acessToken)
       .toPromise()
       .then((response: HttpResponse<IUser> | any) => {
         if (response?.status == 200 || response?.status == 201) {

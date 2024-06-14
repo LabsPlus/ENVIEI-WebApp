@@ -1,0 +1,33 @@
+.container{
+    background-repeat: no-repeat;
+    background-position: center;
+    height: 40px;
+    width: 85px;
+    display: flex;
+    align-items: center;
+    padding-left: 5px;
+    border-radius: 22px 22px 22px 22px;
+    }
+
+    .isOn{
+      background-color: #316C87;
+    }
+    .isOff{
+      background-color: #606368;
+    }
+.ball {
+  cursor: pointer;
+    width: 32px;
+    height: 31px;
+    background-color: #fff;
+    border-radius: 50%;
+    position: absolute;
+    transition: transform 0.3s ease;
+  }
+  .ball.move-right {
+    transform: translateX(132%);
+  }
+  .ball.move-left {
+    transform: translateX(0);
+  }
+  

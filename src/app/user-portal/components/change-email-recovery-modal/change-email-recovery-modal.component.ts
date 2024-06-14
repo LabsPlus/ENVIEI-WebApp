@@ -11,14 +11,14 @@ import { PasswordValidatorService } from '../../../shared/services/password-vali
 import { EmailValidatorService } from '../../../shared/services/email-validator/email-validator.service';
 
 @Component({
-  selector: 'app-change-email-recuperacao-modal',
+  selector: 'app-change-email-recovery-modal',
   standalone: true,
   imports: [MatButtonModule, MatDialogModule, CommonModule, ReactiveFormsModule],
   providers: [UserService, ToastrNotificationService, PasswordValidatorService, EmailValidatorService],
-  templateUrl: './change-email-recuperacao-modal.component.html',
-  styleUrl: './change-email-recuperacao-modal.component.css'
+  templateUrl: './change-email-recovery-modal.component.html',
+  styleUrl: './change-email-recovery-modal.component.css'
 })
-export class ChangeEmailRecuperacaoModalComponent {
+export class ChangeEmailRecoveryModalComponent {
 
   userForm!: FormGroup
   userProfile: IUser = {};
@@ -43,7 +43,7 @@ export class ChangeEmailRecuperacaoModalComponent {
 
 
   openDialog() {
-    const dialogRef = this.dialog.open(ChangeEmailRecuperacaoModalComponent);
+    const dialogRef = this.dialog.open(ChangeEmailRecoveryModalComponent);
     dialogRef.afterClosed().subscribe(result => { });
   }
 
@@ -90,7 +90,7 @@ export class ChangeEmailRecuperacaoModalComponent {
 
   async updateEmailRecovery(userProfileData: IUser): Promise<void> {
     this.userService
-      .updateUser(userProfileData, this.accessToken)
+      .requestUpdateEmailRecovery(userProfileData, this.accessToken)
       .toPromise()
       .then((response: HttpResponse<IUser> | any) => {
         if (response?.status == 200 || response?.status == 201) {

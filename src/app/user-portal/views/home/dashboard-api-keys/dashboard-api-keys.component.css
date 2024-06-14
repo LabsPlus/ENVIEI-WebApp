@@ -1,0 +1,168 @@
+
+
+@font-face {
+  font-family: "Inter-Regular";
+  src: url("../../../../../assets/fonts/Inter-Regular.ttf") format("truetype");
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    font-family: "Inter-Regular";
+    width: 100%;
+    padding: 4% 8%;
+    color: #000;
+    background: #ffffff;
+    height: 200vh;
+    padding-left: 180px; 
+    /* gap: 10px; */
+  }
+  
+  .navbar-expanded {
+    padding-left: 240px; 
+  }
+
+.container-buttons{
+    display: flex;
+    justify-content: space-between;
+    align-items: end;
+    margin-top: 0px;
+    padding-bottom: 35px;
+}
+
+.container h2 {
+  font-size: 24px;
+  font-style: normal;
+  line-height: 20px; 
+  padding-bottom: 35px;
+ }
+.container p {
+  color: #000;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+ }
+
+ .input-search-div{
+  display: flex;
+  gap: 8px;
+ }
+
+ .mat-elevation-z8{
+  border-radius: 5px !important;
+  border: 1px solid #0444BD;
+  background: #ffffff !important;
+  padding: 1.5px;
+  box-shadow: 0px 0px 40px 0px rgba(0, 0, 0, 0.10);
+ }
+
+ table th {
+  color: var(--Foundation-Blue-Dark, #03338E);
+  text-align: center;
+  font-size: 16px;
+  /* font-family: "Inter-Regular"; */
+  font-style: normal;
+  font-weight: 700;
+  line-height: 20px; 
+}
+table td {
+  color: var(--Foundation-Blue-Normal, #0443BD);
+  /* font-family: "Inter-Regular"; */
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 28px;
+}
+
+tr:nth-child(odd) td {
+  background-color: #E6ECF8;
+}
+table {
+  table-layout: fixed;
+  width: 100%;
+  
+}
+
+th, td {
+  vertical-align: middle;
+  text-align: center;
+  width: 20%; 
+}
+
+.paginator {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 10px;
+  padding: 10px;
+  color: #03328E;
+  font-size: 14px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+  text-align: center;
+}
+
+::ng-deep  .mat-mdc-paginator-icon{
+  fill: #0443BD !important;
+  } 
+ ::ng-deep .mat-mdc-text-field-wrapper{
+    fill: #0443BD !important;
+    }
+
+::ng-deep .mat-mdc-select {
+  color: #0443BD !important;
+}
+
+    
+
+
+
+.checkbox {
+  margin-right: 16px;
+  color: #2C3F47;
+  font-size: 16px;
+  font-style: normal;
+  font-weight: 400;
+  line-height: 20px;
+}
+
+.button-update{
+  border: none;
+  background: transparent;
+  transform: translateY(4px);
+  padding-right: 8px;
+  cursor: pointer;
+  } 
+  
+  .button-delete{
+  cursor: pointer;
+  background: transparent;
+  border: none;
+}
+
+.container-api-keys{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 10px;
+
+}
+.container-api-keys span{
+  width: 80%;
+  font-size: 14px;
+  overflow: hidden;
+  }
+  .container-api-keys button{
+    background: transparent;
+    border: none;
+    padding: 0px;
+    cursor: pointer;
+  }
+
+.slide-toggle-container{
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

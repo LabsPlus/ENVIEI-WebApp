@@ -44,4 +44,12 @@ export class UserService {
     const tokenObject = { accessToken: accessToken };
     return this.httpClient.post(this.registerUrl+'user/logout',  tokenObject, { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
   }
+
+  requestUpdateEmail(user: IUser, access_token: string) {
+    return this.httpClient.post(this.registerUrl+'user/requestUpdateEmail', user, { observe: 'response', headers: { 'Authorization': 'Bearer ' + access_token } });
+  }
+
+  requestUpdateEmailRecovery(user: IUser, access_token: string) {
+    return this.httpClient.post(this.registerUrl+'user/requestUpdateEmailRecovery', user, { observe: 'response', headers: { 'Authorization': 'Bearer ' + access_token } });
+  }
 }

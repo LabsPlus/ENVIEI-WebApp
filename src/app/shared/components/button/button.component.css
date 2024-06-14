@@ -27,3 +27,32 @@
 .button:hover {
   background: #51585f;
 }
+
+.button-blue{
+  display: flex;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 5px;
+  border: 1px solid #316C87;
+  background: #316C87;
+  color: #FFFFFF;
+  cursor: pointer;
+  }
+  
+  .button-blue-extended{
+  cursor: pointer;
+  display: flex;
+  padding: 12px 16px;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+  align-self: stretch;
+  border-radius: 5px;
+  border: 1px solid #316C87;
+  background: #316C87;
+  color: #FFFFFF;
+  width: 300px;
+}
