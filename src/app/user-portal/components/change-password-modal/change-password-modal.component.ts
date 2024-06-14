@@ -160,13 +160,13 @@ export class ChangePasswordModalComponent implements  OnInit{
 
      //validating if password is valid
      if (!this.passwordValidator.isPasswordFormatValid(this.userProfile.password)) {
-      this.toarstNotification.showError('Senha inválida', 'Erro');
+      this.toarstNotification.showError('Nova senha tem formato inválida', 'Erro');
       return;
     }
    
     //validating if password is from the user
     if (!await this.validateUserPassword(this.password)) {
-      this.toarstNotification.showError('Senha inválida', 'Erro');
+      this.toarstNotification.showError('Senha atual está incorreta', 'Erro');
       return;
     }
 
