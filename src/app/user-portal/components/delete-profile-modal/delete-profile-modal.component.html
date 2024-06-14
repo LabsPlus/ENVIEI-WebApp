@@ -1,0 +1,24 @@
+<mat-dialog-content class="mat-typography">
+    <button class="close-button" mat-dialog-close>
+        <img src="../../../../assets/images/shared/close.svg" alt="close-button">
+    </button>
+    <form class="form-group" [formGroup]="userForm">
+        <h2>Excluir Perfil</h2>
+        <p>Se você excluir seu perfil, seus dados serão <strong>apagados em 30 dias</strong> e você não poderá
+            mais acessá-los após esse período, tem certeza de que deseja continuar? Se mudar<br>
+            de ideia, você pode reativar fazendo login antes que seu perfil seja excluído<br>
+            permanentemente.<br>
+            Por favor, <strong>digite sua senha </strong>para confirmar que deseja excluir permanentemente seu<br>
+            perfil.</p>
+            <div class="container-footer">
+                <div class="input-container">
+                    <label for="Digite Sua Senha">Digite sua senha</label>
+                    <input formControlName="password" type="password" class="form-control" placeholder="Senha">
+                </div>
+                <div class="button-container">
+                    <button (click)="submit()" class="delete-button">Excluir</button>
+                    <button class="cancel-button" mat-dialog-close>Cancelar</button>
+                </div>
+            </div>
+    </form>
+    <mat-dialog-content>
