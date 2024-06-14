@@ -1,22 +1,42 @@
 import { CanActivateFn, Router } from '@angular/router';
 import { inject } from '@angular/core';
+import { StayConnectedService } from '../../../../user-portal/services/stay-connected/stay-connected.service';
 
 
-export const authGuard: CanActivateFn = (route, state) => {
-  
-  if (typeof sessionStorage !== 'undefined') {
-    const router = inject(Router);
-    const localData = sessionStorage.getItem('accessToken');
-    
-    if (localData === null || localData === undefined) {
-      router.navigate(['/login']);
-      return false;
-    }
-    
-    return true;
-  } else {
-    // Tratamento alternativo quando o localStorage não está disponível
-    console.error('O sessionStorage não está disponível.');
+export const authGuard: CanActivateFn = async (route, state) => {
+  const isConnected = inject(StayConnectedService);
+  const router = inject(Router);
+
+  const isAuthenticated = await isConnected.hasAlreadyConnected();
+console.log(isAuthenticated);
+
+  if (!isAuthenticated) {
+    router.navigate(['/login']);
     return false;
   }
+
+  return true;
 };
+// import { CanActivateFn } from '@angular/router';
+// import { inject } from '@angular/core';
+// import { StayConnectedService } from '../../../../user-portal/services/stay-connected/stay-connected.service';
+// import { Router } from '@angular/router';
+// import { Observable, of } from 'rxjs';
+// import { switchMap, tap } from 'rxjs/operators';
+
+// export const authGuard: CanActivateFn = (route, state) => {
+//   const stayConnectedService = inject(StayConnectedService);
+//   const router = inject(Router);
+
+//   return stayConnectedService.hasAlreadyConnected().pipe(
+//     tap((isAuthenticated: boolean) => console.log(isAuthenticated)),
+//     switchMap((isAuthenticated: boolean) => {
+//       if (!isAuthenticated) {
+//         router.navigate(['/login']);
+//         return of(false);
+//       }
+//       return of(true);
+//     })
+//   );
+// };
+

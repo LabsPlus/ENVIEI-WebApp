@@ -80,7 +80,7 @@ export class LoginComponent {
 
 
   stayConnectedSelected() {
-    this.stayConnected = true;
+    this.stayConnected = true; 
   }
 
   isPasswordFormatValid(): boolean {
@@ -144,8 +144,7 @@ export class LoginComponent {
     });
   }
 
-  loginUser() {
-
+  loginUser() {   
     this.loginService
       .login({
         email: this.loginForm.value.email,
@@ -153,7 +152,13 @@ export class LoginComponent {
       }, this.stayConnected)
       .toPromise()
       .then((response) => {
-
+        if(response?.status == 200) {
+          const token = response?.body?.token;
+          if (token) {
+   
+            this.stayConnected ? this.stayConnectedService.saveTokenOnLocalStorage(token) : this.stayConnectedService.saveTokenSesionStorage(token);
+          }
+        }
         this.showSuccess('Login realizado com sucesso!');
         this.router.navigate(['/home']);
       })

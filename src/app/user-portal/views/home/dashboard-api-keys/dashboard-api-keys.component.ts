@@ -12,6 +12,7 @@ import { IKey } from '../../../interfaces/IKey';
 import { InputSearchComponent } from '../../../../shared/components/input-search/input-search.component';
 import { FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SlideToggleComponent } from '../../../../shared/components/slide-toggle/slide-toggle.component';
+import { StayConnectedService } from '../../../services/stay-connected/stay-connected.service';
 
 @Component({
   selector: 'app-dashboard-api-keys',
@@ -28,12 +29,12 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit{
   dataSource = new MatTableDataSource<IKey>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   #apiKeysService = inject(ApiKeysService);
-  acessToken: string;
+  accessToken: string;
   searchForm! : FormGroup;
   isOn: boolean = false;
 
 
-  constructor(private sidebarService: SidebarService) {
+  constructor(private sidebarService: SidebarService, private stayConnectedService: StayConnectedService) {
     
     this.sidebarOpenSubscription = this.sidebarService.sidebarOpen$.subscribe(
       (isOpen) => {
@@ -41,11 +42,7 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit{
       }
     );
 
-    if (typeof localStorage !== 'undefined') {
-      this.acessToken = sessionStorage.getItem('accessToken') as string;
-    } else {
-      this.acessToken = '';
-    }
+    this.accessToken = this.stayConnectedService.getAccessToken() as string;
 
     this.searchForm = new FormGroup({
       search: new FormControl('')
@@ -53,7 +50,7 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit{
   }
 
   ngOnInit() {
-    this.#apiKeysService.getApiKeys(this.acessToken).subscribe(
+    this.#apiKeysService.getApiKeys(this.accessToken).subscribe(
       (response) => {
         this.dataSource.data = response.body as IKey[];
         this.applyApiKeyFormatting();
@@ -73,7 +70,6 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit{
   }
 
   toggleSwitch(){
-    console.log(this.isOn);
     this.isOn = !this.isOn;
   }
 

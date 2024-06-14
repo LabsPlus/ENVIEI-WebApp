@@ -9,6 +9,7 @@ import { ToastrNotificationService } from '../../services/toastr/toastr.service'
 import { NameValidatorService } from '../../../shared/services/name-validator/name-validator.service';
 import { PasswordValidatorService } from '../../../shared/services/password-validator/password-validator.service';
 import { PhoneNumberValidatorService } from '../../../shared/services/phone-number-validator/phone-number-validator.service';
+import { StayConnectedService } from '../../services/stay-connected/stay-connected.service';
 
 @Component({
   selector: 'app-change-personal-information-modal',
@@ -21,7 +22,7 @@ import { PhoneNumberValidatorService } from '../../../shared/services/phone-numb
 
 export class ChangePersonalInformationModalComponent {
 
-  acessToken: string = '';
+  accessToken: string = '';
   userForm!: FormGroup;
   userProfile: IUser = {};
   password: string = '';
@@ -32,10 +33,11 @@ export class ChangePersonalInformationModalComponent {
       private toarstNotification: ToastrNotificationService,
       private passwordValidator: PasswordValidatorService,
       private nameValidator: NameValidatorService,
-      private phoneNumberValidator: PhoneNumberValidatorService
+      private phoneNumberValidator: PhoneNumberValidatorService,
+      private stayConnectedService: StayConnectedService
     ) {
-
-    this.getToken();
+      
+      this.accessToken = this.stayConnectedService.getAccessToken() as string;
 
     this.userForm = new FormGroup({
       name: new FormControl(''),
@@ -48,7 +50,7 @@ export class ChangePersonalInformationModalComponent {
   updateProfileData(userProfileData: IUser): void {
 
     this.userService
-      .updateUser(userProfileData, this.acessToken)
+      .updateUser(userProfileData, this.accessToken)
       .toPromise()
       .then((response: HttpResponse<IUser> | any) => {
 
@@ -68,7 +70,7 @@ export class ChangePersonalInformationModalComponent {
   async validateUserPassword(password: string): Promise<boolean> {
 
     return await this.userService
-      .validateUserPassword(password, this.acessToken)
+      .validateUserPassword(password, this.accessToken)
       .toPromise()
       .then((response: HttpResponse<any> | undefined) => {
 
@@ -155,17 +157,6 @@ export class ChangePersonalInformationModalComponent {
     this.userProfile.name = this.userForm.get('name')?.value;
     this.userProfile.phone_number = this.userForm.get('phone_number')?.value;
     this.password = this.userForm.get('password')?.value;
-
-  }
-
-  getToken(): void {
-
-    if (sessionStorage.getItem('accessToken') == null) {
-      this.acessToken = '';
-      return;
-    }
-
-    this.acessToken = sessionStorage.getItem('accessToken') as string;
 
   }
 
