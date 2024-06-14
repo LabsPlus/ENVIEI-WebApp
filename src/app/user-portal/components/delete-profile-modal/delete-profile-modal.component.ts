@@ -50,6 +50,10 @@ export class DeleteProfileModalComponent {
 
   getToken(): void {
     
+    if (sessionStorage.getItem('accessToken') == null) {
+      this.accessToken = '';
+      return;
+    }
     this.accessToken = sessionStorage.getItem('accessToken') as string;
     
   }
@@ -86,10 +90,10 @@ export class DeleteProfileModalComponent {
       .catch((error: HttpErrorResponse) => {
 
         this.toarstNotification.showError('Erro ao validar senha', 'Erro');
-        console.error(error);
         return false;
       });
   }
+
 
   async deleteProfile(): Promise<void> {
     await this.userService
@@ -98,27 +102,40 @@ export class DeleteProfileModalComponent {
       .then(async (response: HttpResponse<IUser> | any) => {
         if (response?.status == 200 || response?.status == 201) {
           await this.toarstNotification.showSuccess('O perfil está em processo de exclusão', 'Sucesso');
-
-          console.log(response)
         }
       })
       .catch(async (erro: HttpErrorResponse) => {
         await this.toarstNotification.showError('Erro ao deletar perfil', 'Erro')
-        console.log(erro)
       });
   }
 
   async submit(): Promise<void> {
-    console.log('entreii')
+    
     if (!await this.isFormValid()) {
-      this.toarstNotification.showError('Erro ao deletar perfil','Erro')
       return;
     }
+
     await this.deleteProfile();
     this.dialog.closeAll();
-    //this.userService
+    await this.logout();
   }
+
   refreshPage():void{
     window.location.reload();
+  }
+
+  async logout(): Promise<void>{
+    await this.userService
+    .logout(this.accessToken)
+    .toPromise()
+    .then(async (response: HttpResponse<IUser> | any) => {
+      if (response?.status == 200 || response?.status == 201) {
+        await this.toarstNotification.showSuccess('Seu Perfil Foi Deslogado Com Sucesso', 'Sucesso');
+        this.refreshPage();
+      }
+    })
+    .catch(async (erro: HttpErrorResponse) => {
+      await this.toarstNotification.showError('Erro ao fazer o logout', 'Erro')
+    });
   }
 }

@@ -33,7 +33,7 @@ export class UserService {
   }
 
   scheduleUserDeletion(accessToken: string) {
-    return this.httpClient.post(this.registerUrl+'user/scheduleUserDeletion', { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
+    return this.httpClient.get(this.registerUrl+'user/scheduleUserDeletion', { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
   }
 
   validateUserPassword(password: string, accessToken: string) {
