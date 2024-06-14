@@ -122,13 +122,14 @@ export class ChangePasswordModalComponent implements  OnInit{
       });
   }
 
-  updatePassword(userProfileData: IUser): void {
-    this.userService
+
+  async updatePassword(userProfileData: IUser): Promise<void> {
+    await this.userService
       .updateUser(userProfileData, this.acessToken)
       .toPromise()
-      .then((response: HttpResponse<IUser> | any) => {
+      .then((response: HttpResponse<Object | any> | undefined) => {
         if (response?.status == 200 || response?.status == 201) {
-          this.toarstNotification.showSuccess('Dados atualizados com sucesso', 'Sucesso');
+          this.toarstNotification.showSuccess('Senha Atualizada Com Susseco', 'Sucesso');
         }
       })
       .catch((error: HttpErrorResponse) => {
@@ -170,7 +171,7 @@ export class ChangePasswordModalComponent implements  OnInit{
       return;
     }
 
-    this.updatePassword({password:this.userProfile.password});
+    await this.updatePassword({password:this.userProfile.password});
     this.dialog.closeAll();
     this.refreshPage();
   }

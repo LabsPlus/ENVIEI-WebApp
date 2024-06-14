@@ -9,7 +9,7 @@ export class ToastrNotificationService {
   constructor(private toastr: ToastrService) { }
 
   showSuccess(message: string, title: string, {
-    timeOut = 3000,
+    timeOut = 6000,
     progressBar = true,
     closeButton = true,
     positionClass = 'toast-top-center',
