@@ -118,9 +118,12 @@ export class DeleteProfileModalComponent {
     await this.deleteProfile();
     this.dialog.closeAll();
     await this.logout();
+    await this.refreshPage()
+    
   }
 
   refreshPage():void{
+    this.router.navigate(['/login'])
     window.location.reload();
   }
 

@@ -29,7 +29,7 @@ export class UserService {
   }
 
   deleteUser(access_token: string) {
-    return this.httpClient.post(this.registerUrl+'user/scheduleUserDeletion', { observe: 'response', headers: { 'Authorization': 'Bearer ' + access_token } });
+    return this.httpClient.post(this.registerUrl+'user/delete', { observe: 'response', headers: { 'Authorization': 'Bearer ' + access_token } });
   }
 
   scheduleUserDeletion(accessToken: string) {
