@@ -8,7 +8,6 @@ import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ToastrNotificationService } from '../../services/toastr/toastr.service';
 import { PasswordValidatorService } from '../../../shared/services/password-validator/password-validator.service';
-import { Router } from '@angular/router';
 
 
 @Component({
@@ -31,7 +30,6 @@ export class DeleteProfileModalComponent {
     private userService: UserService,
     private toarstNotification: ToastrNotificationService,
     private passwordValidator: PasswordValidatorService,
-    private router : Router,
   ) {
     this.getToken();
 
@@ -118,12 +116,9 @@ export class DeleteProfileModalComponent {
     await this.deleteProfile();
     this.dialog.closeAll();
     await this.logout();
-    await this.refreshPage()
-    
   }
 
   refreshPage():void{
-    this.router.navigate(['/login'])
     window.location.reload();
   }
 
