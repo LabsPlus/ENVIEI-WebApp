@@ -61,7 +61,7 @@ export class DeleteProfileModalComponent {
     this.getFormValue();
 
     if (!this.passwordValidator.isPasswordFormatValid(this.password)) {
-      this.toarstNotification.showError('Senha inválida', 'Erro');
+      this.toarstNotification.showError('Senha atual é necessária para excluir o perfil', 'Erro');
       return false;
     }
 
