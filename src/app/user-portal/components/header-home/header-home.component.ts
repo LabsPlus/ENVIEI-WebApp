@@ -8,11 +8,11 @@ import { ToastrNotificationService } from '../../services/toastr/toastr.service'
 import IUser from '../../interfaces/IUser';
 import { SidebarService } from '../../services/sidebar/sidebar.service';
 import { StayConnectedService } from '../../services/stay-connected/stay-connected.service';
-
+import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-header-home',
   standalone: true,
-  imports: [CommonModule],
+  imports: [CommonModule, RouterModule],
   providers: [HomeService, ToastrNotificationService],
   templateUrl: './header-home.component.html',
   styleUrl: './header-home.component.css',
@@ -65,10 +65,10 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
 
   async getUserData(): Promise<void> {
 
-    this.isVisible && this.homeService
+    this.isVisible && await this.homeService
       .getUserData(this.accessToken)
       .toPromise()
-      .then((response: HttpResponse<IUser> | any) => {
+      .then(async(response: HttpResponse<IUser> | any) => {
         if (response?.status == 200 || response?.status == 201) {
           this.user.name = response.body.name;
           this.user.email = response.body.email;
@@ -104,7 +104,7 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
   }
 
   goToProfile(): void {
-    console.log('Navigating to profile...');
+    this.router.navigate(['/home/profile']);
   }
 
   logout(): void {

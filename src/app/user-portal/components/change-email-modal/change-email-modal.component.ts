@@ -54,17 +54,18 @@ export class ChangeEmailModalComponent {
     this.password = this.userForm.get('password')?.value;
   }
 
-  updateEmail(userProfileData: IUser): void {
-    this.userService
+
+  async updateEmail(userProfileData: IUser): Promise<void> {
+    await this.userService
       .requestUpdateEmail(userProfileData, this.accessToken)
       .toPromise()
-      .then((response: HttpResponse<IUser> | any) => {
+      .then(async (response: HttpResponse<IUser> | any) => {
         if (response?.status == 200 || response?.status == 201) {
-          this.toarstNotification.showSuccess('Dados atualizados com sucesso', 'Sucesso');
+          await this.toarstNotification.showSuccess('Dados atualizados com sucesso', 'Sucesso');
         }
       })
-      .catch((error: HttpErrorResponse) => {
-        this.toarstNotification.showError('Erro ao atualizar dados', 'Erro');
+      .catch(async (error: HttpErrorResponse) => {
+        await this.toarstNotification.showError('Erro ao atualizar dados', 'Erro');
         console.error(error);
       });
   }
@@ -113,7 +114,7 @@ export class ChangeEmailModalComponent {
       this.toarstNotification.showError('Senha inválida', 'Erro');
       return;
     }
-    this.updateEmail(this.userProfile);
+    await this.updateEmail(this.userProfile);
     this.dialog.closeAll();
     this.refreshPage();
   }
