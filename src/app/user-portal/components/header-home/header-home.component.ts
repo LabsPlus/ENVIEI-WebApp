@@ -64,7 +64,8 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
   }
 
   async getUserData(): Promise<void> {
-    this.homeService
+
+    this.isVisible && this.homeService
       .getUserData(this.accessToken)
       .toPromise()
       .then((response: HttpResponse<IUser> | any) => {
@@ -107,18 +108,21 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
   }
 
   logout(): void {
-    sessionStorage.removeItem('accessToken');
-    localStorage.removeItem('stayConnectedToken');
+
     this.homeService
       .logout(this.accessToken)
       .toPromise()
-      .then((response: HttpResponse<Object | any> | undefined) => {
+      .then((response: HttpResponse<Object | any> | undefined) => {            
         if (response?.status == 200 || response?.status == 201) {
           this.toastr.showSuccess('Usuário deslogado com sucesso', 'success');
           this.router.navigate(['/login']);
         }
+      }).then(() => {
+        this.stayConnectedService.removeToken();
       })
       .catch((error: HttpErrorResponse) => {
+        console.log(error);
+        
         if (error.status >= 400 && error.status < 500) {
           console.error(error.error.error);
         }

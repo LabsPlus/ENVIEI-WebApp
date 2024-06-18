@@ -45,8 +45,8 @@ export class StayConnectedService {
       return null;
     }
   
-    const sessionToken = window.sessionStorage.getItem('accessToken') || null;
-    const localToken = window.localStorage.getItem('stayConnectedToken') || null;
+    const sessionToken = window.sessionStorage.getItem('accessToken');
+    const localToken = window.localStorage.getItem('stayConnectedToken');
     
     return sessionToken || localToken;
   }
