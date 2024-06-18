@@ -13,7 +13,6 @@ export class HomeService {
   constructor(private httpClient: HttpClient) { }
 
   getUserData(accessToken: string) {
-    console.log(accessToken);
     return this.httpClient.get<IUser>(this.registerUrl+'user/getUserByAccessToken', { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
   }
 

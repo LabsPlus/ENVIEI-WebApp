@@ -52,4 +52,9 @@ export class UserService {
   requestUpdateEmailRecovery(user: IUser, access_token: string) {
     return this.httpClient.post(this.registerUrl+'user/requestUpdateEmailRecovery', user, { observe: 'response', headers: { 'Authorization': 'Bearer ' + access_token } });
   }
+
+  isLoggedIn(accessToken: string) {      
+    return this.httpClient.get(this.registerUrl+'user/isLoggedIn', { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
+  }
+  
 }

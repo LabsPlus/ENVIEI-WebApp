@@ -9,13 +9,14 @@ import { ChangePersonalInformationModalComponent } from '../../../../components/
 import { ChangeEmailRecoveryModalComponent } from '../../../../components/change-email-recovery-modal/change-email-recovery-modal.component';
 import { ChangeEmailModalComponent } from '../../../../components/change-email-modal/change-email-modal.component';
 import { ChangePasswordModalComponent } from '../../../../components/change-password-modal/change-password-modal.component';
+import { StayConnectedService } from '../../../../services/stay-connected/stay-connected.service';
 
 @Component({
   selector: 'app-my-profile',
   standalone: true,
   imports: [MatSlideToggleModule, CommonModule],
   templateUrl: './my-profile.component.html',
-  providers: [UserService, ChangePersonalInformationModalComponent,ChangeEmailModalComponent, ChangePasswordModalComponent, ChangeEmailRecoveryModalComponent],
+  providers: [StayConnectedService,UserService, ChangePersonalInformationModalComponent,ChangeEmailModalComponent, ChangePasswordModalComponent, ChangeEmailRecoveryModalComponent],
   styleUrl: './my-profile.component.css',
 })
 export class MyProfileComponent {
@@ -27,22 +28,18 @@ export class MyProfileComponent {
 
   constructor(
     private userService: UserService,
+    private stayConnectedService: StayConnectedService,
     private changePersonalInformationModalComponent: ChangePersonalInformationModalComponent,
     private changeEmailModalComponent: ChangeEmailModalComponent,
     private changePasswordModalComponent: ChangePasswordModalComponent, 
     private changeEmailRecoveryModalComponent: ChangeEmailRecoveryModalComponent,
   ) {
 
-    if (typeof localStorage !== 'undefined') {
-      this.acessToken = sessionStorage.getItem('accessToken') as string;
-    } else {
-      this.acessToken = '';
+    this.acessToken = this.stayConnectedService.getAccessToken() as string;
+
+    if(this.acessToken){
+      this.getProfileData();
     }
-
-
-    this.getProfileData();
-
-    console.log(this.userProfile);
 
   }
 
@@ -88,6 +85,8 @@ export class MyProfileComponent {
         }
       })
       .catch((error: HttpErrorResponse) => {
+        console.log(error);
+        
         if (error.status >= 400 && error.status < 500) {
           console.error(error.error.error);
         }

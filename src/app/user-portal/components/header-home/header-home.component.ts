@@ -7,6 +7,7 @@ import { HomeService } from '../../services/home/home.service';
 import { ToastrNotificationService } from '../../services/toastr/toastr.service';
 import IUser from '../../interfaces/IUser';
 import { SidebarService } from '../../services/sidebar/sidebar.service';
+import { StayConnectedService } from '../../services/stay-connected/stay-connected.service';
 import { RouterModule } from '@angular/router';
 @Component({
   selector: 'app-header-home',
@@ -21,7 +22,7 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
   defaultProfilePhoto: string =
     '../../../../../assets/images/shared/not-registred-user-photo.png';
   menuOpen: boolean = false;
-  acessToken: string;
+  accessToken: string;
   isNavOpen = false;
   sidebarOpenSubscription: Subscription;
   isVisible: boolean = true;
@@ -34,6 +35,7 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
     private router: Router,
     private toastr: ToastrNotificationService,
     private location: Location,
+    private stayConnectedService: StayConnectedService
   ) {
     this.isVisible = false;
     this.sidebarOpenSubscription = this.sidebarService.sidebarOpen$.subscribe(
@@ -42,11 +44,8 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
       }
     );
 
-    if (typeof localStorage !== 'undefined') {
-      this.acessToken = sessionStorage.getItem('accessToken') as string;
-    } else {
-      this.acessToken = '';
-    }
+    this.accessToken = this.stayConnectedService.getAccessToken() as string;
+
 
     this.getUserData();
     this.getUserData();
@@ -65,8 +64,9 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
   }
 
   async getUserData(): Promise<void> {
-    await this.homeService
-      .getUserData(this.acessToken)
+
+    this.isVisible && await this.homeService
+      .getUserData(this.accessToken)
       .toPromise()
       .then(async(response: HttpResponse<IUser> | any) => {
         if (response?.status == 200 || response?.status == 201) {
@@ -108,18 +108,21 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
   }
 
   logout(): void {
-    sessionStorage.removeItem('accessToken');
-    localStorage.removeItem('stayConnectedToken');
+
     this.homeService
-      .logout(this.acessToken)
+      .logout(this.accessToken)
       .toPromise()
-      .then((response: HttpResponse<Object | any> | undefined) => {
+      .then((response: HttpResponse<Object | any> | undefined) => {            
         if (response?.status == 200 || response?.status == 201) {
           this.toastr.showSuccess('Usuário deslogado com sucesso', 'success');
           this.router.navigate(['/login']);
         }
+      }).then(() => {
+        this.stayConnectedService.removeToken();
       })
       .catch((error: HttpErrorResponse) => {
+        console.log(error);
+        
         if (error.status >= 400 && error.status < 500) {
           console.error(error.error.error);
         }

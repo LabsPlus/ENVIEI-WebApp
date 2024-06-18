@@ -9,6 +9,7 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ToastrNotificationService } from '../../services/toastr/toastr.service';
 import { PasswordValidatorService } from '../../../shared/services/password-validator/password-validator.service';
 import { EmailValidatorService } from '../../../shared/services/email-validator/email-validator.service';
+import { StayConnectedService } from '../../services/stay-connected/stay-connected.service';
 
 @Component({
   selector: 'app-change-email-modal',
@@ -21,7 +22,7 @@ import { EmailValidatorService } from '../../../shared/services/email-validator/
 export class ChangeEmailModalComponent {
   userForm! : FormGroup
   userProfile: IUser = {};
-  acessToken: string = '';
+  accessToken: string = '';
   password: string = '';
 
   constructor(
@@ -29,10 +30,11 @@ export class ChangeEmailModalComponent {
     private userService: UserService,
     private toarstNotification: ToastrNotificationService,
     private passwordValidator: PasswordValidatorService,
-    private emailValidator: EmailValidatorService
+    private emailValidator: EmailValidatorService,
+    private stayConnectedService: StayConnectedService
   ) {
 
-    this.getToken();
+    this.accessToken = this.stayConnectedService.getAccessToken() as string;
 
     this.userForm = new FormGroup({
       email: new FormControl(''),
@@ -43,7 +45,7 @@ export class ChangeEmailModalComponent {
   openDialog() {
     const dialogRef = this.dialog.open(ChangeEmailModalComponent);
 
-    dialogRef.afterClosed().subscribe(result => { // if not used, remove
+    dialogRef.afterClosed().subscribe(result => { 
     });
   }
 
@@ -52,18 +54,10 @@ export class ChangeEmailModalComponent {
     this.password = this.userForm.get('password')?.value;
   }
 
-  getToken(): void {
-    if (sessionStorage.getItem('accessToken') == null) {
-      this.acessToken = '';
-      return;
-    }
-    this.acessToken = sessionStorage.getItem('accessToken') as string;
-  }
-
 
   async updateEmail(userProfileData: IUser): Promise<void> {
     await this.userService
-      .requestUpdateEmail(userProfileData, this.acessToken)
+      .requestUpdateEmail(userProfileData, this.accessToken)
       .toPromise()
       .then(async (response: HttpResponse<IUser> | any) => {
         if (response?.status == 200 || response?.status == 201) {
@@ -79,7 +73,7 @@ export class ChangeEmailModalComponent {
   
  async validateUserPassword(password: string): Promise<boolean> {
     return await this.userService
-      .validateUserPassword(password, this.acessToken)
+      .validateUserPassword(password, this.accessToken)
       .toPromise()
       .then((response: HttpResponse<any> | undefined) => {
 

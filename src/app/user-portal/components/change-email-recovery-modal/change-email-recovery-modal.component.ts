@@ -9,6 +9,7 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ToastrNotificationService } from '../../services/toastr/toastr.service';
 import { PasswordValidatorService } from '../../../shared/services/password-validator/password-validator.service';
 import { EmailValidatorService } from '../../../shared/services/email-validator/email-validator.service';
+import { StayConnectedService } from '../../services/stay-connected/stay-connected.service';
 
 @Component({
   selector: 'app-change-email-recovery-modal',
@@ -30,10 +31,11 @@ export class ChangeEmailRecoveryModalComponent {
     private userService: UserService,
     private toarstNotification: ToastrNotificationService,
     private passwordValidator: PasswordValidatorService,
-    private emailValidator: EmailValidatorService
+    private emailValidator: EmailValidatorService,
+    private stayConnectedService: StayConnectedService
   ) {
 
-    this.getToken();
+    this.accessToken = this.stayConnectedService.getAccessToken() as string;
 
     this.userForm = new FormGroup({
       email_recovery: new FormControl(''),
@@ -51,14 +53,6 @@ export class ChangeEmailRecoveryModalComponent {
   getFormValue(): void {
     this.userProfile.email_recovery = this.userForm.get('email_recovery')?.value;
     this.password = this.userForm.get('password')?.value;
-  }
-
-  getToken(): void {
-    if (sessionStorage.getItem('accessToken') == null) {
-      this.accessToken = '';
-      return;
-    }
-    this.accessToken = sessionStorage.getItem('accessToken') as string;
   }
 
   async isFormValid(): Promise<boolean> {

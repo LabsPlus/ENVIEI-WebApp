@@ -9,6 +9,7 @@ import { ToastrNotificationService } from '../../services/toastr/toastr.service'
 import { PasswordValidatorService } from '../../../shared/services/password-validator/password-validator.service';
 import { EmailValidatorService } from '../../../shared/services/email-validator/email-validator.service';
 import IUser from '../../interfaces/IUser';
+import { StayConnectedService } from '../../services/stay-connected/stay-connected.service';
 
 
 @Component({
@@ -22,7 +23,7 @@ import IUser from '../../interfaces/IUser';
 export class ChangePasswordModalComponent implements  OnInit{
   userForm! : FormGroup
   userProfile: any = {};
-  acessToken: string = '';
+  accessToken: string = '';
   password: string = '';
   strengths = {
     hasLowerCase: false,
@@ -36,10 +37,11 @@ export class ChangePasswordModalComponent implements  OnInit{
     private userService: UserService,
     private toarstNotification: ToastrNotificationService,
     private passwordValidator: PasswordValidatorService,
+    private stayConnectedService: StayConnectedService
   ) {}
 
   ngOnInit(): void {
-    this.getToken();
+    this.accessToken = this.stayConnectedService.getAccessToken() as string;
   
     this.userForm = new FormGroup({
       password: new FormControl(''),
@@ -99,7 +101,7 @@ export class ChangePasswordModalComponent implements  OnInit{
 
   async validateUserPassword(password: string): Promise<boolean> {
     return await this.userService
-      .validateUserPassword(password, this.acessToken)
+      .validateUserPassword(password, this.accessToken)
       .toPromise()
       .then((response: HttpResponse<any> | undefined) => {
 
@@ -125,7 +127,7 @@ export class ChangePasswordModalComponent implements  OnInit{
 
   async updatePassword(userProfileData: IUser): Promise<void> {
     await this.userService
-      .updateUser(userProfileData, this.acessToken)
+      .updateUser(userProfileData, this.accessToken)
       .toPromise()
       .then((response: HttpResponse<Object | any> | undefined) => {
         if (response?.status == 200 || response?.status == 201) {
@@ -178,13 +180,5 @@ export class ChangePasswordModalComponent implements  OnInit{
 
   refreshPage(): void {
     window.location.reload();
-  }
-
-  getToken(): void {
-    if (sessionStorage.getItem('accessToken') == null) {
-      this.acessToken = '';
-      return;
-    }
-    this.acessToken = sessionStorage.getItem('accessToken') as string;
   }
 }

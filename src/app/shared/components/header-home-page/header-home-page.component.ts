@@ -43,9 +43,10 @@ export class HeaderHomePageComponent {
 
   }
 
-  accessLogin() {
-
-    if (this.stayConnectedService.hasAlreadyConnected()) {
+  async accessLogin() {
+    const token = this.stayConnectedService.getAccessToken();
+    
+    if (token) {
       this.route.navigate(['/home']);
       return;
     }
