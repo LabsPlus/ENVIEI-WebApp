@@ -1,100 +1,89 @@
 import { Injectable } from '@angular/core';
 import { ToastrNotificationService } from '../toastr/toastr.service';
 import { UserService } from '../user-service/user.service';
-import { of, Observable } from 'rxjs';
-import { catchError, map } from 'rxjs/operators';
+import { Router } from '@angular/router';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StayConnectedService {
 
-  constructor(private userService: UserService, private toastrNotificationService: ToastrNotificationService) { }
+  constructor(private router: Router, private userService: UserService, private toastrNotificationService: ToastrNotificationService) { }
+
+  //this function checks if the window object is defined
+  private isWindowDefined(): boolean {
+    return typeof window !== 'undefined';
+  }
+
+  //this function removes quotes from the token
+  verifyAndFormatQuotesOnToken(token: string): string {
+    let formattedToken = token.replace(/^['"]+|['"]+$/g, '');
+    formattedToken = `"${formattedToken}"`;
+  
+    return formattedToken;
+  }
+  
 
   saveTokenOnLocalStorage(token: string) {
-    localStorage.setItem('stayConnectedToken', '"' + token + '"');
-  }
-  saveTokenSesionStorage(token: string) {
-    sessionStorage.setItem('accessToken', '"' + token + '"');
+    if (!this.isWindowDefined()) return;
+    
+    const tokenFormatted = this.verifyAndFormatQuotesOnToken(token);
+    window.localStorage.setItem('stayConnectedToken', tokenFormatted);
   }
 
-  getAccessToken() {
+
+  saveTokenSesionStorage(token: string) {
+    if (!this.isWindowDefined()) return;
     
-    if (typeof window == 'undefined') {
+    const tokenFormatted = this.verifyAndFormatQuotesOnToken(token);
+    window.sessionStorage.setItem('accessToken', tokenFormatted);
+  }
+
+  //this function gets the token from the local storage or session storage
+  getAccessToken(): string | null {
+    if (!this.isWindowDefined()) {
       return null;
     }
   
-    let sessionToken = sessionStorage.getItem('accessToken') ?  sessionStorage.getItem('accessToken') : null;
-    let localToken = localStorage.getItem('stayConnectedToken') ? localStorage.getItem('stayConnectedToken') : null ;
+    const sessionToken = window.sessionStorage.getItem('accessToken') || null;
+    const localToken = window.localStorage.getItem('stayConnectedToken') || null;
     
-    if (sessionToken !== null)
-      return sessionToken;
-  
-    if (localToken !== null)
-      return localToken;
-  
-    return null;
+    return sessionToken || localToken;
   }
 
+
   removeToken() {
-    localStorage.removeItem('stayConnectedToken');
-    sessionStorage.removeItem('accessToken');
-  }
+    if (!this.isWindowDefined()) return;
     
-  async hasAlreadyConnected(): Promise<boolean> {
-    const token = this.getAccessToken() as string;
+    window.localStorage.removeItem('stayConnectedToken');
+    window.sessionStorage.removeItem('accessToken');
+  }
+
+  //this function handles errors and redirects the user to the login page
+  private handleErrorAndRedirect() {
+    this.toastrNotificationService.showError('Faça login novamente.', 'Error');
+    this.removeToken();
+    this.router.navigate(['/login']);
+  }
   
-    if (!token) {
-      return false;
-    }
-  
-    const tokenDecoded = JSON.parse(atob(token.split('.')[1]));
-    const tokenExpiration = tokenDecoded.exp * 1000;
-    const now = new Date().getTime();
-  
-    if (now > tokenExpiration) {
-      this.removeToken();
-      return false;
-    }
-  
+
+  //this function checks if the user is already connected
+  async hasAlreadyConnected(token:string): Promise<boolean | null> {
+
     try {
       const response: any = await this.userService.isLoggedIn(token).toPromise();
-      return response?.status === 200;
+      if(response?.status === 200) {
+        return true;
+      }
     } catch (error: any) {
       if (error.status === 400) {
-        this.toastrNotificationService.showError('Faça login novamente.', 'Error');
-        this.removeToken();
+        this.handleErrorAndRedirect();
       }
       return false;
     }
-  }
-  // hasAlreadyConnected(): Observable<boolean> {
-  //   const token = this.getAccessToken() as string;
-  
-  //   if (!token) {
-  //     return of(false);
-  //   }
-  
-  //   const tokenDecoded = JSON.parse(atob(token.split('.')[1]));
-  //   const tokenExpiration = tokenDecoded.exp * 1000;
-  //   const now = new Date().getTime();
-  
-  //   if (now > tokenExpiration) {
-  //     this.removeToken();
-  //     return of(false);
-  //   }
-  
-  //   return this.userService.isLoggedIn(token).pipe(
-  //     map((response: any) => response?.status === 200),
-  //     catchError((error: any) => {
-  //       if (error.status === 400) {
-  //         this.toastrNotificationService.showError('Faça login novamente.', 'Error');
-  //         this.removeToken();
-  //       }
-  //       return of(false);
-  //     })
-  //   );
-  // }
+    return null;
+}
+
 }
 
   

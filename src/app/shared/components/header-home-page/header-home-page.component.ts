@@ -45,7 +45,7 @@ export class HeaderHomePageComponent {
 
   async accessLogin() {
     const token = this.stayConnectedService.getAccessToken();
-    console.log(token, 'token');
+    
     if (token) {
       this.route.navigate(['/home']);
       return;
