@@ -48,7 +48,6 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
 
 
     this.getUserData();
-    this.getUserData();
   }
 
   ngOnInit() {
@@ -65,7 +64,7 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
 
   async getUserData(): Promise<void> {
 
-    this.isVisible && await this.homeService
+     await this.homeService
       .getUserData(this.accessToken)
       .toPromise()
       .then(async(response: HttpResponse<IUser> | any) => {
