@@ -112,8 +112,13 @@ export class DeleteProfileModalComponent {
   }
 
   async submit(): Promise<void> {
-    
+    this.getFormValue();
+
     if (!await this.isFormValid()) {
+      return;
+    }
+    if (!await this.validateUserPassword(this.password)){
+      this.toarstNotification.showError('Senha atual está incorreta','Erro')
       return;
     }
 
