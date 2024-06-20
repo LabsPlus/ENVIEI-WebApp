@@ -57,4 +57,11 @@ export class UserService {
     return this.httpClient.get(this.registerUrl+'user/isLoggedIn', { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
   }
   
+  setFlagValueRememberPasswordChange(accessToken: string, flagValue: boolean) {
+    return this.httpClient.post(this.registerUrl+'user/setFlagValueRememberPasswordChange', { remember_password_change_is_enable: flagValue }, { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
+  }
+
+  isFlagRememberPasswordChangeEnable(accessToken: string) {
+    return this.httpClient.get(this.registerUrl+'user/isFlagRememberPasswordChangeEnable', { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
+  }
 }
