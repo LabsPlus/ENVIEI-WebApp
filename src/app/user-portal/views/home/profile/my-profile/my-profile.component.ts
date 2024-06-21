@@ -21,10 +21,10 @@ import { StayConnectedService } from '../../../../services/stay-connected/stay-c
 })
 export class MyProfileComponent {
   color: ThemePalette = 'primary';
-
+  flagRememberPasswordChange: boolean = false;
   defaultProfilePhoto: string = '../../../../../../../src/assets/images/shared/profile-photo.svg';
   userProfile: IUser = {}
-  acessToken: string;
+  acessToken: string = '';
 
   constructor(
     private userService: UserService,
@@ -34,13 +34,18 @@ export class MyProfileComponent {
     private changePasswordModalComponent: ChangePasswordModalComponent, 
     private changeEmailRecoveryModalComponent: ChangeEmailRecoveryModalComponent,
   ) {
+    this.initialize();
+  }
+  
+  async initialize() {
 
     this.acessToken = this.stayConnectedService.getAccessToken() as string;
+    
+    await this.isFlagRememberPasswordChangeEnable();
 
     if(this.acessToken){
       this.getProfileData();
     }
-
   }
 
   openChangePersonalInformationModal() {
@@ -99,6 +104,44 @@ export class MyProfileComponent {
         this.userProfile.email = '';
         this.userProfile.profile_photo = this.defaultProfilePhoto;
         this.userProfile.phone_number = '';
+      });
+  }
+  setCheckBoxValueFlagValueRememberPasswordChange(flagValue: boolean) {
+    this.flagRememberPasswordChange = flagValue;
+  }
+
+  async checkBoxFlagValueRememberPasswordChangeClick() {
+    alert('checkBoxFlagValueRememberPasswordChangeClick');
+    this.flagRememberPasswordChange = !this.flagRememberPasswordChange;
+    await this.setFlagValueRememberPasswordChange();
+  }
+
+  async setFlagValueRememberPasswordChange(): Promise<void> {
+    await this.userService
+      .setFlagValueRememberPasswordChange(this.acessToken, this.flagRememberPasswordChange)
+      .toPromise()
+      .then((response: HttpResponse<any> | any) => {
+        if (response?.status == 200 || response?.status == 201) {
+          alert('Flag value changed');
+        }
+      })
+      .catch((error: HttpErrorResponse) => {
+        console.error(error);
+      });
+  }
+
+  async isFlagRememberPasswordChangeEnable(){
+
+    await this.userService
+      .isFlagRememberPasswordChangeEnable(this.acessToken)
+      .toPromise()
+      .then((response: HttpResponse<any> | any) => {
+        if (response?.status == 200 || response?.status == 201) {
+          this.flagRememberPasswordChange = response.body.isFlagEnable;
+        }
+      })
+      .catch((error: HttpErrorResponse) => {
+        console.error(error);
       });
   }
 }

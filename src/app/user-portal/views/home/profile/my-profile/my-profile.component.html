@@ -48,7 +48,7 @@
           </div>
         </div>
         <div>
-          <input type="checkbox" class="checkbox-own">
+          <input type="checkbox" class="checkbox-own" oninput="checkBoxFlagValueRememberPasswordChangeClick()" (click)="checkBoxFlagValueRememberPasswordChangeClick()" [checked]="flagRememberPasswordChange">
           <span>Solicitar mudança de senha com ao completar 60 dias?</span>
         </div>
       </div>
