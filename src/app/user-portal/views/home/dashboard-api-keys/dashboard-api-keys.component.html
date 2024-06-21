@@ -20,8 +20,15 @@
             <!-- Status Column -->
             <ng-container matColumnDef="Status">
                 <th mat-header-cell *matHeaderCellDef> Status </th>
-                <td mat-cell *matCellDef="let element"> Ativo </td>
-            </ng-container>
+                <td mat-cell *matCellDef="let element">
+                  <ng-container *ngIf="element.is_active; else inactive">
+                    Ativa
+                  </ng-container>
+                  <ng-template #inactive>
+                    Desativada
+                  </ng-template>
+                </td>
+              </ng-container>
 
             <!-- Name Column -->
             <ng-container matColumnDef="Name">
@@ -47,7 +54,7 @@
                 <th mat-header-cell *matHeaderCellDef> Ativar/Desativar </th>
                 <td mat-cell *matCellDef="let element">
                     <div class="slide-toggle-container">
-                        <app-slide-toggle (click)="toggleSwitch()" [isOn]="isOn"></app-slide-toggle>
+                        <app-slide-toggle (click)="toggleSwitch(element)" [isOn]="element.is_active"></app-slide-toggle>
                     </div>
                 </td>
             </ng-container>
