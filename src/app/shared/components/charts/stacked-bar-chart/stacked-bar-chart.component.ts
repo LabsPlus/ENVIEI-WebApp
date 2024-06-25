@@ -16,7 +16,7 @@ export class StackedBarChartComponent {
   data = [
     { name: '@hotmail.com', values: [75] },
     { name: '@hotmail.com.br', values: [75] },
-    { name: '@labsif.com.br', values: [95] },
+    { name: '@labsif.com.br', values: [100] },
     { name: '@gmail.com', values: [25] }
   ];
 
