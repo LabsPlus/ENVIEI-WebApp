@@ -1,0 +1,16 @@
+<div class="chart-container">
+    <div class="y-axis">
+        <div class="y-axis-labels">
+            <div class="y-label" *ngFor="let tick of yTicks">{{ tick }}</div>
+        </div>
+        <div style="height: 10px;"></div>
+    </div>
+    <div class="chart-content">
+        <div *ngFor="let item of data; let i = index" class="bar-group">
+            <div class="bar" *ngFor="let value of item.values"
+                [ngStyle]="{'height': value + '%', 'background': getColor(i)}">
+            </div>
+            <span class="x-label">{{ item.name }}</span>
+        </div>
+    </div>
+</div>
