@@ -1,6 +1,19 @@
 .container{
     display: flex;
-    flex-direction: row;
+    flex-direction: column;
     justify-content: space-between;
     margin-top: 20px;
+    margin-left: 10em;
+}
+.graphic-container {
+    display: flex;
+    flex-wrap: wrap; 
+    justify-content: center; 
+    gap: 20px; 
+}
+
+.graphic-container > div {
+    flex: 1 1 45%; /* Hace que cada gráfico ocupe alrededor del 45% del ancho del contenedor */
+    min-width: 300px; /* Asegura un tamaño mínimo para los gráficos */
+    box-sizing: border-box; /* Incluye padding y border en el tamaño del elemento */
 }

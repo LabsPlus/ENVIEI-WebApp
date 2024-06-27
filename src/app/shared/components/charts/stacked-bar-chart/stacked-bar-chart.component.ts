@@ -10,9 +10,6 @@ import { CommonModule } from '@angular/common';
 })
 export class StackedBarChartComponent {
 
-
-
-
   data = [
     { name: '@hotmail.com', values: [75] },
     { name: '@hotmail.com.br', values: [75] },
