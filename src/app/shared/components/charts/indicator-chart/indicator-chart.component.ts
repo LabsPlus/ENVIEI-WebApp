@@ -8,11 +8,12 @@ import { Component, OnInit } from '@angular/core';
 })
 export class IndicatorChartComponent implements OnInit {
 
-  openRate: number = 75; //mock
-  clickRate: number = 25; //mock
+  openRate: number = 80; // Mock data inicial
+  clickRate: number = 20; // Mock data inicial
 
   ngOnInit(): void {
     this.drawChart(this.openRate, this.clickRate);
+    this.updateLabels(this.openRate, this.clickRate);
   }
 
   drawChart(openRate: number, clickRate: number): void {
@@ -23,51 +24,47 @@ export class IndicatorChartComponent implements OnInit {
       const radius = Math.min(canvas.width, canvas.height) / 2;
       const centerX = canvas.width / 2;
       const centerY = canvas.height / 2;
-      const innerRadius = radius * 0.5; 
+      const innerRadius = radius * 0.5;
 
       ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-      // background circle
       ctx.beginPath();
       ctx.arc(centerX, centerY, radius, 0, 2 * Math.PI);
       ctx.fillStyle = '#f0f0f0';
       ctx.fill();
 
-      // Sección of emails open
-      const startAngleOpen = -0.5 * Math.PI; 
-      const endAngleOpen = startAngleOpen + (openRate / 100) * Math.PI;
+      const startAngleOpen = -0.5 * Math.PI;
+      const endAngleOpen = startAngleOpen + (openRate / 100) * 2 * Math.PI;
       ctx.beginPath();
-      ctx.arc(centerX, centerY, radius, startAngleOpen, startAngleOpen + (openRate / 100) * 2 * Math.PI);
+      ctx.arc(centerX, centerY, radius, startAngleOpen, endAngleOpen);
       ctx.lineTo(centerX, centerY);
-      ctx.fillStyle = '#36a2eb';
+      ctx.fillStyle = '#0443BD';
       ctx.fill();
 
-      // Seccion of emails clickados
-      const startAngleClick = -0.5 * Math.PI; 
-      const endAngleClick = startAngleClick - (clickRate / 100) * Math.PI;
+      const startAngleClick = -0.5 * Math.PI;
+      const endAngleClick = startAngleClick - (clickRate / 100) * 2 * Math.PI;
       ctx.beginPath();
-      ctx.arc(centerX, centerY, radius, startAngleClick, startAngleClick - (clickRate / 100) * 2 * Math.PI, true);
+      ctx.arc(centerX, centerY, radius, startAngleClick, endAngleClick, true);
       ctx.lineTo(centerX, centerY);
-      ctx.fillStyle = '#ffce56';
+      ctx.fillStyle = '#FBBC04';
       ctx.fill();
 
-      // Circle intern
       ctx.beginPath();
       ctx.arc(centerX, centerY, innerRadius, 0, 2 * Math.PI);
       ctx.fillStyle = '#f0f0f0';
       ctx.fill();
-
     }
   }
 
+  updateLabels(openRate: number, clickRate: number): void {
+    const openLabel = document.getElementById('openLabel');
+    const clickLabel = document.getElementById('clickLabel');
 
-  fetchData(): void {
-    const data = {
-      openRate: 80, 
-      clickRate: 20 
-    };
-
-    // updates the chart with new data
-    this.drawChart(data.openRate, data.clickRate);
+    if (openLabel) {
+      openLabel.textContent = `Abertos: ${openRate}%`;
+    }
+    if (clickLabel) {
+      clickLabel.textContent = `Clicke en links: ${clickRate}%`;
+    }
   }
 }
