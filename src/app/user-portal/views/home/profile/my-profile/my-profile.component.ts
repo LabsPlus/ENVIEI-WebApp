@@ -10,13 +10,17 @@ import { ChangeEmailRecoveryModalComponent } from '../../../../components/change
 import { ChangeEmailModalComponent } from '../../../../components/change-email-modal/change-email-modal.component';
 import { ChangePasswordModalComponent } from '../../../../components/change-password-modal/change-password-modal.component';
 import { StayConnectedService } from '../../../../services/stay-connected/stay-connected.service';
+import { ToastrNotificationService } from '../../../../services/toastr/toastr.service';
 
 @Component({
   selector: 'app-my-profile',
   standalone: true,
   imports: [MatSlideToggleModule, CommonModule],
   templateUrl: './my-profile.component.html',
-  providers: [StayConnectedService,UserService, ChangePersonalInformationModalComponent,ChangeEmailModalComponent, ChangePasswordModalComponent, ChangeEmailRecoveryModalComponent],
+  providers: [
+      StayConnectedService,UserService, ChangePersonalInformationModalComponent,
+      ChangeEmailModalComponent, ChangePasswordModalComponent, 
+      ChangeEmailRecoveryModalComponent,  ToastrNotificationService],
   styleUrl: './my-profile.component.css',
 })
 export class MyProfileComponent {
@@ -33,6 +37,7 @@ export class MyProfileComponent {
     private changeEmailModalComponent: ChangeEmailModalComponent,
     private changePasswordModalComponent: ChangePasswordModalComponent, 
     private changeEmailRecoveryModalComponent: ChangeEmailRecoveryModalComponent,
+    private toarstNotification: ToastrNotificationService,
   ) {
     this.initialize();
   }
@@ -111,7 +116,6 @@ export class MyProfileComponent {
   }
 
   async checkBoxFlagValueRememberPasswordChangeClick() {
-    alert('checkBoxFlagValueRememberPasswordChangeClick');
     this.flagRememberPasswordChange = !this.flagRememberPasswordChange;
     await this.setFlagValueRememberPasswordChange();
   }
@@ -122,10 +126,12 @@ export class MyProfileComponent {
       .toPromise()
       .then((response: HttpResponse<any> | any) => {
         if (response?.status == 200 || response?.status == 201) {
-          alert('Flag value changed');
+          this.toarstNotification.showSuccess('Flag alterada com sucesso', 'Sucesso');
         }
       })
       .catch((error: HttpErrorResponse) => {
+
+        this.toarstNotification.showError('Erro ao alterar flag', 'Erro');
         console.error(error);
       });
   }
@@ -141,7 +147,11 @@ export class MyProfileComponent {
         }
       })
       .catch((error: HttpErrorResponse) => {
+        
+        this.toarstNotification.showError('Erro ao obter flag', 'Erro');
+
         console.error(error);
+
       });
   }
 }
