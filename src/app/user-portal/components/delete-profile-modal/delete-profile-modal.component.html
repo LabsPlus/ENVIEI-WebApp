@@ -13,7 +13,19 @@
             <div class="container-footer">
                 <div class="input-container">
                     <label for="Digite Sua Senha">Digite sua senha</label>
-                    <input formControlName="password" type="password" class="form-control" placeholder="Senha">
+                    <!-- <input formControlName="password" type="password" class="form-control" placeholder="Senha"> -->
+                    <div class="form-group">
+                        <app-password-eye-button [props]="{
+                            type: 'password',
+                            placeholder: 'Senha',
+                            id: 'password',
+                            name: 'password',
+                            inputName: 'password',
+                            class: 'input',
+                            required: true,
+                            value: ''
+                          }" formControlName="password" />
+                      </div>
                 </div>
                 <div class="button-container">
                     <button (click)="submit()" class="delete-button">Excluir</button>

@@ -8,12 +8,12 @@ import { CommonModule } from '@angular/common';
 import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ToastrNotificationService } from '../../services/toastr/toastr.service';
 import { PasswordValidatorService } from '../../../shared/services/password-validator/password-validator.service';
-
+import { PasswordEyeButtonComponent } from '../password-eye-button/password-eye-button.component';
 
 @Component({
   selector: 'app-delete-profile-modal',
   standalone: true,
-  imports: [MatButtonModule, MatDialogModule, CommonModule, ReactiveFormsModule],
+  imports: [MatButtonModule, MatDialogModule, CommonModule, ReactiveFormsModule, PasswordEyeButtonComponent],
   providers: [UserService, ToastrNotificationService, PasswordValidatorService],
   templateUrl: './delete-profile-modal.component.html',
   styleUrl: './delete-profile-modal.component.css'
