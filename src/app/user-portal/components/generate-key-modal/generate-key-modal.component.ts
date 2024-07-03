@@ -24,7 +24,7 @@ import { response } from 'express';
 })
 export class GenerateKeyModalComponent {
 
-  keyForm! : FormGroup;
+  keyForm!: FormGroup;
   accessToken: string = '';
   private afterClosedSubject = new Subject<{ success: boolean }>();
 
@@ -34,8 +34,8 @@ export class GenerateKeyModalComponent {
     private toarstNotification: ToastrNotificationService,
     private apiKeysService: ApiKeysService,
     private stayConnectedService: StayConnectedService,
-    
-  ){
+
+  ) {
     this.keyForm = new FormGroup({
       keyName: new FormControl(''),
     });
@@ -43,8 +43,8 @@ export class GenerateKeyModalComponent {
   }
 
   openDialog() {
-    const dialogRef = this.dialog.open( GenerateKeyModalComponent );
-    dialogRef.afterClosed().subscribe(result => {});
+    const dialogRef = this.dialog.open(GenerateKeyModalComponent);
+    dialogRef.afterClosed().subscribe(result => { });
   }
 
   afterClosed() {
@@ -52,20 +52,32 @@ export class GenerateKeyModalComponent {
   }
 
   closeDialog() {
-    
+
     this.dialog.closeAll();
     window.location.reload();
   }
 
-  submit(){
+  submit() {
     this.createKey();
+  }
+
+  isFormValid(): boolean {
+
+    let formValue = this.keyForm.get('keyName')?.value;
+    return formValue.length > 1 && formValue.length < 45 ? true : false;
+
   }
 
   async createKey() {
 
+    if (!this.isFormValid()) {
+      this.toarstNotification.showError('Nome da chave inválido, o tamanho deve ser entre 2 e 45 caracteres', 'Erro');
+      return;
+    }
+
     this.apiKeysService.createApiKey(this.accessToken, await this.getKeyInfoToCreate() as IKey).subscribe(
       (response) => {
-        if (response.status == 201 || response.status == 200 ) {
+        if (response.status == 201 || response.status == 200) {
           this.toarstNotification.showSuccess('Chave criada com sucesso!', 'Sucesso');
           this.closeDialog();
         }
@@ -83,30 +95,30 @@ export class GenerateKeyModalComponent {
     return this.keyForm.get('keyName')?.value;
   }
 
-  async getUserId() : Promise<number>{
-    
+  async getUserId(): Promise<number> {
+
     let userId = -1;
 
     await this.userService.getUserData(this.accessToken)
-    .toPromise()
-    .then(
-      
-      (response: HttpResponse<Object | any> | undefined) => {
-      
-      if (response?.status == 200 || response?.status == 201) {
-        userId = response.body?.id;
-      }
-    })
-    .catch((error: HttpErrorResponse) => {
-      this.toarstNotification.showError('Erro ao atualizar dados', 'Erro');
-      console.error(error);
-    });
+      .toPromise()
+      .then(
+
+        (response: HttpResponse<Object | any> | undefined) => {
+
+          if (response?.status == 200 || response?.status == 201) {
+            userId = response.body?.id;
+          }
+        })
+      .catch((error: HttpErrorResponse) => {
+        this.toarstNotification.showError('Erro ao atualizar dados', 'Erro');
+        console.error(error);
+      });
 
     return userId;
   }
 
   async getKeyInfoToCreate(): Promise<IKey> {
-    
+
     let keyInfo: IKey = {
       name: this.getKeyNameInTheForm(),
       user_id: await this.getUserId(),
