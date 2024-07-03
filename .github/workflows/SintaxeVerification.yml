@@ -11,18 +11,23 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - uses: actions/checkout@v2
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Instalar Node.js
-        uses: actions/setup-node@v3
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          node-version: 20
+          node-version: '20'
+          cache: 'npm'
 
-      - name: Instalar dependências
+      - name: Install dependencies
         run: npm install
 
-      - name: Verificação de sintaxe
-        run: npm run lint
+      - name: Run tests
+        run: npm test
+
+      - name: Build production
+        run: npm run build:prod
 
       - name: Exibir erros de sintaxe
         if: ${{ failure() }}
