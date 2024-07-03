@@ -15,12 +15,18 @@ import { SlideToggleComponent } from '../../../../shared/components/slide-toggle
 import { StayConnectedService } from '../../../services/stay-connected/stay-connected.service';
 import { ToastrNotificationService } from '../../../services/toastr/toastr.service';
 import { FormaterService } from '../../../services/formater-service/formater.service';
+import { GenerateKeyModalComponent } from '../../../components/generate-key-modal/generate-key-modal.component';
+import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
   selector: 'app-dashboard-api-keys',
   standalone: true,
-  imports: [SlideToggleComponent, FormsModule, ReactiveFormsModule, InputSearchComponent, ButtonComponent, ButtonSeePlansHomePageComponent, ButtonStartHomePageComponent, CommonModule, MatTableModule, MatPaginatorModule],
-  providers: [ApiKeysService, ToastrNotificationService, FormaterService],
+  imports: [
+    SlideToggleComponent, FormsModule, ReactiveFormsModule, InputSearchComponent, ButtonComponent,
+    ButtonSeePlansHomePageComponent, ButtonStartHomePageComponent, CommonModule, MatTableModule,
+    MatPaginatorModule
+  ],
+  providers: [ApiKeysService, ToastrNotificationService, FormaterService, GenerateKeyModalComponent, Clipboard],
   templateUrl: './dashboard-api-keys.component.html',
   styleUrl: './dashboard-api-keys.component.css'
 })
@@ -34,10 +40,13 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
   #apiKeysService = inject(ApiKeysService);
   accessToken: string;
   searchForm!: FormGroup;
-  isOn: boolean = false;
 
 
-  constructor(private sidebarService: SidebarService, private stayConnectedService: StayConnectedService, private toastr: ToastrNotificationService, private formaterService: FormaterService) {
+  constructor(
+    private sidebarService: SidebarService, private stayConnectedService: StayConnectedService,
+    private toastr: ToastrNotificationService, private formaterService: FormaterService,
+    private createKeyDialog: GenerateKeyModalComponent, private clipboard: Clipboard
+  ) {
 
     this.sidebarOpenSubscription = this.sidebarService.sidebarOpen$.subscribe(
       (isOpen) => {
@@ -55,8 +64,11 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
   ngOnInit() {
     this.#apiKeysService.getApiKeys(this.accessToken).subscribe(
       (response) => {
-        this.dataSource.data = response.body as IKey[];
+
+        const apiKeys = response.body as IKey[];
+        this.dataSource.data = apiKeys;
         this.applyApiKeyFormatting();
+
       },
       (error) => {
         console.log(error);
@@ -64,22 +76,35 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
     );
   }
 
+
   ngAfterViewInit() {
     this.dataSource.paginator = this.paginator;
   }
 
-  
   ngOnDestroy() {
     this.sidebarOpenSubscription.unsubscribe();
   }
-  
+
+  async openGenerateKeyModal() {
+    this.createKeyDialog.openDialog();
+  }
+
+  closeGenerateKeyModal() {
+    this.createKeyDialog.closeDialog();
+  }
+
   Search() {
     console.log('searching');
   }
 
-  async toggleSwitch(apiKey: IKey) {
-    apiKey.is_active = !apiKey.is_active;
+  copyToClipboard(value: string) {
+    this.clipboard.copy(value);
+    this.toastr.showSuccess('API Key copiado para a área de transferência', 'Sucesso');
+  }
 
+  async toggleSwitch(apiKey: IKey) {
+
+    apiKey.is_active = !apiKey.is_active;
 
     this.#apiKeysService.toggleApiKey(this.accessToken, apiKey.id as number, apiKey.is_active).subscribe(
       (response) => {
@@ -91,10 +116,16 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
     );
   }
 
-  CreateNewKey() {
-    console.log('creating new key');
+  async updateKey(key: IKey) {
+    this.#apiKeysService.updateApiKey(this.accessToken, key).subscribe(
+      (response) => {
+        this.toastr.showSuccess('API Key atualizado com sucesso', 'Sucesso');
+      },
+      (error) => {
+        this.toastr.showError('Erro ao atualizar o API Key', 'Erro');
+      }
+    );
   }
-
 
   applyApiKeyFormatting() {
     this.dataSource.data.forEach((element) => {
@@ -106,19 +137,4 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
     return this.formaterService.formatApiKey(apiKey);
   }
 
-
-  setApiKeyStatus(key: IKey) {
-    
-  }
-
-  async updateKey(key: IKey) {
-    await this.#apiKeysService.updateApiKey(this.accessToken, key).subscribe(
-      (response) => {
-        this.toastr.showSuccess('API Key atualizado com sucesso', 'Sucesso');
-      },
-      (error) => {
-        this.toastr.showError('Erro ao atualizar o API Key', 'Erro');
-      }
-    );
-  }
 }

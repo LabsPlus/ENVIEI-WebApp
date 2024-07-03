@@ -21,7 +21,7 @@ export class ApiKeysService {
   }
 
   createApiKey(accessToken: string, key: IKey) {
-    return this.httpClient.post(this.apiKeysUrl+'key/createApiKey', { key }, { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
+    return this.httpClient.post(this.apiKeysUrl+'key/generateKey', { key }, { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
   }
 
   deleteApiKey(accessToken: string, key: IKey) {
