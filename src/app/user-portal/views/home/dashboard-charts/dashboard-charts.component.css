@@ -42,14 +42,10 @@
     line-height: 20px;
 }
 
-.select-container{
-    display: flex;
-    flex-direction: row;
-    gap: 2em;
-    align-items: center;
-    
-}
-.select-container{
+.select-container {
+    display: flex; /* Usar flexbox */
+    align-items: center; /* Alinear elementos al centro verticalmente */
+    position: relative; /* Necesario para el posicionamiento absoluto del ul */
     color: #2C3F47;
     font-family: "Inter-SemiBold";
     font-size: 12px;
@@ -57,6 +53,57 @@
     font-weight: 400;
     line-height: normal;
 }
+
+.select-container label {
+    margin-right: 10px; /* Separar label de span */
+}
+
+.select-container span {
+    cursor: pointer;
+    display: inline-block;
+    padding: 5px 10px;
+    font-family: "Inter-Regular";
+    width: 160px;
+    height: 35px;
+    border: 0.2px solid #757575;
+    background: #D9D9D9;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+}
+
+.select-container img {
+    width: 15px;
+}
+
+.select-container ul {
+    position: absolute;
+    top: 100%;
+    right: 0;
+    list-style: none;
+    padding: 0;
+    margin: 0;
+    border: 1px solid #757575;
+    background-color: #FFF;
+    z-index: 1000;
+    width: 160px; /* Ajusta el ancho según tus necesidades */
+  }
+  
+  .select-container ul li {
+    padding: 10px;
+    cursor: pointer;
+    text-align: center;
+    border-radius: 0;
+    background: #D9D9D9;
+  }
+  
+  .select-container ul li:hover {
+    background-color: #9bb1bb
+  }
+  
+
+
+
 
 .dashboard-container{
     display: flex;
@@ -99,7 +146,7 @@
 
 .paragraph-container p {
     color: #000;
-    font-size: 13px;
+    font-size: 14px;
     font-family: "Inter-Regular";
     font-style: normal;
     font-weight: 300;
@@ -125,13 +172,53 @@
     display: flex;
     width: 100%;
     justify-content: start;
-    gap: 8em;
+    gap: 30%;
+    padding: 2.5em 2em;
 }
 
 .container-dados ul{
-    list-style: none;
     display: flex;
-    gap: 2em;
+    gap: 2.3em;
+    align-items: center;
+}
+
+.container-dados ul li::marker{
+    color: #007D0D;
+    font-size: 24px;
+}
+
+.container-dados span {
+    color: #000;
+    font-family: "Inter-SemiBold";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 700;
+    line-height: 20px;
+}
+
+.container-envios{
+    margin-top: 2em;
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.container-dados p{
+    color: #000;
+    font-family: "Inter-Regular";
+    font-size: 12px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px
+} 
+
+.container-envios label{
+    color: #000;
+    font-family: "Inter-Regular";
+    font-size: 16px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 20px;
 }
 
 .graphic-container{

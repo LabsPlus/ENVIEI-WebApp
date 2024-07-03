@@ -1,25 +1,31 @@
-import { Component, OnDestroy,ViewEncapsulation } from '@angular/core';
+import { Component, OnDestroy } from '@angular/core';
+import { Subscription } from 'rxjs';
+import { SidebarService } from '../../../services/sidebar/sidebar.service';
+import { ReactiveFormsModule } from '@angular/forms';
+import { CommonModule } from '@angular/common';
 import { StackedBarChartComponent } from '../../../../shared/components/charts/stacked-bar-chart/stacked-bar-chart.component';
 import { LineShartComponent } from '../../../../shared/components/charts/line-shart/line-shart.component';
 import { IndicatorChartComponent } from '../../../../shared/components/charts/indicator-chart/indicator-chart.component';
-import { Subscription } from 'rxjs';
-import { SidebarService } from '../../../services/sidebar/sidebar.service';
-import { CommonModule } from '@angular/common';
-import {FormControl, FormsModule, ReactiveFormsModule} from '@angular/forms';
-import {MatSelectModule} from '@angular/material/select';
-import {MatFormFieldModule} from '@angular/material/form-field';
 
 @Component({
   selector: 'app-dashboard-charts',
   standalone: true,
-  imports: [MatFormFieldModule, MatSelectModule, FormsModule, ReactiveFormsModule,StackedBarChartComponent, LineShartComponent, IndicatorChartComponent, CommonModule],
+  imports: [ReactiveFormsModule, StackedBarChartComponent, LineShartComponent, IndicatorChartComponent, CommonModule],
   templateUrl: './dashboard-charts.component.html',
-  styleUrl: './dashboard-charts.component.css'
+  styleUrls: ['./dashboard-charts.component.css']
 })
-export class DashboardChartsComponent implements OnDestroy{
-  panelColor = new FormControl('red');
+export class DashboardChartsComponent implements OnDestroy {
   isNavOpen = false;
   sidebarOpenSubscription: Subscription;
+  selectedOption = 'Últimos 7 dias';
+  options = [
+    { value: '3', label: 'Últimos 7 dias' },
+    { value: '3', label: 'Últimos 14 dias' },
+    { value: '4', label: 'Últimos 30 dias' },
+    { value: '4', label: 'Últimos 60 dias' },
+    { value: '4', label: 'Últimos 90 dias' }
+  ];
+  menuVisible = false;
 
   constructor(private sidebarService: SidebarService) {
     this.sidebarOpenSubscription = this.sidebarService.sidebarOpen$.subscribe(
@@ -31,5 +37,15 @@ export class DashboardChartsComponent implements OnDestroy{
 
   ngOnDestroy() {
     this.sidebarOpenSubscription.unsubscribe();
+  }
+
+  toggleMenu() {
+    this.menuVisible = !this.menuVisible;
+    console.log('menuVisible', this.menuVisible);
+  }
+
+  selectOption(option: any) {
+    this.selectedOption = option.label;
+    this.menuVisible = false;
   }
 }

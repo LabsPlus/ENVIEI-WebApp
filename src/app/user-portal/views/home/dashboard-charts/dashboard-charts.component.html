@@ -2,15 +2,19 @@
     <div class="title-container">
         <h1>Dashboard</h1>
         <div class="select-container">
-            <span>Visualização por:</span>
-            <mat-form-field>
-                <mat-select [formControl]="panelColor" panelClass="example-panel-{{panelColor.value}}">
-                    <mat-option value="red">Red</mat-option>
-                    <mat-option value="green">Green</mat-option>
-                    <mat-option value="blue">Blue</mat-option>
-                </mat-select>
-            </mat-form-field>
+            <label>Visualização por:</label>
+            <span (click)="toggleMenu()">
+                {{ selectedOption }}
+                <img src="../../../../../assets/images/shared/arrow.png" alt="arrow">
+            </span>
+            <ul *ngIf="menuVisible">
+                <li *ngFor="let option of options" (click)="selectOption(option)">
+                    {{ option.label }}
+                </li>
+            </ul>
         </div>
+
+
     </div>
     <div class="dashboard-container">
         <div class="sections-container">
@@ -23,15 +27,16 @@
             </section>
             <div class="container-dados">
                 <ul>
-                    <li><span>•</span>Excelente <p>Reputação</p>
+                    <li><span>Excelente</span>
+                        <p>Reputação</p>
                     </li>
-                    <li>98.0%
+                    <li style="list-style: none;"><span>98.0%</span>
                         <p>Entrega</p>
                     </li>
                 </ul>
-                <div>
-                    <label>199 de 600</label>
-                    <span>Envios de avaliação gratuita usados</span>
+                <div class="container-envios">
+                    <span>199 de 600</span>
+                    <label>Envios de avaliação gratuita usados</label>
                 </div>
             </div>
         </div>
