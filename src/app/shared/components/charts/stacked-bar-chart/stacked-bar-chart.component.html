@@ -1,0 +1,22 @@
+<h2 class="title">Taxa de rejeição por dominio</h2>
+<div class="chart-container">
+    <div class="y-axis">
+        <div class="y-axis-labels">
+            <div class="y-label" *ngFor="let tick of yTicks">{{ tick }}</div>
+        </div>
+    </div>
+    <h2 class="subtitle">Valor</h2>
+    <div class="chart-content">
+        <div class="horizontal-lines">
+            <div class="line" *ngFor="let tick of yTicks"></div>
+        </div>
+        <div class="bars">
+            <div *ngFor="let item of data; let i = index" class="bar-group">
+                <div class="bar" *ngFor="let value of item.values"
+                    [ngStyle]="{'height': value + '%', 'background': getColor(i)}">
+                </div>
+                <h2 class="x-label">{{ item.name }}</h2>
+            </div>
+        </div>
+    </div>
+</div>

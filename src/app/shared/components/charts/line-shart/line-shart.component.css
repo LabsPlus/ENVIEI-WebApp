@@ -1,0 +1,79 @@
+.container{
+  display: flex;
+  width: 100%;
+  height: 100%;
+  flex-direction: column;
+  padding: 15px;
+}
+
+.container h2{
+  color: #000;
+  font-family: Roboto;
+  font-size: 13px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.title-container{
+  display: flex;
+  align-items: center;
+  padding-left: 2em;
+  gap: 5px;
+  padding-bottom: 1em;
+}
+
+.blue-line {
+  width: 24px; /* Puedes ajustar el ancho según sea necesario */
+  height: 2px;
+  background-color: #0072F0;
+  margin: 0;
+}
+
+.chart-container {
+  display: flex;
+  width: 100%;
+  height: 100%;
+  gap: 10px;
+}
+
+#emailChart {
+  border: 1px solid #ccc;
+  display: block;
+  border-left: 2px solid #000;
+  border-bottom: 2px solid #000;
+}
+
+.y-labels {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
+.y-labels span {
+  color: #000;
+  text-align: right;
+  font-family: Roboto;
+  font-size: 11px;
+  font-weight: 500;
+  line-height: normal;
+}
+
+.labels-container {
+  display: flex;
+  justify-content: space-between;
+  width: 450px;
+  margin-top: 10px;
+}
+
+.labels-container span {
+  color: #000;
+  text-align: center;
+  font-family: Roboto;
+  font-size: 11px;
+  font-style: normal;
+  font-weight: 500;
+  line-height: normal;
+}
+
+

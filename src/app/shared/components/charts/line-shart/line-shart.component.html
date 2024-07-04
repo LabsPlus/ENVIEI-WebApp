@@ -1,0 +1,15 @@
+<div class="container">
+    <div class="title-container">
+        <div class="blue-line"></div>
+        <h2>Volume de envios</h2>
+    </div>
+    <div class="chart-container">
+        <div class="y-labels">
+            <span *ngFor="let item of itemsRadio">{{item}}</span>
+        </div>
+        <canvas id="emailChart" width="400" height="230"></canvas>
+    </div>
+    <div class="labels-container">
+        <span *ngFor="let item of itemsDays">{{item}}</span>
+    </div>
+</div>

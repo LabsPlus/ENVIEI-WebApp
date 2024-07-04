@@ -1,0 +1,62 @@
+<div [ngClass]="{'navbar-expanded': isNavOpen}" class="container">
+    <div class="title-container">
+        <h1>Dashboard</h1>
+        <div class="select-container">
+            <label>Visualização por:</label>
+            <span (click)="toggleMenu()">
+                {{ selectedOption }}
+                <img src="../../../../../assets/images/shared/arrow.png" alt="arrow">
+            </span>
+            <ul *ngIf="menuVisible">
+                <li *ngFor="let option of options" (click)="selectOption(option)">
+                    {{ option.label }}
+                </li>
+            </ul>
+        </div>
+
+
+    </div>
+    <div class="dashboard-container">
+        <div class="sections-container">
+            <h2>Visão geral da Conta</h2>
+            <section class="paragraph-container">
+                <p>No momento, você está em nosso plano de teste gratuito que inclui 600 envios no total . Faça upgrade
+                    através da sua conta Enviei para enviar mais de 600 e-mails ou para obter acesso a recursos pagos e
+                    suporte técnico estendido.</p>
+                <button>Mudar Plano</button>
+            </section>
+            <div class="container-dados">
+                <ul>
+                    <li><span>Excelente</span>
+                        <p>Reputação</p>
+                    </li>
+                    <li style="list-style: none;"><span>98.0%</span>
+                        <p>Entrega</p>
+                    </li>
+                </ul>
+                <div class="container-envios">
+                    <span>199 de 600</span>
+                    <label>Envios de avaliação gratuita usados</label>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <div class="graphic-container">
+            <h2>Volume de Envios</h2>
+            <div class="graphic-section">
+                <div>
+                    <app-line-shart />
+                </div>
+                <div>
+                    //here
+                </div>
+                <div>
+                    <app-indicator-chart />
+                </div>
+                <div>
+                    <app-stacked-bar-chart />
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

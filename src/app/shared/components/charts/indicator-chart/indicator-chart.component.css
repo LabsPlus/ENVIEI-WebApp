@@ -1,0 +1,41 @@
+@font-face {
+    font-family: "Inter-Medium";
+    src: url("../../../../../assets/fonts/Inter-Medium.ttf") format("truetype");
+  }
+.chart-container {
+    width: 450px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 15px;
+}
+
+.span-container{
+    display: flex;
+    align-items: center;
+    gap: 3px;
+}
+
+.chart-label {
+    color: #000;
+    font-family: "Inter-Medium";
+    font-size: 11px;
+    font-style: normal;
+    font-weight: 500;
+    line-height: normal;
+    border-bottom: 1px solid #757575;
+  }
+
+  .ball-blue{
+    font-size: 26px;
+    color: #0443BD;
+  }
+  .ball-yellow{
+    font-size: 26px;
+    color: #FBBC04;;
+  }
+  
+  canvas {
+    display: block;
+  }
+  
