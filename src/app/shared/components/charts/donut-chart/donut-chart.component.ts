@@ -56,10 +56,11 @@ export class DonutChartComponent implements AfterViewInit {
 
     // Draw percentage text
     ctx.fillStyle = '#000';
-    ctx.font = '20px Arial';
+    ctx.font = '12px Roboto';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
-    ctx.fillText(`Valor Atual`, centerX, centerY-60);
-    ctx.fillText(`${this.percentage}%`, centerX, centerY-30);
+    ctx.fillText(`Valor Atual`, centerX, centerY - 60);
+    ctx.font = '24px Roboto';
+    ctx.fillText(`${this.percentage}%`, centerX, centerY - 30);
   }
 }

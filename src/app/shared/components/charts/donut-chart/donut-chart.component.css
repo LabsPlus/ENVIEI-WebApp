@@ -6,6 +6,10 @@
 * {
   font-family: 'Inter-Medium';
 }
+p {
+  font-size: 12px;
+  color: #000000;
+}
 
 .container {
     background-color: transparent;
