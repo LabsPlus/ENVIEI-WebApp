@@ -18,7 +18,7 @@ import { InputComponent } from '../../../shared/components/input/input.component
 import { IRegisterData } from '../../../shared/interfaces/register/register-date-interface';
 import { ToastrNotificationService } from '../../../user-portal/services/toastr/toastr.service';
 import { RegisterService } from '../../services/register/register.service';
-import { IdentificationNumberValidatorService } from '../../../shared/services/cpf-validator/cpf-validator.service';
+import { CpfValidatorService } from '../../../shared/services/cpf-validator/cpf-validator.service';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
 import { NameValidatorService } from '../../../shared/services/name-validator/name-validator.service';
 
@@ -37,7 +37,7 @@ import { NameValidatorService } from '../../../shared/services/name-validator/na
     InputConfirmPasswordComponent,
 
   ],
-  providers: [RegisterService, ToastrService, ToastrNotificationService, IdentificationNumberValidatorService, NameValidatorService],
+  providers: [RegisterService, ToastrService, ToastrNotificationService, CpfValidatorService, NameValidatorService],
   templateUrl: './register.component.html',
   styleUrl: './register.component.css',
 })
@@ -53,7 +53,7 @@ export class RegisterComponent {
     private registerService: RegisterService,
     private router: Router,
     private toastr: ToastrNotificationService,
-    private identificationNumberValidator: IdentificationNumberValidatorService,
+    private identificationNumberValidator: CpfValidatorService,
     private nameValidator: NameValidatorService
   ) {
     this.registerForm = new FormGroup({

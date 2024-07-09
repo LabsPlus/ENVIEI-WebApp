@@ -1,5 +1,4 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-
 import { InputCpfCnpjComponent } from './input-cpf-cnpj.component';
 
 describe('InputCpfCnpjComponent', () => {
