@@ -14,32 +14,12 @@ p {
 .container {
     background-color: transparent;
     border-radius: 50%;
-    margin: 0 auto;
     display: flex;
     flex-direction: column;
-    gap: 50px;
 }
 
-.currentValue {
-    position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
-    font-size: 24px;
-    font-weight: bold;
-    color: #333;
-}
-
-.chart-container {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 500px;
-    height: 300px;
-    position: relative;
-  }
-  
-  canvas {
+  #canvas {
     background: transparent;
+
   }
   
