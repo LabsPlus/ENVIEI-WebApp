@@ -25,7 +25,7 @@ export class ChangePasswordModalComponent implements OnInit {
   userForm!: FormGroup
   userProfile: any = {};
   accessToken: string = '';
-  password: string = '';
+  currentPassword: string = '';
   strengths = {
     hasLowerCase: false,
     hasUpperCase: false,
@@ -47,20 +47,25 @@ export class ChangePasswordModalComponent implements OnInit {
     this.accessToken = this.stayConnectedService.getAccessToken() as string;
 
     this.userForm = new FormGroup({
-      password: new FormControl(''),
+      currentPassword: new FormControl(''),
       confirmNewPassword: new FormControl(''),
       newPassword: new FormControl(''),
+    });
+
+      this.userForm.get('newPassword')?.valueChanges.subscribe(value => {
+      this.validatePasswordStrength(value);
     });
     
   }
 
-  validatePasswordStrength(password: string): void | boolean {
-    const minLength = 8;
-    const hasLowerCase = /[a-z]/.test(password);
-    const hasUpperCase = /[A-Z]/.test(password);
-    const hasNumber = /[0-9]/.test(password);
+  validatePasswordStrength(newPassword: string): boolean {
 
-    this.strengths.minLength = password.length >= minLength;
+    const minLength = 8;
+    const hasLowerCase = /[a-z]/.test(newPassword);
+    const hasUpperCase = /[A-Z]/.test(newPassword);
+    const hasNumber = /[0-9]/.test(newPassword);
+
+    this.strengths.minLength = newPassword.length >= minLength;
     this.strengths.hasLowerCase = hasLowerCase;
     this.strengths.hasUpperCase = hasUpperCase;
     this.strengths.hasNumber = hasNumber;
@@ -79,30 +84,29 @@ export class ChangePasswordModalComponent implements OnInit {
   async getFormValue(): Promise<void> {
     this.userProfile.newPassword = this.userForm.get('newPassword')?.value as string;
     this.userProfile.confirmNewPassword = this.userForm.get('confirmNewPassword')?.value as string;
-    this.password = this.userForm.get('password')?.value as string;
+    this.currentPassword = this.userForm.get('currentPassword')?.value as string;
+
   }
 
   async isFormValid(): Promise<boolean> {
-    if (this.userForm.get('password')?.value == '' || this.
-      userForm.get('confirmNewPassword')?.value == '' || this.userForm.get('newPassword')?.value == '') {
+    if (this.userForm.get('currentPassword')?.value === '' || this.
+      userForm.get('confirmNewPassword')?.value === '' || this.userForm.get('newPassword')?.value === '') {
       return false;
     }
     return true;
   }
 
-  validateConfirmPassword(): boolean{
-    
-    alert(this.userProfile.newPassword)
-    alert(this.userProfile.confirmNewPassword)
+  async validateConfirmPassword(): Promise<boolean>{
+
     if (this.userProfile.newPassword === this.userProfile.confirmNewPassword) {
       return true;
     }
     return false;
   }
 
-  async validateUserPassword(password: string): Promise<boolean> {
+  async validateUserPassword(currentPassword: string): Promise<boolean> {
     return await this.userService
-      .validateUserPassword(password, this.accessToken)
+      .validateUserPassword(currentPassword, this.accessToken)
       .toPromise()
       .then((response: HttpResponse<any> | undefined) => {
 
@@ -143,35 +147,31 @@ export class ChangePasswordModalComponent implements OnInit {
 
   async submit(): Promise<void> {
     
-    await this.getFormValue();
+   this.getFormValue();
 
     //validating all fields are filled
-    if (!this.isFormValid()) {
+    if (!await this.isFormValid()) {
       this.toarstNotification.showError('Preencha todos os campos', 'Erro');
       return;
     }
 
     //validating if password is from the user
-    if (!await this.validateUserPassword(this.password)) {
+    if (!await this.validateUserPassword(this.currentPassword)) {
       this.toarstNotification.showError('Senha atual está incorreta', 'Erro');
       return;
     }
 
-    alert('validateConfirmPassword');
     //validating if password and confirm password are the same
-    if (this.validateConfirmPassword()) {
+    if (!await this.validateConfirmPassword()) {
       this.toarstNotification.showError('As senhas não coincidem', 'Erro');
       return;
     }
 
-    alert('validatePasswordStrengh');
     //validating password strength
-    if (!this.validatePasswordStrength(this.userProfile.newPassword)) {
+    if (this.validatePasswordStrength(this.userProfile.newPassword)) {
       this.toarstNotification.showError("A senha não segue as diretrizes de segurança necessárias.", 'Erro');
       return;
     }
-
-    alert('usPasswordFormatValid');
 
     //validating if password is valid
     if (!await this.passwordValidator.isPasswordFormatValid(this.userProfile.newPassword)) {
@@ -179,7 +179,6 @@ export class ChangePasswordModalComponent implements OnInit {
       return;
     }
 
-    alert('vou atualizar sua senha');
     await this.updatePassword({ password: this.userProfile.newPassword });
     this.dialog.closeAll();
     this.refreshPage();
