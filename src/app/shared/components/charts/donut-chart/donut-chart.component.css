@@ -1,0 +1,25 @@
+@font-face {
+  font-family: "Inter-Medium";
+  src: url("../../../../../assets/fonts/Inter-Medium.ttf") format("truetype");
+}
+
+* {
+  font-family: 'Inter-Medium';
+}
+p {
+  font-size: 12px;
+  color: #000000;
+}
+
+.container {
+    background-color: transparent;
+    border-radius: 50%;
+    display: flex;
+    flex-direction: column;
+}
+
+  #canvas {
+    background: transparent;
+
+  }
+  

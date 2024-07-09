@@ -6,11 +6,12 @@ import { CommonModule } from '@angular/common';
 import { StackedBarChartComponent } from '../../../../shared/components/charts/stacked-bar-chart/stacked-bar-chart.component';
 import { LineShartComponent } from '../../../../shared/components/charts/line-shart/line-shart.component';
 import { IndicatorChartComponent } from '../../../../shared/components/charts/indicator-chart/indicator-chart.component';
+import { DonutChartComponent } from '../../../../shared/components/charts/donut-chart/donut-chart.component';
 
 @Component({
   selector: 'app-dashboard-charts',
   standalone: true,
-  imports: [ReactiveFormsModule, StackedBarChartComponent, LineShartComponent, IndicatorChartComponent, CommonModule],
+  imports: [ReactiveFormsModule, StackedBarChartComponent, LineShartComponent, IndicatorChartComponent, CommonModule, DonutChartComponent],
   templateUrl: './dashboard-charts.component.html',
   styleUrls: ['./dashboard-charts.component.css']
 })

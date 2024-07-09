@@ -19,7 +19,7 @@ import {
     },
   ],
   templateUrl: './input.component.html',
-  styleUrls: ['./input.component.scss'],
+  styleUrls: ['./input.component.css'],
 })
 export class InputComponent {
   @Input() props!: IInput;

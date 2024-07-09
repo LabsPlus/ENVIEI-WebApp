@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { CpfValidatorService } from './cpf-validator.service';
 
 describe('CpfValidatorService', () => {

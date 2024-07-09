@@ -1,17 +1,18 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
-import { InputCpfCnpjComponent } from './input-cpf-cnpj.component';
 
-describe('InputCpfCnpjComponent', () => {
-  let component: InputCpfCnpjComponent;
-  let fixture: ComponentFixture<InputCpfCnpjComponent>;
+import { DonutChartComponent } from './donut-chart.component';
+
+describe('DonutChartComponent', () => {
+  let component: DonutChartComponent;
+  let fixture: ComponentFixture<DonutChartComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [InputCpfCnpjComponent]
+      imports: [DonutChartComponent]
     })
     .compileComponents();
     
-    fixture = TestBed.createComponent(InputCpfCnpjComponent);
+    fixture = TestBed.createComponent(DonutChartComponent);
     component = fixture.componentInstance;
     fixture.detectChanges();
   });
