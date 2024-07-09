@@ -168,7 +168,7 @@ export class ChangePasswordModalComponent implements OnInit {
     }
 
     //validating password strength
-    if (this.validatePasswordStrength(this.userProfile.newPassword)) {
+    if (!this.validatePasswordStrength(this.userProfile.newPassword)) {
       this.toarstNotification.showError("A senha não segue as diretrizes de segurança necessárias.", 'Erro');
       return;
     }
