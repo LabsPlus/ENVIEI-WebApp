@@ -9,7 +9,7 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ToastrNotificationService } from '../../services/toastr/toastr.service';
 import { PasswordValidatorService } from '../../../shared/services/password-validator/password-validator.service';
 import { EmailValidatorService } from '../../../shared/services/email-validator/email-validator.service';
-import { StayConnectedService } from '../../services/stay-connected/stay-connected.service';
+import { SessionStorageService } from '../../../shared/services/session-storage/session-storage.service';
 import { ApiKeysService } from '../../services/api-keys-service/api-keys.service';
 import { Subject } from 'rxjs';
 import { response } from 'express';
@@ -18,7 +18,7 @@ import { response } from 'express';
   selector: 'app-generate-key-modal',
   standalone: true,
   imports: [MatButtonModule, MatDialogModule, CommonModule, ReactiveFormsModule],
-  providers: [UserService, ToastrNotificationService, PasswordValidatorService, EmailValidatorService, ApiKeysService, StayConnectedService],
+  providers: [UserService, ToastrNotificationService, PasswordValidatorService, EmailValidatorService, ApiKeysService, SessionStorageService],
   templateUrl: './generate-key-modal.component.html',
   styleUrl: './generate-key-modal.component.css'
 })
@@ -33,13 +33,13 @@ export class GenerateKeyModalComponent {
     private userService: UserService,
     private toarstNotification: ToastrNotificationService,
     private apiKeysService: ApiKeysService,
-    private stayConnectedService: StayConnectedService,
+    private sessionStorageService: SessionStorageService,
 
   ) {
     this.keyForm = new FormGroup({
       keyName: new FormControl(''),
     });
-    this.accessToken = this.stayConnectedService.getAccessToken() as string;
+    this.accessToken = this.sessionStorageService.getSessionToken() as string;
   }
 
   openDialog() {
@@ -83,7 +83,6 @@ export class GenerateKeyModalComponent {
         }
       },
       (error) => {
-        console.log(error);
         if (error instanceof HttpErrorResponse) {
           this.toarstNotification.showError('Erro ao criar chave', 'Erro');
         }

@@ -9,14 +9,14 @@ import { ToastrNotificationService } from '../../services/toastr/toastr.service'
 import { PasswordValidatorService } from '../../../shared/services/password-validator/password-validator.service';
 import { EmailValidatorService } from '../../../shared/services/email-validator/email-validator.service';
 import IUser from '../../interfaces/IUser';
-import { StayConnectedService } from '../../services/stay-connected/stay-connected.service';
+import { SessionStorageService } from '../../../shared/services/session-storage/session-storage.service';
 
 
 @Component({
   selector: 'app-change-password-modal',
   standalone: true,
   imports: [MatButtonModule, MatDialogModule, CommonModule, ReactiveFormsModule],
-  providers: [UserService, ToastrNotificationService, PasswordValidatorService, EmailValidatorService],
+  providers: [UserService, ToastrNotificationService, PasswordValidatorService, EmailValidatorService, SessionStorageService],
   templateUrl: './change-password-modal.component.html',
   styleUrl: './change-password-modal.component.css'
 })
@@ -37,11 +37,11 @@ export class ChangePasswordModalComponent implements  OnInit{
     private userService: UserService,
     private toarstNotification: ToastrNotificationService,
     private passwordValidator: PasswordValidatorService,
-    private stayConnectedService: StayConnectedService
+    private sessionStorageService: SessionStorageService,
   ) {}
 
   ngOnInit(): void {
-    this.accessToken = this.stayConnectedService.getAccessToken() as string;
+    this.accessToken = this.sessionStorageService.getSessionToken() as string;
   
     this.userForm = new FormGroup({
       password: new FormControl(''),

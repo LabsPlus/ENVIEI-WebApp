@@ -9,13 +9,13 @@ import { ToastrNotificationService } from '../../services/toastr/toastr.service'
 import { NameValidatorService } from '../../../shared/services/name-validator/name-validator.service';
 import { PasswordValidatorService } from '../../../shared/services/password-validator/password-validator.service';
 import { PhoneNumberValidatorService } from '../../../shared/services/phone-number-validator/phone-number-validator.service';
-import { StayConnectedService } from '../../services/stay-connected/stay-connected.service';
+import { SessionStorageService } from '../../../shared/services/session-storage/session-storage.service';
 
 @Component({
   selector: 'app-change-personal-information-modal',
   standalone: true,
   imports: [MatButtonModule, MatDialogModule, ReactiveFormsModule],
-  providers: [UserService, ToastrNotificationService, PasswordValidatorService, NameValidatorService, PhoneNumberValidatorService],
+  providers: [UserService, ToastrNotificationService, PasswordValidatorService, NameValidatorService, PhoneNumberValidatorService, SessionStorageService],
   templateUrl: './change-personal-information-modal.component.html',
   styleUrl: './change-personal-information-modal.component.css'
 })
@@ -34,10 +34,10 @@ export class ChangePersonalInformationModalComponent {
       private passwordValidator: PasswordValidatorService,
       private nameValidator: NameValidatorService,
       private phoneNumberValidator: PhoneNumberValidatorService,
-      private stayConnectedService: StayConnectedService
+      private sessionStorageService: SessionStorageService
     ) {
       
-      this.accessToken = this.stayConnectedService.getAccessToken() as string;
+      this.accessToken = this.sessionStorageService.getSessionToken() as string;
 
     this.userForm = new FormGroup({
       name: new FormControl(''),

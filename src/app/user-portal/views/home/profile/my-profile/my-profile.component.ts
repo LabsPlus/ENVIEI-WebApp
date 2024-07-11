@@ -9,7 +9,7 @@ import { ChangePersonalInformationModalComponent } from '../../../../components/
 import { ChangeEmailRecoveryModalComponent } from '../../../../components/change-email-recovery-modal/change-email-recovery-modal.component';
 import { ChangeEmailModalComponent } from '../../../../components/change-email-modal/change-email-modal.component';
 import { ChangePasswordModalComponent } from '../../../../components/change-password-modal/change-password-modal.component';
-import { StayConnectedService } from '../../../../services/stay-connected/stay-connected.service';
+import { SessionStorageService } from '../../../../../shared/services/session-storage/session-storage.service';
 import { ToastrNotificationService } from '../../../../services/toastr/toastr.service';
 
 @Component({
@@ -18,7 +18,7 @@ import { ToastrNotificationService } from '../../../../services/toastr/toastr.se
   imports: [MatSlideToggleModule, CommonModule],
   templateUrl: './my-profile.component.html',
   providers: [
-      StayConnectedService,UserService, ChangePersonalInformationModalComponent,
+    SessionStorageService, UserService, ChangePersonalInformationModalComponent,
       ChangeEmailModalComponent, ChangePasswordModalComponent, 
       ChangeEmailRecoveryModalComponent,  ToastrNotificationService],
   styleUrl: './my-profile.component.css',
@@ -32,7 +32,7 @@ export class MyProfileComponent {
 
   constructor(
     private userService: UserService,
-    private stayConnectedService: StayConnectedService,
+    private sessionStorageService: SessionStorageService,
     private changePersonalInformationModalComponent: ChangePersonalInformationModalComponent,
     private changeEmailModalComponent: ChangeEmailModalComponent,
     private changePasswordModalComponent: ChangePasswordModalComponent, 
@@ -44,7 +44,7 @@ export class MyProfileComponent {
   
   async initialize() {
 
-    this.acessToken = this.stayConnectedService.getAccessToken() as string;
+    this.acessToken = this.sessionStorageService.getSessionToken() as string;
     
     await this.isFlagRememberPasswordChangeEnable();
 
@@ -95,7 +95,6 @@ export class MyProfileComponent {
         }
       })
       .catch((error: HttpErrorResponse) => {
-        console.log(error);
         
         if (error.status >= 400 && error.status < 500) {
           console.error(error.error.error);

@@ -2,18 +2,19 @@ import { Component, EventEmitter, Output } from '@angular/core';
 import { ButtonStartHomePageComponent } from '../button-start-home-page/button-start-home-page.component';
 import { Router, RouterLink, RouterOutlet } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { StayConnectedService } from '../../../user-portal/services/stay-connected/stay-connected.service';
+import { SessionStorageService } from '../../services/session-storage/session-storage.service';
+import { AuthenticatorService } from '../../services/auth/authenticator.service';
 @Component({
   selector: 'app-header-home-page',
   standalone: true,
   imports: [ButtonStartHomePageComponent,CommonModule, RouterLink, RouterOutlet],
   templateUrl: './header-home-page.component.html',
-  providers: [StayConnectedService],
+  providers: [SessionStorageService, AuthenticatorService],
   styleUrl: './header-home-page.component.css'
 })
 export class HeaderHomePageComponent {
 
-  constructor(private route: Router, private stayConnectedService: StayConnectedService) {}
+  constructor(private route: Router, private sessionStorageService: SessionStorageService, private authService: AuthenticatorService) {}
 
   @Output('submit') onSubmit = new EventEmitter();
   @Output('navigate') onNavigate = new EventEmitter();
@@ -44,14 +45,22 @@ export class HeaderHomePageComponent {
   }
 
   async accessLogin() {
-    const token = this.stayConnectedService.getAccessToken();
     
-    if (token) {
-      this.route.navigate(['/home']);
+    const token = this.sessionStorageService.getSessionToken();
+    
+    if (!token) {
+      this.route.navigate(['/login']);
       return;
     }
 
-    this.route.navigate(['/login']);
+    const isAuthenticated = await this.authService.isAuthenticated(token);
+
+    if (!isAuthenticated) {
+      this.route.navigate(['/login']);
+      return;
+    }
+
+    this.route.navigate(['/home']);
   }
   
 }

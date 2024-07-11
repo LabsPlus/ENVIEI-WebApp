@@ -12,7 +12,7 @@ import { IKey } from '../../../interfaces/IKey';
 import { InputSearchComponent } from '../../../../shared/components/input-search/input-search.component';
 import { FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SlideToggleComponent } from '../../../../shared/components/slide-toggle/slide-toggle.component';
-import { StayConnectedService } from '../../../services/stay-connected/stay-connected.service';
+import { SessionStorageService } from '../../../../shared/services/session-storage/session-storage.service';
 import { ToastrNotificationService } from '../../../services/toastr/toastr.service';
 import { FormaterService } from '../../../services/formater-service/formater.service';
 import { GenerateKeyModalComponent } from '../../../components/generate-key-modal/generate-key-modal.component';
@@ -26,7 +26,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
     ButtonSeePlansHomePageComponent, ButtonStartHomePageComponent, CommonModule, MatTableModule,
     MatPaginatorModule
   ],
-  providers: [ApiKeysService, ToastrNotificationService, FormaterService, GenerateKeyModalComponent, Clipboard],
+  providers: [ApiKeysService, ToastrNotificationService, FormaterService, GenerateKeyModalComponent, Clipboard, SessionStorageService],
   templateUrl: './dashboard-api-keys.component.html',
   styleUrl: './dashboard-api-keys.component.css'
 })
@@ -43,7 +43,7 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
 
 
   constructor(
-    private sidebarService: SidebarService, private stayConnectedService: StayConnectedService,
+    private sidebarService: SidebarService, private sessionStorageService: SessionStorageService,
     private toastr: ToastrNotificationService, private formaterService: FormaterService,
     private createKeyDialog: GenerateKeyModalComponent, private clipboard: Clipboard
   ) {
@@ -54,7 +54,7 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
       }
     );
 
-    this.accessToken = this.stayConnectedService.getAccessToken() as string;
+    this.accessToken = this.sessionStorageService.getSessionToken() as string;
 
     this.searchForm = new FormGroup({
       search: new FormControl('')
@@ -71,7 +71,7 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
 
       },
       (error) => {
-        console.log(error);
+        console.error(error);
       }
     );
   }
