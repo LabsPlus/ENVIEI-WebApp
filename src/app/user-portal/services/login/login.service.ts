@@ -4,7 +4,7 @@ import { tap } from 'rxjs/operators';
 import { IToken } from '../../../shared/interfaces/Token/token.interfaces';
 import { ILoginData } from '../../../shared/interfaces/login-data/login-data.interfaces';
 import { environment } from '../../../../environments/environment';
-import { StayConnectedService } from '../stay-connected/stay-connected.service';
+
 @Injectable({
   providedIn: 'root',
 })

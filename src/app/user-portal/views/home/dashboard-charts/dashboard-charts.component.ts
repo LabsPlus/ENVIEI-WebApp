@@ -42,7 +42,6 @@ export class DashboardChartsComponent implements OnDestroy {
 
   toggleMenu() {
     this.menuVisible = !this.menuVisible;
-    console.log('menuVisible', this.menuVisible);
   }
 
   selectOption(option: any) {

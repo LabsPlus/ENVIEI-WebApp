@@ -13,7 +13,9 @@ import { InputComponent } from '../../../shared/components/input/input.component
 import { ILoginData } from '../../../shared/interfaces/login-data/login-data.interfaces';
 import { LoginService } from '../../services/login/login.service';
 import { ToastrNotificationService } from '../../services/toastr/toastr.service';
-import { StayConnectedService } from '../../services/stay-connected/stay-connected.service';
+import { SessionStorageService } from '../../../shared/services/session-storage/session-storage.service';
+import { IToken } from '../../../shared/interfaces/Token/token.interfaces';
+import { AuthenticatorService } from '../../../shared/services/auth/authenticator.service';
 
 @Component({
   selector: 'app-login',
@@ -26,7 +28,7 @@ import { StayConnectedService } from '../../services/stay-connected/stay-connect
     ReactiveFormsModule,
     RouterLink,
   ],
-  providers: [LoginService, ToastrNotificationService, StayConnectedService],
+  providers: [LoginService, ToastrNotificationService, SessionStorageService, AuthenticatorService],
   templateUrl: './login.component.html',
   styleUrl: './login.component.css',
 })
@@ -39,7 +41,8 @@ export class LoginComponent {
     private loginService: LoginService,
     private router: Router,
     private toastr: ToastrNotificationService,
-    private stayConnectedService: StayConnectedService,
+    private sessionStorageService: SessionStorageService,
+    private authenticatorService: AuthenticatorService,
 
   ) {
     this.loginForm = new FormGroup({
@@ -145,18 +148,15 @@ export class LoginComponent {
   }
 
   loginUser() {   
-    this.loginService
-      .login({
-        email: this.loginForm.value.email,
-        password: this.loginForm.value.password,
-      }, this.stayConnected)
-      .toPromise()
+    this.authenticatorService
+      .login(this.loginForm.value.email, this.loginForm.value.password, this.stayConnected)
       .then((response) => {
         if(response?.status == 200) {
           const token = response?.body?.token;
           if (token) {
-   
-            this.stayConnected ? this.stayConnectedService.saveTokenOnLocalStorage(token) : this.stayConnectedService.saveTokenSesionStorage(token);
+            
+            alert(token)
+            this.stayConnected ? this.sessionStorageService.createSessionWithStayConnectedMode(token) : this.sessionStorageService.createSessionWithNoStayConnectedMode(token);
           }
         }
         this.showSuccess('Login realizado com sucesso!');

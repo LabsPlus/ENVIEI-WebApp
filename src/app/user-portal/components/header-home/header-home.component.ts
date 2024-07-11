@@ -7,13 +7,14 @@ import { HomeService } from '../../services/home/home.service';
 import { ToastrNotificationService } from '../../services/toastr/toastr.service';
 import IUser from '../../interfaces/IUser';
 import { SidebarService } from '../../services/sidebar/sidebar.service';
-import { StayConnectedService } from '../../services/stay-connected/stay-connected.service';
+import { SessionStorageService } from '../../../shared/services/session-storage/session-storage.service';
 import { RouterModule } from '@angular/router';
+import { AuthenticatorService } from '../../../shared/services/auth/authenticator.service';
 @Component({
   selector: 'app-header-home',
   standalone: true,
   imports: [CommonModule, RouterModule],
-  providers: [HomeService, ToastrNotificationService],
+  providers: [HomeService, ToastrNotificationService, SessionStorageService, AuthenticatorService],
   templateUrl: './header-home.component.html',
   styleUrl: './header-home.component.css',
 })
@@ -35,7 +36,8 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
     private router: Router,
     private toastr: ToastrNotificationService,
     private location: Location,
-    private stayConnectedService: StayConnectedService
+    private sessionStorageService: SessionStorageService,
+    private authenticatorService: AuthenticatorService,
   ) {
     this.isVisible = false;
     this.sidebarOpenSubscription = this.sidebarService.sidebarOpen$.subscribe(
@@ -44,25 +46,35 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
       }
     );
 
-    this.accessToken = this.stayConnectedService.getAccessToken() as string;
+    this.accessToken = this.sessionStorageService.getSessionToken() as string;
 
 
-    this.getUserData();
+    
   }
 
-  ngOnInit() {
+  async ngOnInit() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const currentPath = this.location.path();
         this.isVisible = !this.hiddenRoutes.includes(currentPath);
       }
     });
+
+    await this.getUserData();
   } 
   toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
   }
 
   async getUserData(): Promise<void> {
+
+    if (!this.sessionStorageService.getSessionToken()) {
+      return;
+    }
+
+    if (!this.authenticatorService.isAuthenticated(this.accessToken)) {
+      return;
+    }
 
      await this.homeService
       .getUserData(this.accessToken)
@@ -117,10 +129,9 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
           this.router.navigate(['/login']);
         }
       }).then(() => {
-        this.stayConnectedService.removeToken();
+        this.sessionStorageService.removeSession();
       })
       .catch((error: HttpErrorResponse) => {
-        console.log(error);
         
         if (error.status >= 400 && error.status < 500) {
           console.error(error.error.error);

@@ -9,13 +9,13 @@ import { FormGroup, FormControl, ReactiveFormsModule } from '@angular/forms';
 import { ToastrNotificationService } from '../../services/toastr/toastr.service';
 import { PasswordValidatorService } from '../../../shared/services/password-validator/password-validator.service';
 import { EmailValidatorService } from '../../../shared/services/email-validator/email-validator.service';
-import { StayConnectedService } from '../../services/stay-connected/stay-connected.service';
+import { SessionStorageService } from '../../../shared/services/session-storage/session-storage.service';
 
 @Component({
   selector: 'app-change-email-modal',
   standalone: true,
   imports: [MatButtonModule, MatDialogModule, CommonModule, ReactiveFormsModule],
-  providers: [UserService, ToastrNotificationService, PasswordValidatorService, EmailValidatorService],
+  providers: [UserService, ToastrNotificationService, PasswordValidatorService, EmailValidatorService, SessionStorageService],
   templateUrl: './change-email-modal.component.html',
   styleUrl: './change-email-modal.component.css'
 })
@@ -31,10 +31,10 @@ export class ChangeEmailModalComponent {
     private toarstNotification: ToastrNotificationService,
     private passwordValidator: PasswordValidatorService,
     private emailValidator: EmailValidatorService,
-    private stayConnectedService: StayConnectedService
+    private sessionStorageService: SessionStorageService
   ) {
 
-    this.accessToken = this.stayConnectedService.getAccessToken() as string;
+    this.accessToken = this.sessionStorageService.getSessionToken() as string;
 
     this.userForm = new FormGroup({
       email: new FormControl(''),

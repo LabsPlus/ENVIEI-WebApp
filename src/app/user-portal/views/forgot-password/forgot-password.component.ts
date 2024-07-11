@@ -45,7 +45,6 @@ export class ForgotPasswordComponent {
       );
       return;
     }
-    console.log(this.forgotPasswordForm.value.email);
     this.sendEmail();
   }
 

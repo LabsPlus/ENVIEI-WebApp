@@ -1,4 +1,6 @@
 export interface IToken {
-    token: string;
+    token?: string;
+    accessToken?: string;
+    refreshToken?: string;
   }
   

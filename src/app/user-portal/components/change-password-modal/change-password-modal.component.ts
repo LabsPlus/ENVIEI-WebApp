@@ -9,6 +9,7 @@ import { ToastrNotificationService } from '../../services/toastr/toastr.service'
 import { PasswordValidatorService } from '../../../shared/services/password-validator/password-validator.service';
 import { EmailValidatorService } from '../../../shared/services/email-validator/email-validator.service';
 import IUser from '../../interfaces/IUser';
+import { SessionStorageService } from '../../../shared/services/session-storage/session-storage.service';
 import { StayConnectedService } from '../../services/stay-connected/stay-connected.service';
 import { PasswordEyeButtonComponent } from '../password-eye-button/password-eye-button.component';
 
@@ -17,7 +18,7 @@ import { PasswordEyeButtonComponent } from '../password-eye-button/password-eye-
   selector: 'app-change-password-modal',
   standalone: true,
   imports: [MatButtonModule, MatDialogModule, CommonModule, ReactiveFormsModule, PasswordEyeButtonComponent],
-  providers: [UserService, ToastrNotificationService, PasswordValidatorService, EmailValidatorService],
+  providers: [UserService, ToastrNotificationService, PasswordValidatorService, EmailValidatorService, SessionStorageService],
   templateUrl: './change-password-modal.component.html',
   styleUrl: './change-password-modal.component.css'
 })
@@ -38,14 +39,11 @@ export class ChangePasswordModalComponent implements OnInit {
     private userService: UserService,
     private toarstNotification: ToastrNotificationService,
     private passwordValidator: PasswordValidatorService,
-    private stayConnectedService: StayConnectedService
-  ) { 
-    this.ngOnInit();
-  }
+    private sessionStorageService: SessionStorageService,
+  ) {}
 
   ngOnInit(): void {
-    this.accessToken = this.stayConnectedService.getAccessToken() as string;
-
+    this.accessToken = this.sessionStorageService.getSessionToken() as string;
     this.userForm = new FormGroup({
       currentPassword: new FormControl(''),
       confirmNewPassword: new FormControl(''),
