@@ -17,11 +17,13 @@ import { FormaterService } from '../../../services/formater-service/formater.ser
 import { SidebarService } from '../../../services/sidebar/sidebar.service';
 import { StayConnectedService } from '../../../services/stay-connected/stay-connected.service';
 import { ToastrNotificationService } from '../../../services/toastr/toastr.service';
+import { DeleteKeyPopupComponent } from '../../../components/delete-key-popup/delete-key-popup.component';
+import { MatDialog } from '@angular/material/dialog';
 
 @Component({
   selector: 'app-dashboard-api-keys',
   standalone: true,
-  imports: [
+  imports: [DeleteKeyPopupComponent,
     SlideToggleComponent, FormsModule, ReactiveFormsModule, InputSearchComponent, ButtonComponent,
     ButtonSeePlansHomePageComponent, ButtonStartHomePageComponent, CommonModule, MatTableModule,
     MatPaginatorModule
@@ -45,7 +47,8 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
   constructor(
     private sidebarService: SidebarService, private stayConnectedService: StayConnectedService,
     private toastr: ToastrNotificationService, private formaterService: FormaterService,
-    private createKeyDialog: GenerateKeyModalComponent, private clipboard: Clipboard
+    private createKeyDialog: GenerateKeyModalComponent, private clipboard: Clipboard,
+    private dialog: MatDialog
   ) {
 
     this.sidebarOpenSubscription = this.sidebarService.sidebarOpen$.subscribe(
@@ -88,6 +91,27 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
 
   async openGenerateKeyModal() {
     this.createKeyDialog.openDialog();
+  }
+
+  openDeleteKeyModal(key: IKey): void {
+    const dialogRef = this.dialog.open(DeleteKeyPopupComponent);
+    dialogRef.componentInstance.confirmDelete.subscribe(() => {
+      this.deleteKey(key);
+    });
+  }
+
+  deleteKey(key: IKey): void {
+    this.#apiKeysService.deleteApiKey(this.accessToken, key).subscribe(
+      () => {
+        this.toastr.showSuccess('Chave deletada com sucesso', 'Éxito');
+        this.dataSource.data = this.dataSource.data.filter(k => k.id !== key.id);
+        this.dataSource.paginator = this.paginator;
+      },
+      (error) => {
+        this.toastr.showError('Chave não pôde ser deletada', 'Error');
+        console.log(error);
+      }
+    );
   }
 
   closeGenerateKeyModal() {

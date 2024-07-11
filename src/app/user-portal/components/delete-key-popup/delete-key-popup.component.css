@@ -1,0 +1,104 @@
+@font-face {
+    font-family: "Inter-Bold";
+    src: url("../../../../assets/fonts/Inter-Bold.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Inter-Regular";
+    src: url("../../../../assets/fonts/Inter-Regular.ttf") format("truetype");
+}
+
+@font-face {
+    font-family: "Inter-Medium";
+    src: url("../../../../assets/fonts/Inter-Medium.ttf") format("truetype");
+}
+
+* {
+    color: #2C3F47;
+    font-size: 14px;
+    font-family: "Inter-Medium";
+}
+
+.mat-typography {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 298px;
+    height: 178px;
+    border-radius: 8px;
+    background: #FCFCFC;
+    box-shadow: 0px 8px 10px 0px rgba(0, 0, 0, 0.25);
+    position: relative;
+    padding-bottom: 0px;
+}
+
+.close-button {
+    background-color: transparent;
+    border: none;
+    cursor: pointer;
+    position: absolute;
+    top: 8px;
+    right: 8px;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: background-color 0.3s;
+}
+
+h2 {
+    font-family: "Inter-Medium";
+    font-size: 1.2rem;
+    font-weight: 700;
+    position: absolute;
+    margin: 0 0 0 0;
+    padding: 0 0 0 0;
+    top: 15px;
+    left: 20px;
+    text-align: start;
+    color: #316C87;
+   
+}
+
+p{
+    color: #316C87;
+    font-size: 15px;
+    font-weight: 500;
+    font-family: "Inter-Medium";
+    line-height: 20px; 
+    margin-bottom: 0;
+}
+
+
+.button-container {
+    display: flex;
+    justify-content: flex-start;
+    gap: 20px;
+    padding-right: 10px;
+
+}
+
+.deletar-button {
+
+    width: 100px;
+    height: 40px;
+    border-radius: 10px;
+    background-color: #316C87;
+    color: #fff;
+    font-family: "Inter-Bold";
+    cursor: pointer;
+    border: none;
+    box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+}
+
+.cancelar-button{
+    display: inline-flex;
+    padding: 10px 24px;
+    justify-content: center;
+    align-items: center;
+    gap: 10px;
+    border-radius: 10px;
+    border: 1.5px solid #316C87;
+    cursor: pointer;
+    color: #316C87;
+    font-family: "Inter-Bold";
+}
