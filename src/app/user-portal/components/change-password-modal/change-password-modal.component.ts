@@ -43,7 +43,7 @@ export class ChangePasswordModalComponent implements OnInit {
   ) {}
 
   ngOnInit(): void {
-    this.accessToken = this.stayConnectedService.getAccessToken() as string;
+    this.accessToken = this.sessionStorageService.getSessionToken() as string;
     this.userForm = new FormGroup({
       currentPassword: new FormControl(''),
       confirmNewPassword: new FormControl(''),

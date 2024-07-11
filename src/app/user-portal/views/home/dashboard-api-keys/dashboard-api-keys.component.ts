@@ -16,7 +16,6 @@ import { IKey } from '../../../interfaces/IKey';
 import { ApiKeysService } from '../../../services/api-keys-service/api-keys.service';
 import { FormaterService } from '../../../services/formater-service/formater.service';
 import { SidebarService } from '../../../services/sidebar/sidebar.service';
-import { StayConnectedService } from '../../../services/stay-connected/stay-connected.service';
 import { ToastrNotificationService } from '../../../services/toastr/toastr.service';
 
 @Component({
