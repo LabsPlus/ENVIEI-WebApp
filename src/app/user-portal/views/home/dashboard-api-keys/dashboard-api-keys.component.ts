@@ -1,22 +1,23 @@
+import { Clipboard } from '@angular/cdk/clipboard';
 import { CommonModule } from '@angular/common';
+import { AfterViewInit, Component, OnInit, ViewChild, inject } from '@angular/core';
+import { FormControl, FormGroup, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
+import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { Subscription } from 'rxjs';
 import { ButtonSeePlansHomePageComponent } from '../../../../shared/components/button-see-plans-home-page/button-see-plans-home-page.component';
 import { ButtonStartHomePageComponent } from '../../../../shared/components/button-start-home-page/button-start-home-page.component';
 import { ButtonComponent } from '../../../../shared/components/button/button.component';
-import { SidebarService } from '../../../services/sidebar/sidebar.service';
-import { AfterViewInit, Component, OnInit, ViewChild, inject } from '@angular/core';
-import { MatPaginator, MatPaginatorModule } from '@angular/material/paginator';
-import { MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { ApiKeysService } from '../../../services/api-keys-service/api-keys.service';
-import { IKey } from '../../../interfaces/IKey';
 import { InputSearchComponent } from '../../../../shared/components/input-search/input-search.component';
-import { FormGroup, FormControl, ReactiveFormsModule, FormsModule } from '@angular/forms';
 import { SlideToggleComponent } from '../../../../shared/components/slide-toggle/slide-toggle.component';
 import { SessionStorageService } from '../../../../shared/services/session-storage/session-storage.service';
-import { ToastrNotificationService } from '../../../services/toastr/toastr.service';
-import { FormaterService } from '../../../services/formater-service/formater.service';
 import { GenerateKeyModalComponent } from '../../../components/generate-key-modal/generate-key-modal.component';
-import { Clipboard } from '@angular/cdk/clipboard';
+import { IKey } from '../../../interfaces/IKey';
+import { ApiKeysService } from '../../../services/api-keys-service/api-keys.service';
+import { FormaterService } from '../../../services/formater-service/formater.service';
+import { SidebarService } from '../../../services/sidebar/sidebar.service';
+import { StayConnectedService } from '../../../services/stay-connected/stay-connected.service';
+import { ToastrNotificationService } from '../../../services/toastr/toastr.service';
 
 @Component({
   selector: 'app-dashboard-api-keys',
@@ -74,6 +75,7 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
         console.error(error);
       }
     );
+
   }
 
 
@@ -93,8 +95,15 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
     this.createKeyDialog.closeDialog();
   }
 
-  Search() {
-    console.log('searching');
+  search() {
+    this.dataSource.filter = this.searchForm.value.search.trim().toLowerCase();
+    this.dataSource.paginator?.firstPage();
+
+    const filteredData = this.dataSource.filteredData;
+
+    if(filteredData.length == 0){
+      this.toastr.showInfo('Nenhum resultado encontrado', 'Info');
+    }
   }
 
   copyToClipboard(value: string) {

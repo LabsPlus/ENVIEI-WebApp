@@ -26,7 +26,7 @@ export class DonutChartComponent implements AfterViewInit {
     }
 
     const centerX = canvas.width / 2;
-    const centerY = canvas.height / 2;
+    const centerY = canvas.height / 1.2;
     const radius = Math.min(centerX, centerY) - 10;
     const startAngle = Math.PI; // Starting from the left middle point
     const endAngle = startAngle + (Math.PI * this.percentage / 100);
@@ -56,11 +56,11 @@ export class DonutChartComponent implements AfterViewInit {
 
     // Draw percentage text
     ctx.fillStyle = '#000';
-    ctx.font = '12px Roboto';
+    ctx.font = 'bold 12px Inter';
     ctx.textAlign = 'center';
     ctx.textBaseline = 'middle';
     ctx.fillText(`Valor Atual`, centerX, centerY - 60);
-    ctx.font = '24px Roboto';
+    ctx.font = 'bold 24px Inter';
     ctx.fillText(`${this.percentage}%`, centerX, centerY - 30);
   }
 }

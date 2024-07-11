@@ -1,4 +1,5 @@
 import { Component, Input, forwardRef, } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { IInput } from '../../../shared/interfaces/input/input.interfaces';
 import {
   ControlValueAccessor,
@@ -10,7 +11,7 @@ import {
 @Component({
   selector: 'app-password-eye-button',
   standalone: true,
-  imports: [ReactiveFormsModule],
+  imports: [ReactiveFormsModule, CommonModule],
   providers:[
     {
       provide:NG_VALUE_ACCESSOR,
@@ -29,16 +30,14 @@ export class PasswordEyeButtonComponent {
   value: string = '';
   onChange: any = () => {};
   onTouched: any = () => {};
+
   public togglePasswordVisibility(): void {
     this.passwordVisible = !this.passwordVisible;
-    const inputElement = document.querySelector(
-      '.input-password'
-    ) as HTMLInputElement;
-    inputElement.type = this.passwordVisible ? 'text' : 'password';
   }
 
   onInput(event: Event) {
     const value = (event.target as HTMLInputElement).value;
+    this.value = value;
     this.onChange(value);
   }
 

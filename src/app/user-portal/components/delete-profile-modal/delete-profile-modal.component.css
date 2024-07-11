@@ -62,6 +62,8 @@ p {
 
 .input-container {
     display: flex;
+    width: 330px;
+    max-width: 330px;
     flex-direction: column;
     gap: 9px;
     font-size: 14px;
