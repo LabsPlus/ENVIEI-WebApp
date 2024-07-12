@@ -13,7 +13,6 @@ import { SlideToggleComponent } from '../../../../shared/components/slide-toggle
 import { SessionStorageService } from '../../../../shared/services/session-storage/session-storage.service';
 import { GenerateKeyModalComponent } from '../../../components/generate-key-modal/generate-key-modal.component';
 import { UpdateKeyModalComponent } from '../../../components/update-key-modal/update-key-modal.component';
-import { Clipboard } from '@angular/cdk/clipboard';
 import { IKey } from '../../../interfaces/IKey';
 import { ApiKeysService } from '../../../services/api-keys-service/api-keys.service';
 import { FormaterService } from '../../../services/formater-service/formater.service';
