@@ -54,6 +54,14 @@ h2 {
     color: #2C3F47;
 }
 
+.password {
+    width: 500px;
+    height: 40px;
+    border-radius: 5px;
+    padding-left: 0px;
+    color: #2C3F47;
+}
+
 .form-group {
     display: flex;
     flex-direction: column;

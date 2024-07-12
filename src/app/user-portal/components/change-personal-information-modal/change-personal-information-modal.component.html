@@ -18,7 +18,13 @@
             </div>
             <div class="input-container">
                 <label for="Digite Sua Senha">Digite sua senha</label>
-                <input formControlName="password" type="password" class="form-control" placeholder="Senha">
+                <div class="password">
+                    <app-password-eye-button [props]="{
+                        type:'password',
+                        placeholder:'Senha',
+                        class:'password',
+                    }"formControlName="password"/>
+                </div>
             </div>
 
             <div class="button-container">
