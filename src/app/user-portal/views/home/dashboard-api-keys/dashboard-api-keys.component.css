@@ -144,13 +144,14 @@ th, td {
 
 .container-api-keys{
   display: flex;
-  justify-content: space-between;
+  justify-content: center;
+  gap: 5px;
   align-items: center;
   padding: 10px;
 
 }
 .container-api-keys span{
-  width: 80%;
+  width: 60%;
   font-size: 14px;
   overflow: hidden;
   }
