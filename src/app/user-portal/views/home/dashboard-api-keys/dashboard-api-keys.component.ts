@@ -16,6 +16,7 @@ import { SessionStorageService } from '../../../../shared/services/session-stora
 import { ToastrNotificationService } from '../../../services/toastr/toastr.service';
 import { FormaterService } from '../../../services/formater-service/formater.service';
 import { GenerateKeyModalComponent } from '../../../components/generate-key-modal/generate-key-modal.component';
+import { UpdateKeyModalComponent } from '../../../components/update-key-modal/update-key-modal.component';
 import { Clipboard } from '@angular/cdk/clipboard';
 
 @Component({
@@ -26,7 +27,7 @@ import { Clipboard } from '@angular/cdk/clipboard';
     ButtonSeePlansHomePageComponent, ButtonStartHomePageComponent, CommonModule, MatTableModule,
     MatPaginatorModule
   ],
-  providers: [ApiKeysService, ToastrNotificationService, FormaterService, GenerateKeyModalComponent, Clipboard, SessionStorageService],
+  providers: [ApiKeysService, ToastrNotificationService, FormaterService, GenerateKeyModalComponent, Clipboard, SessionStorageService, UpdateKeyModalComponent],
   templateUrl: './dashboard-api-keys.component.html',
   styleUrl: './dashboard-api-keys.component.css'
 })
@@ -41,11 +42,11 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
   accessToken: string;
   searchForm!: FormGroup;
 
-
   constructor(
     private sidebarService: SidebarService, private sessionStorageService: SessionStorageService,
     private toastr: ToastrNotificationService, private formaterService: FormaterService,
-    private createKeyDialog: GenerateKeyModalComponent, private clipboard: Clipboard
+    private createKeyDialog: GenerateKeyModalComponent, private clipboard: Clipboard,
+    private updateKeyDialog: UpdateKeyModalComponent
   ) {
 
     this.sidebarOpenSubscription = this.sidebarService.sidebarOpen$.subscribe(
@@ -93,6 +94,14 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
     this.createKeyDialog.closeDialog();
   }
 
+  async updateKeyModal(key: IKey) {
+    this.updateKeyDialog.openDialog(key);
+  }
+
+  closeUpdateKeyModal() {
+    this.updateKeyDialog.closeDialog();
+  }
+
   Search() {
     console.log('searching');
   }
@@ -116,16 +125,6 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
     );
   }
 
-  async updateKey(key: IKey) {
-    this.#apiKeysService.updateApiKey(this.accessToken, key).subscribe(
-      (response) => {
-        this.toastr.showSuccess('API Key atualizado com sucesso', 'Sucesso');
-      },
-      (error) => {
-        this.toastr.showError('Erro ao atualizar o API Key', 'Erro');
-      }
-    );
-  }
 
   applyApiKeyFormatting() {
     this.dataSource.data.forEach((element) => {

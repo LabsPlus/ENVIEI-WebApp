@@ -154,8 +154,6 @@ export class LoginComponent {
         if(response?.status == 200) {
           const token = response?.body?.token;
           if (token) {
-            
-            alert(token)
             this.stayConnected ? this.sessionStorageService.createSessionWithStayConnectedMode(token) : this.sessionStorageService.createSessionWithNoStayConnectedMode(token);
           }
         }
