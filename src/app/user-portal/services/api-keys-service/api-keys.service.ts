@@ -24,10 +24,9 @@ export class ApiKeysService {
     return this.httpClient.post(this.apiKeysUrl+'key/generateKey', { key }, { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
   }
 
-  deleteApiKey(accessToken: string, key: IKey) {
-    return this.httpClient.delete(this.apiKeysUrl+'key/deleteApiKey', { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
+  deleteApiKey(accessToken: string, Key: IKey) {    
+    return this.httpClient.delete(`${this.apiKeysUrl}key/${Key.id}`, { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
   }
-
 
   toggleApiKey(accessToken: string, id: number, is_active: boolean) {
     return this.httpClient.post(this.apiKeysUrl+'key/toggleKeyStatus', { id: id, is_active: is_active}, { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
