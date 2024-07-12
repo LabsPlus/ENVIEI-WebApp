@@ -17,7 +17,7 @@ export class ApiKeysService {
   }
 
   updateApiKey(accessToken: string, key: IKey) {
-    return this.httpClient.put(this.apiKeysUrl+'key/updateApiKey', { key }, { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
+    return this.httpClient.patch(this.apiKeysUrl+'key/updateApiKey', { key }, { observe: 'response', headers: { 'Authorization': 'Bearer ' + accessToken } });
   }
 
   createApiKey(accessToken: string, key: IKey) {
