@@ -10,11 +10,12 @@ import { ToastrNotificationService } from '../../services/toastr/toastr.service'
 import { PasswordValidatorService } from '../../../shared/services/password-validator/password-validator.service';
 import { EmailValidatorService } from '../../../shared/services/email-validator/email-validator.service';
 import { SessionStorageService } from '../../../shared/services/session-storage/session-storage.service';
+import { PasswordEyeButtonComponent } from '../password-eye-button/password-eye-button.component';
 
 @Component({
   selector: 'app-change-email-modal',
   standalone: true,
-  imports: [MatButtonModule, MatDialogModule, CommonModule, ReactiveFormsModule],
+  imports: [MatButtonModule, MatDialogModule, CommonModule, ReactiveFormsModule, PasswordEyeButtonComponent],
   providers: [UserService, ToastrNotificationService, PasswordValidatorService, EmailValidatorService, SessionStorageService],
   templateUrl: './change-email-modal.component.html',
   styleUrl: './change-email-modal.component.css'
