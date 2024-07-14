@@ -4,7 +4,7 @@
     <img src="../../../../assets/images/shared/close.svg" alt="close-button">
   </button>
 
-  <form (ngSubmit)="submit()" class="form-group" [formGroup]="userForm">
+  <form class="form-group" [formGroup]="userForm">
     <h2>Mudar Email</h2>
 
     <div class="input-container">
@@ -23,7 +23,7 @@
     </div>
 
     <div class="button-container">
-      <button class="save-button">Mudar</button>
+      <button (click)="submit()" class="save-button">Mudar</button>
       <button type="submit" class="cancel-button" mat-dialog-close>Cancelar</button>
     </div>
 
