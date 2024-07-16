@@ -83,11 +83,27 @@ export class UpdateKeyModalComponent {
   isFormValid(): boolean {
 
     let formValue = this.keyForm.get('keyName')?.value;
-    return formValue.length > 1 && formValue.length < 45 ? true : false;
+
+    if(formValue === '' || formValue.length == 0){
+      this.toarstNotification.showError('O nome da chave está em branco, não podemos submeter assim.', 'Erro');
+      return false;
+    }
+
+    if(formValue.length <= 1 || formValue.length > 45){
+      this.toarstNotification.showError('O nome da chave está no tamanho inadequado, não podemos submeter assim.', 'Erro');
+      return false;
+    }
+
+    return true;
 
   }
 
+
   async updateKey(key: IKey) {
+
+    if(!this.isFormValid()){
+      return;
+    }
 
     this.apiKeysService.updateApiKey(this.accessToken, key).subscribe(
       (response) => {
