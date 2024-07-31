@@ -56,12 +56,13 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const currentPath = this.location.path();
-        this.isVisible = !this.hiddenRoutes.includes(currentPath);
+        this.isVisible = !this.hiddenRoutes.some(route => currentPath.startsWith(route));
       }
     });
-
+  
     await this.getUserData();
-  } 
+  }
+  
   toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
   }

@@ -41,13 +41,14 @@ export class SideBarComponent implements OnInit{
     this.isVisible = false;
   }
   
-  ngOnInit() {
+  async ngOnInit() {
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         const currentPath = this.location.path();
-        this.isVisible = !this.hiddenRoutes.includes(currentPath);
+        this.isVisible = !this.hiddenRoutes.some(route => currentPath.startsWith(route));
       }
     });
+
   }  
 
   public toggleSidebar() {
