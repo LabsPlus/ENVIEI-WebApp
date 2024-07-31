@@ -12,8 +12,25 @@
         <input formControlName="keyName" type="text" class="form-control" id="name" required>
       </div>
   
-      <div class="button-container">
-        <button class="register-button" (click)="submit()">Registrar</button>
+      <div id="button-container" class="button-container">
+        <button
+          *ngIf="!isLoading"
+          id="register-button"
+          class="register-button"
+          (click)="submit()"
+        >
+          Registrar
+        </button>
+        <button
+          *ngIf="isLoading"
+          id="register-button"
+          class="register-button loading"
+          disabled
+
+          style="cursor: not-allowed;"
+        >
+          <div class="spinner"></div>
+        </button>
       </div>
   
     </form>

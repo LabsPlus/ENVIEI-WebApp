@@ -27,6 +27,7 @@ export class GenerateKeyModalComponent {
   keyForm!: FormGroup;
   accessToken: string = '';
   private afterClosedSubject = new Subject<{ success: boolean }>();
+  isLoading = false;
 
   constructor(
     public dialog: MatDialog,
@@ -75,6 +76,10 @@ export class GenerateKeyModalComponent {
       return;
     }
 
+    this.disableInputFieldAfterSubmit();
+
+    this.applyLoadingIndicator();
+    
     this.apiKeysService.createApiKey(this.accessToken, await this.getKeyInfoToCreate() as IKey).subscribe(
       (response) => {
         if (response.status == 201 || response.status == 200) {
@@ -125,6 +130,20 @@ export class GenerateKeyModalComponent {
     };
 
     return keyInfo;
+  }
+
+
+  applyLoadingIndicator(): void {
+    
+    this.isLoading = true;
+    
+  }
+
+  disableInputFieldAfterSubmit(): void {
+    
+    let inputField = document.getElementById('name') as HTMLInputElement;
+    inputField.disabled = true;
+
   }
 
 }
