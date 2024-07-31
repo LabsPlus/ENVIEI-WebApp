@@ -56,3 +56,34 @@
   color: #FFFFFF;
   width: 300px;
 }
+
+/* resonsividade para dispositivos moveis */
+@media (max-width: 414px) {
+  .button {
+    width: 16.375rem;
+  }
+}
+
+@media (max-width: 400px) {
+  .button {
+    width: 15rem;
+  }
+}
+
+@media (max-width: 390px) {
+  .button {
+    width: 13.75rem;
+  }
+}
+
+@media (max-width: 375px) {
+  .button {
+    width: 12.5rem;
+  }
+}
+
+@media (max-width: 325px) {
+  .button {
+    width: 11.25rem;
+  }
+}
