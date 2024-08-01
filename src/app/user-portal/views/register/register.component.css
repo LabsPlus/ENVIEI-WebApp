@@ -66,3 +66,48 @@
 h2 {
   margin: 0%;
 }
+@media (max-width:414px){
+  
+  .login-container{
+    width:100%
+  }
+  
+  .form-container {
+    width: 23rem;
+    height: 39rem;
+    padding-bottom: 2rem;
+  }
+}
+
+@media (max-width:390px){
+  
+  .form-container {
+    width: 20.875rem;
+    height: 39rem;
+}
+.logo{
+  width:95px;
+  height: 95px;
+}
+}
+
+@media (max-width:375px){
+  
+  .form-container {
+    width: 20.875rem;
+    height: 39rem;
+}
+.logo{
+  width:93px;
+  height: 93px;
+}
+}
+
+@media (max-width:325px){
+  
+  .form-container {
+    width: 18.75rem;
+    height: 39rem;
+}
+}
+
