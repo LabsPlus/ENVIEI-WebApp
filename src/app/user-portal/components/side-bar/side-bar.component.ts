@@ -41,14 +41,59 @@ export class SideBarComponent implements OnInit{
     this.isVisible = false;
   }
   
-  ngOnInit() {
+  async ngOnInit() {
     this.router.events.subscribe(event => {
+
       if (event instanceof NavigationEnd) {
-        const currentPath = this.location.path();
-        this.isVisible = !this.hiddenRoutes.includes(currentPath);
+
+        let currentUrl = this.location.path() as string;
+
+        if (!currentUrl) {
+          return;
+        }
+
+        let route = this.splitUrlToGetRoute(currentUrl);
+
+        if (!this.hiddenRoutes.includes(route)) {
+          this.isVisible = true;
+          return;
+        }
+
+        this.isVisible = false;
       }
+
     });
-  }  
+  }
+
+  splitUrlToGetRoute(url: string): string {
+    let currentUrl = url;
+
+    if (!currentUrl) {
+      return '';
+    }
+
+    
+    let hasQueryParams = currentUrl.includes('?');
+    let hasChildRoute = currentUrl.includes('/', 2);
+
+
+    if (!hasQueryParams && !hasChildRoute) {
+      return currentUrl;
+    }
+
+    if (hasQueryParams) {
+      let splitUrl = currentUrl.split('?');
+      currentUrl = splitUrl[0];
+    }
+
+    if (hasChildRoute) {
+      let splitUrl = currentUrl.split('/');
+      currentUrl = splitUrl[1];
+    }
+
+    return currentUrl;
+
+  }
 
   public toggleSidebar() {
     this.drawer.toggle();

@@ -49,19 +49,65 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
     this.accessToken = this.sessionStorageService.getSessionToken() as string;
 
 
-    
+
   }
 
   async ngOnInit() {
     this.router.events.subscribe(event => {
+
       if (event instanceof NavigationEnd) {
-        const currentPath = this.location.path();
-        this.isVisible = !this.hiddenRoutes.includes(currentPath);
+
+        let currentUrl = this.location.path() as string;
+
+        if (!currentUrl) {
+          return;
+        }
+
+        let route = this.splitUrlToGetRoute(currentUrl);
+
+        if (!this.hiddenRoutes.includes(route)) {
+          this.isVisible = true;
+          return;
+        }
+
+        this.isVisible = false;
       }
+
     });
 
     await this.getUserData();
-  } 
+  }
+
+  splitUrlToGetRoute(url: string): string {
+    let currentUrl = url;
+
+    if (!currentUrl) {
+      return '';
+    }
+
+    
+    let hasQueryParams = currentUrl.includes('?');
+    let hasChildRoute = currentUrl.includes('/', 2);
+
+
+    if (!hasQueryParams && !hasChildRoute) {
+      return currentUrl;
+    }
+
+    if (hasQueryParams) {
+      let splitUrl = currentUrl.split('?');
+      currentUrl = splitUrl[0];
+    }
+
+    if (hasChildRoute) {
+      let splitUrl = currentUrl.split('/');
+      currentUrl = splitUrl[1];
+    }
+
+    return currentUrl;
+
+  }
+
   toggleMenu(): void {
     this.menuOpen = !this.menuOpen;
   }
@@ -76,10 +122,10 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
       return;
     }
 
-     await this.homeService
+    await this.homeService
       .getUserData(this.accessToken)
       .toPromise()
-      .then(async(response: HttpResponse<IUser> | any) => {
+      .then(async (response: HttpResponse<IUser> | any) => {
         if (response?.status == 200 || response?.status == 201) {
           this.user.name = response.body.name;
           this.user.email = response.body.email;
@@ -111,7 +157,7 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
       });
 
 
-      this.router.routeReuseStrategy.shouldReuseRoute = () => false;
+    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
   }
 
   goToProfile(): void {
@@ -123,7 +169,7 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
     this.homeService
       .logout(this.accessToken)
       .toPromise()
-      .then((response: HttpResponse<Object | any> | undefined) => {            
+      .then((response: HttpResponse<Object | any> | undefined) => {
         if (response?.status == 200 || response?.status == 201) {
           this.toastr.showSuccess('Usuário deslogado com sucesso', 'success');
           this.router.navigate(['/login']);
@@ -132,7 +178,7 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
         this.sessionStorageService.removeSession();
       })
       .catch((error: HttpErrorResponse) => {
-        
+
         if (error.status >= 400 && error.status < 500) {
           console.error(error.error.error);
         }
