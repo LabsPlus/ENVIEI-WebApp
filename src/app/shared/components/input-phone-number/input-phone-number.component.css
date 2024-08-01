@@ -29,4 +29,28 @@
     line-height: normal;
     opacity: 0.5;
   }
-  
+  @media (max-width: 414px) {
+    .input{
+      width: 20rem;
+    }
+  }
+  @media (max-width: 400px){
+    .input{
+      width: 18.75rem;
+    }
+  }
+  @media (max-width:390px){
+    .input{
+      width:17.75rem;
+    }
+  }
+  @media (max-width:375px){
+    .input{
+      width: 16.75rem;
+    }
+  }
+  @media (max-width:325px){
+  .input{
+    width:15.25rem
+  }  
+  }
