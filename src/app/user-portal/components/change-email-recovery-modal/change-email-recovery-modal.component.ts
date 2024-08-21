@@ -37,7 +37,7 @@ export class ChangeEmailRecoveryModalComponent {
     private sessionStorageService: SessionStorageService,
   ) {
 
-    this.accessToken = this.sessionStorageService.getSessionToken() as string;
+    
 
     this.userForm = new FormGroup({
       email_recovery: new FormControl(''),
@@ -45,6 +45,9 @@ export class ChangeEmailRecoveryModalComponent {
     });
   }
 
+  async ngOnInit() {
+    this.accessToken = await this.sessionStorageService.getSessionToken() as string;
+  }
 
   openDialog() {
     const dialogRef = this.dialog.open(ChangeEmailRecoveryModalComponent);

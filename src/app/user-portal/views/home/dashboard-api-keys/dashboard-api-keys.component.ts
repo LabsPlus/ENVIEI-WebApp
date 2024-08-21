@@ -20,6 +20,9 @@ import { SidebarService } from '../../../services/sidebar/sidebar.service';
 import { ToastrNotificationService } from '../../../services/toastr/toastr.service';
 import { DeleteKeyPopupComponent } from '../../../components/delete-key-popup/delete-key-popup.component';
 import { MatDialog } from '@angular/material/dialog';
+import { HeaderHomeComponent } from '../../../components/header-home/header-home.component';
+import { SideBarComponent } from '../../../components/side-bar/side-bar.component';
+
 
 @Component({
   selector: 'app-dashboard-api-keys',
@@ -27,7 +30,7 @@ import { MatDialog } from '@angular/material/dialog';
   imports: [DeleteKeyPopupComponent,
     SlideToggleComponent, FormsModule, ReactiveFormsModule, InputSearchComponent, ButtonComponent,
     ButtonSeePlansHomePageComponent, ButtonStartHomePageComponent, CommonModule, MatTableModule,
-    MatPaginatorModule
+    MatPaginatorModule, HeaderHomeComponent, SideBarComponent
   ],
   providers: [ApiKeysService, ToastrNotificationService, FormaterService, GenerateKeyModalComponent, Clipboard, SessionStorageService, UpdateKeyModalComponent],
   templateUrl: './dashboard-api-keys.component.html',
@@ -41,7 +44,7 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
   dataSource = new MatTableDataSource<IKey>([]);
   @ViewChild(MatPaginator) paginator!: MatPaginator;
   #apiKeysService = inject(ApiKeysService);
-  accessToken: string;
+  accessToken: string = '';
   searchForm!: FormGroup;
 
   constructor(
@@ -58,14 +61,17 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
       }
     );
 
-    this.accessToken = this.sessionStorageService.getSessionToken() as string;
+    
 
     this.searchForm = new FormGroup({
       search: new FormControl('')
     });
   }
 
-  ngOnInit() {
+  async ngOnInit() {
+
+    this.accessToken = await this.sessionStorageService.getSessionToken() as string;
+    
     this.#apiKeysService.getApiKeys(this.accessToken).subscribe(
       (response) => {
 
@@ -79,6 +85,7 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
       }
     );
 
+    this.accessToken = await  this.sessionStorageService.getSessionToken() as string;
   }
 
 

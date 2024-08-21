@@ -40,7 +40,11 @@ export class GenerateKeyModalComponent {
     this.keyForm = new FormGroup({
       keyName: new FormControl(''),
     });
-    this.accessToken = this.sessionStorageService.getSessionToken() as string;
+    
+  }
+
+  async ngOnInit() {
+    this.accessToken = await this.sessionStorageService.getSessionToken() as string;
   }
 
   openDialog() {

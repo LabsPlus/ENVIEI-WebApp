@@ -147,14 +147,14 @@ export class LoginComponent {
     });
   }
 
-  loginUser() {   
+  async loginUser(): Promise<void> {   
     this.authenticatorService
       .login(this.loginForm.value.email, this.loginForm.value.password, this.stayConnected)
-      .then((response) => {
+      .then(async (response) => {
         if(response?.status == 200) {
           const token = response?.body?.token;
           if (token) {
-            this.stayConnected ? this.sessionStorageService.createSessionWithStayConnectedMode(token) : this.sessionStorageService.createSessionWithNoStayConnectedMode(token);
+            this.stayConnected ? await this.sessionStorageService.createSessionWithStayConnectedMode(token) : await this.sessionStorageService.createSessionWithNoStayConnectedMode(token);
           }
         }
         this.showSuccess('Login realizado com sucesso!');

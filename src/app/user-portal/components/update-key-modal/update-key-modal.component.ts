@@ -40,8 +40,12 @@ export class UpdateKeyModalComponent {
       keyName: new FormControl(''),
     });
 
-    this.accessToken = this.sessionStorageService.getSessionToken() as string;
+
     this.key = {} as IKey;
+  }
+
+  async ngOnInit() {
+    this.accessToken = await this.sessionStorageService.getSessionToken() as string;
   }
 
   openDialog(key: IKey) {

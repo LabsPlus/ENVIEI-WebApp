@@ -1,0 +1,7 @@
+<div style="display: flex; width: 100%; flex-direction: row; align-items: flex-end;">
+    <div [ngClass]="{'push-content': isSidebarOpen}" style="width: 100%; ">
+        <app-header-home id="app-header"></app-header-home>
+    </div>
+    <app-side-bar id="app-side-bar"></app-side-bar>
+</div>
+<router-outlet></router-outlet>
