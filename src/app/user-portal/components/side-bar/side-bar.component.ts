@@ -1,5 +1,5 @@
 import { CommonModule } from '@angular/common';
-import { Component, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild, Input, Output } from '@angular/core';
 import { RouterLink, RouterLinkActive,Router, NavigationEnd } from '@angular/router';
 import { MatDrawer, MatSidenavModule } from '@angular/material/sidenav';
 import { MatListModule } from '@angular/material/list';
@@ -25,12 +25,15 @@ import { SidebarService } from '../../services/sidebar/sidebar.service';
 })
 
 export class SideBarComponent implements OnInit{
+  
   showFiller = false;
   @ViewChild('drawer') drawer!: MatDrawer;
+  
+  @Output()
   isSidebarOpen: boolean = false;
+
   isVisible: boolean = true;
 
-  
   constructor(
     private sidebarService: SidebarService,
     private location: Location,
@@ -42,6 +45,7 @@ export class SideBarComponent implements OnInit{
   
   async ngOnInit() {
   }
+
 
   public toggleSidebar() {
     this.drawer.toggle();

@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
   providedIn: 'root',
 })
 export class SidebarService {
+  
   private _sidebarOpen = new BehaviorSubject<boolean>(false);
 
   sidebarOpen$ = this._sidebarOpen.asObservable();
@@ -12,4 +13,5 @@ export class SidebarService {
   toggleSidebar() {
     this._sidebarOpen.next(!this._sidebarOpen.value);
   }
+  
 }

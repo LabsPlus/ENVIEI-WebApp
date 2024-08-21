@@ -9,3 +9,17 @@ app-sidebar {
 app-sidebar.open {
     width: 20%;
 }
+
+/* Exemplo usando margin-left */
+.push-content {
+    margin-left: 250px;
+    /* Largura da sidebar */
+    transition: margin-left 0.3s ease;
+}
+
+/* Exemplo usando transform */
+.push-content-transform {
+    transform: translateX(250px);
+    /* Largura da sidebar */
+    transition: transform 0.3s ease;
+}
