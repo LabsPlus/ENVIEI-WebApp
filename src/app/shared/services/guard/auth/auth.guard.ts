@@ -12,17 +12,17 @@ export const authGuard : CanActivateFn = async (route, state) => {
   const router = inject(Router);
   const toastr = inject(ToastrNotificationService);
 
-  const token = sessionStorageService.getSessionToken() !== null ? sessionStorageService.getSessionToken() :  '';
+  const token = await sessionStorageService.getSessionToken() !== null ? sessionStorageService.getSessionToken() :  '';
 
   if (!token) {
     return false;
   }
 
-  const isAuthenticated = await authService.isAuthenticated(token);
+  const isAuthenticated = await authService.isAuthenticated(await token);
 
   if (authService.getStayConnected() && isAuthenticated) {
 
-    const refreshedToken = await authService.refreshToken(token);
+    const refreshedToken = await authService.refreshToken(await token);
     sessionStorageService.updateSessionWithRefreshedToken(refreshedToken);
     return true;
 

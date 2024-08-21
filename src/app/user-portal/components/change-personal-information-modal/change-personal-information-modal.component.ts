@@ -38,7 +38,7 @@ export class ChangePersonalInformationModalComponent {
       private sessionStorageService: SessionStorageService
     ) {
       
-      this.accessToken = this.sessionStorageService.getSessionToken() as string;
+      
 
     this.userForm = new FormGroup({
       name: new FormControl(''),
@@ -46,6 +46,11 @@ export class ChangePersonalInformationModalComponent {
       password: new FormControl(''),
     });
 
+  }
+
+  async ngOnInit() {
+    this.accessToken = await this.sessionStorageService.getSessionToken() as string;
+    
   }
 
   updateProfileData(userProfileData: IUser): void {

@@ -42,8 +42,8 @@ export class ChangePasswordModalComponent implements OnInit {
     private sessionStorageService: SessionStorageService,
   ) {}
 
-  ngOnInit(): void {
-    this.accessToken = this.sessionStorageService.getSessionToken() as string;
+  async ngOnInit(): Promise<void> {
+    this.accessToken = await this.sessionStorageService.getSessionToken() as string;
     this.userForm = new FormGroup({
       currentPassword: new FormControl(''),
       confirmNewPassword: new FormControl(''),

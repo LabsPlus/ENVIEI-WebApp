@@ -7,11 +7,13 @@ import { StackedBarChartComponent } from '../../../../shared/components/charts/s
 import { LineShartComponent } from '../../../../shared/components/charts/line-shart/line-shart.component';
 import { IndicatorChartComponent } from '../../../../shared/components/charts/indicator-chart/indicator-chart.component';
 import { DonutChartComponent } from '../../../../shared/components/charts/donut-chart/donut-chart.component';
+import { HeaderHomeComponent } from '../../../components/header-home/header-home.component';
+import { SideBarComponent } from '../../../components/side-bar/side-bar.component';
 
 @Component({
   selector: 'app-dashboard-charts',
   standalone: true,
-  imports: [ReactiveFormsModule, StackedBarChartComponent, LineShartComponent, IndicatorChartComponent, CommonModule, DonutChartComponent],
+  imports: [ReactiveFormsModule, StackedBarChartComponent, LineShartComponent, IndicatorChartComponent, CommonModule, DonutChartComponent, HeaderHomeComponent, SideBarComponent],
   templateUrl: './dashboard-charts.component.html',
   styleUrls: ['./dashboard-charts.component.css']
 })

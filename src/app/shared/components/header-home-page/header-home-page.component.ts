@@ -53,7 +53,7 @@ export class HeaderHomePageComponent {
       return;
     }
 
-    const isAuthenticated = await this.authService.isAuthenticated(token);
+    const isAuthenticated = await this.authService.isAuthenticated(await token);
 
     if (!isAuthenticated) {
       this.route.navigate(['/login']);

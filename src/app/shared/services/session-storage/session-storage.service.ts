@@ -7,7 +7,7 @@ export class SessionStorageService {
 
   constructor() { }
 
-  createSessionWithNoStayConnectedMode(token: string) {
+  async createSessionWithNoStayConnectedMode(token: string) {
 
     if (!token) {
       return;
@@ -20,7 +20,7 @@ export class SessionStorageService {
     }
   }
 
-  createSessionWithStayConnectedMode(token: string) {
+  async createSessionWithStayConnectedMode(token: string) {
 
     if (!token) {
       return;
@@ -33,7 +33,7 @@ export class SessionStorageService {
     }
   }
 
-  updateSessionWithRefreshedToken(token: string) {
+  async updateSessionWithRefreshedToken(token: string) {
       
       if (!token) {
         return;
@@ -48,10 +48,10 @@ export class SessionStorageService {
       }
   }
 
-  getSessionToken() {
+  async getSessionToken(): Promise<string> {
 
     if (typeof window === 'undefined') {
-      return null;
+      return '';
     }
 
     let token = window.localStorage.getItem('accessToken');
@@ -60,7 +60,7 @@ export class SessionStorageService {
       token = window.sessionStorage.getItem('accessToken');
     }
 
-    return token;
+    return token as string;
   }
 
   removeSession() {

@@ -29,7 +29,6 @@ export class SideBarComponent implements OnInit{
   @ViewChild('drawer') drawer!: MatDrawer;
   isSidebarOpen: boolean = false;
   isVisible: boolean = true;
-  hiddenRoutes = ['/login', '/register', '/forgot-password', '/new-password', ''];
 
   
   constructor(
@@ -42,63 +41,18 @@ export class SideBarComponent implements OnInit{
   }
   
   async ngOnInit() {
-    this.router.events.subscribe(event => {
-
-      if (event instanceof NavigationEnd) {
-
-        let currentUrl = this.location.path() as string;
-
-        if (!currentUrl) {
-          return;
-        }
-
-        let route = this.splitUrlToGetRoute(currentUrl);
-
-        if (!this.hiddenRoutes.includes(route)) {
-          this.isVisible = true;
-          return;
-        }
-
-        this.isVisible = false;
-      }
-
-    });
-  }
-
-  splitUrlToGetRoute(url: string): string {
-    let currentUrl = url;
-
-    if (!currentUrl) {
-      return '';
-    }
-
-    
-    let hasQueryParams = currentUrl.includes('?');
-    let hasChildRoute = currentUrl.includes('/', 2);
-
-
-    if (!hasQueryParams && !hasChildRoute) {
-      return currentUrl;
-    }
-
-    if (hasQueryParams) {
-      let splitUrl = currentUrl.split('?');
-      currentUrl = splitUrl[0];
-    }
-
-    if (hasChildRoute) {
-      let splitUrl = currentUrl.split('/');
-      currentUrl = splitUrl[1];
-    }
-
-    return currentUrl;
-
   }
 
   public toggleSidebar() {
     this.drawer.toggle();
     this.isSidebarOpen = !this.isSidebarOpen;
     this.sidebarService.toggleSidebar();
+  }
+
+  goToRoute(route: string) {
+
+    alert('Go to route: ' + route);
+    this.router.navigate([route]);
   }
 }
 

@@ -1,4 +1,4 @@
-<mat-drawer-container class="sidebar-container" *ngIf="isVisible">
+<mat-drawer-container class="sidebar-container">
     <!-- links with sidebar closed -->
     @if(!isSidebarOpen){
     <div class="container-button">
@@ -7,13 +7,13 @@
         </button>
     </div>
     <div *ngIf="!isSidebarOpen" class="icon-container">
-        <a [routerLink]="['home/profile']" mat-list-item routerLinkActive="active">
+        <a [routerLink]="['home/profile']" mat-list-item routerLinkActive="active" (click)="goToRoute('home/profile')">
             <img *ngIf="!isSidebarOpen" class="icon" src="/assets/shared/Account.svg" />
         </a>
-        <a [routerLink]='["home/dashboard-api-keys"]' mat-list-item routerLinkActive="active">
+        <a [routerLink]='["home/dashboard-api-keys"]' mat-list-item routerLinkActive="active" (click)="goToRoute('home/dashboard-api-keys')">
             <img *ngIf="!isSidebarOpen" class="icon" src="/assets/shared/Key.svg" />
         </a>
-        <a [routerLink]='["home/dashboard-charts"]' mat-list-item routerLinkActive="active">
+        <a [routerLink]='["home/dashboard-charts"]' mat-list-item routerLinkActive="active" (click)="goToRoute('home/dashboard-charts')">
             <img *ngIf="!isSidebarOpen" class="icon" src="/assets/shared/Severity.svg" />
         </a>
     </div>
@@ -26,16 +26,16 @@
             </button>
         </div>
         <mat-nav-list class="list-content">
-            <a [routerLink]="['home/profile']" class="link-content" mat-list-item routerLinkActive="active-open">
+            <a href="home/profile" [routerLink]="['home/profile']" (click)="goToRoute('home/profile')" class="link-content" mat-list-item routerLinkActive="active-open">
                 <img class="link" *ngIf="isSidebarOpen" src="/assets/shared/Account.svg" />
                 <span class="link" ngClass="span" *ngIf="isSidebarOpen">Perfil</span>
             </a>
-            <a [routerLink]='["home/dashboard-api-keys"]' class="link-content" mat-list-item
+            <a [routerLink]='["home/dashboard-api-keys"]' (click)="goToRoute('home/dashboard-api-keys')" class="link-content" mat-list-item
                 routerLinkActive="active-open">
                 <img class="link" *ngIf="isSidebarOpen" src="/assets/shared/Key.svg" />
                 <span class="link" ngClass="span" *ngIf="isSidebarOpen">Chaves</span>
             </a>
-            <a [routerLink]='["home/dashboard-charts"]' class="link-content" mat-list-item
+            <a [routerLink]='["home/dashboard-charts"]' (click)="goToRoute('home/dashboard-charts')" class="link-content" mat-list-item
                 routerLinkActive="active-open">
                 <img class="link" *ngIf="isSidebarOpen" src="/assets/shared/Severity.svg" />
                 <span class="link" ngClass="span" *ngIf="isSidebarOpen">Dashboard</span>

@@ -1,6 +1,6 @@
 import { CommonModule, Location } from '@angular/common';
 import { HttpErrorResponse, HttpResponse } from '@angular/common/http';
-import { Component, OnDestroy, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { NavigationEnd, Router } from '@angular/router';
 import { Subscription } from 'rxjs';
 import { HomeService } from '../../services/home/home.service';
@@ -10,6 +10,7 @@ import { SidebarService } from '../../services/sidebar/sidebar.service';
 import { SessionStorageService } from '../../../shared/services/session-storage/session-storage.service';
 import { RouterModule } from '@angular/router';
 import { AuthenticatorService } from '../../../shared/services/auth/authenticator.service';
+import IHeaderInformation from '../../interfaces/IHeaderInformation';
 @Component({
   selector: 'app-header-home',
   standalone: true,
@@ -18,17 +19,15 @@ import { AuthenticatorService } from '../../../shared/services/auth/authenticato
   templateUrl: './header-home.component.html',
   styleUrl: './header-home.component.css',
 })
-export class HeaderHomeComponent implements OnDestroy, OnInit {
+export class HeaderHomeComponent implements OnInit {
   user: IUser = {};
   defaultProfilePhoto: string =
     '../../../../../assets/images/shared/not-registred-user-photo.png';
+  headerInformation: IHeaderInformation = {};
   menuOpen: boolean = false;
-  accessToken: string;
-  isNavOpen = false;
-  sidebarOpenSubscription: Subscription;
+  accessToken: string = '';
+  isNavOpen = true;
   isVisible: boolean = true;
-  hiddenRoutes = ['/login', '/register', '/forgot-password', '/new-password', ''];
-
 
   constructor(
     private sidebarService: SidebarService,
@@ -40,42 +39,37 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
     private authenticatorService: AuthenticatorService,
   ) {
     this.isVisible = false;
-    this.sidebarOpenSubscription = this.sidebarService.sidebarOpen$.subscribe(
-      (isOpen) => {
-        this.isNavOpen = isOpen;
-      }
-    );
-
-    this.accessToken = this.sessionStorageService.getSessionToken() as string;
-
-
-
   }
 
   async ngOnInit() {
-    this.router.events.subscribe(event => {
+    
+    this.accessToken = await this.sessionStorageService.getSessionToken() as string;
 
-      if (event instanceof NavigationEnd) {
+    if (!this.accessToken || this.accessToken == '') {
+      console.log('tentando pegar token');
+      this.accessToken = await this.tryGetTokenThreTimes();
+    }
 
-        let currentUrl = this.location.path() as string;
-
-        if (!currentUrl) {
-          return;
-        }
-
-        let route = this.splitUrlToGetRoute(currentUrl);
-
-        if (!this.hiddenRoutes.includes(route)) {
-          this.isVisible = true;
-          return;
-        }
-
-        this.isVisible = false;
-      }
-
+    
+    this.homeService.getUserData(this.accessToken).subscribe(user => this.headerInformation = {
+      profileUrl: user.body?.profile_photo,
+      profileNickName: user.body?.name
     });
 
-    await this.getUserData();
+  }
+
+  async ngOnChanges() {
+
+    this.accessToken = await this.sessionStorageService.getSessionToken() as string;
+
+    if (!this.accessToken || this.accessToken == '') {
+      this.accessToken = await this.tryGetTokenThreTimes();
+    }
+
+    this.homeService.getUserData(this.accessToken).subscribe(user => this.headerInformation = {
+      profileUrl: user.body?.profile_photo,
+      profileNickName: user.body?.name
+    })
   }
 
   splitUrlToGetRoute(url: string): string {
@@ -112,54 +106,6 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
     this.menuOpen = !this.menuOpen;
   }
 
-  async getUserData(): Promise<void> {
-
-    if (!this.sessionStorageService.getSessionToken()) {
-      return;
-    }
-
-    if (!this.authenticatorService.isAuthenticated(this.accessToken)) {
-      return;
-    }
-
-    await this.homeService
-      .getUserData(this.accessToken)
-      .toPromise()
-      .then(async (response: HttpResponse<IUser> | any) => {
-        if (response?.status == 200 || response?.status == 201) {
-          this.user.name = response.body.name;
-          this.user.email = response.body.email;
-          this.user.profile_photo = response.body.profile_photo;
-
-          if (
-            response.body.profile_photo == null ||
-            response.body.profile_photo == ''
-          ) {
-            this.user.profile_photo = this.defaultProfilePhoto;
-          }
-
-          this.user.phone_number = response.body.phone_number;
-        }
-      })
-      .catch((error: HttpErrorResponse) => {
-        if (error.status >= 400 && error.status < 500) {
-          console.error(error.error.error);
-        }
-
-        if (error.status >= 500) {
-          console.error('Erro interno no servidor.');
-        }
-
-        this.user.name = 'Default';
-        this.user.email = '';
-        this.user.profile_photo = this.defaultProfilePhoto;
-        this.user.phone_number = '';
-      });
-
-
-    this.router.routeReuseStrategy.shouldReuseRoute = () => false;
-  }
-
   goToProfile(): void {
     this.router.navigate(['/home/profile']);
   }
@@ -190,7 +136,16 @@ export class HeaderHomeComponent implements OnDestroy, OnInit {
         this.toastr.showError('Erro ao deslogar usuário', 'error');
       });
   }
-  ngOnDestroy() {
-    this.sidebarOpenSubscription.unsubscribe();
+
+  async tryGetTokenThreTimes() {
+    
+    let token = '';
+    for (let i = 0; i < 3; i++) {
+      token = await this.sessionStorageService.getSessionToken();
+      if (token) {
+        break;
+      }
+    }
+    return token
   }
 }

@@ -44,7 +44,7 @@ export class MyProfileComponent {
   
   async initialize() {
 
-    this.acessToken = this.sessionStorageService.getSessionToken() as string;
+    this.acessToken = await this.sessionStorageService.getSessionToken() as string;
     
     await this.isFlagRememberPasswordChangeEnable();
 

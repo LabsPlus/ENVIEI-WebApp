@@ -1,0 +1,11 @@
+app-header-home {
+    width: 800%;
+}
+
+app-sidebar {
+    width: 100%;
+}
+
+app-sidebar.open {
+    width: 20%;
+}
