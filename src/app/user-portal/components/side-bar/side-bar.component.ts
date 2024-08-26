@@ -55,7 +55,6 @@ export class SideBarComponent implements OnInit{
 
   goToRoute(route: string) {
 
-    alert('Go to route: ' + route);
     this.router.navigate([route]);
   }
 }
