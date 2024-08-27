@@ -167,3 +167,26 @@ th, td {
   align-items: center;
   justify-content: center;
 }
+
+
+.hidden {
+  display: none;
+}
+
+
+.img {
+  width: 25px;
+  height: 25px;
+  margin-right: 10px;
+  margin-left: 13px;
+  z-index: 1000;
+}
+
+.btn-side-bar {
+  background-color: transparent;
+  border: none;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}
