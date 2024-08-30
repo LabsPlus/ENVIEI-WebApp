@@ -251,3 +251,25 @@
     min-width: 450px; /* Asegura un tamaño mínimo para los gráficos */
     box-sizing: border-box; /* Incluye padding y border en el tamaño del elemento */
 }
+
+.hidden {
+    display: none;
+}
+
+
+.img {
+    width: 25px;
+    height: 25px;
+    margin-right: 10px;
+    margin-left: 13px;
+    z-index: 1000;
+}
+
+.btn-side-bar {
+    background-color: transparent;
+    border: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+}

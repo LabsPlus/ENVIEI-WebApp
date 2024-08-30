@@ -22,6 +22,7 @@ import { DeleteKeyPopupComponent } from '../../../components/delete-key-popup/de
 import { MatDialog } from '@angular/material/dialog';
 import { HeaderHomeComponent } from '../../../components/header-home/header-home.component';
 import { SideBarComponent } from '../../../components/side-bar/side-bar.component';
+import { SideBarButtonComponent } from '../../../components/side-bar-button/side-bar-button.component';
 
 
 @Component({
@@ -32,7 +33,7 @@ import { SideBarComponent } from '../../../components/side-bar/side-bar.componen
     ButtonSeePlansHomePageComponent, ButtonStartHomePageComponent, CommonModule, MatTableModule,
     MatPaginatorModule, HeaderHomeComponent, SideBarComponent
   ],
-  providers: [ApiKeysService, ToastrNotificationService, FormaterService, GenerateKeyModalComponent, Clipboard, SessionStorageService, UpdateKeyModalComponent],
+  providers: [ApiKeysService, ToastrNotificationService, FormaterService, GenerateKeyModalComponent, Clipboard, SessionStorageService, UpdateKeyModalComponent, SideBarButtonComponent],
   templateUrl: './dashboard-api-keys.component.html',
   styleUrl: './dashboard-api-keys.component.css'
 })
@@ -46,6 +47,7 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
   #apiKeysService = inject(ApiKeysService);
   accessToken: string = '';
   searchForm!: FormGroup;
+  sideBarOpen = false;
 
   constructor(
     private sidebarService: SidebarService, private sessionStorageService: SessionStorageService,
@@ -175,5 +177,10 @@ export class DashboardApiKeysComponent implements AfterViewInit, OnInit {
   formatApiKey(apiKey: string) {
     return this.formaterService.formatApiKey(apiKey);
   }
+  
+  onClick() {
+    
+    this.sideBarOpen = !this.sideBarOpen;
 
+  }
 }

@@ -1,6 +1,23 @@
-<app-header-home></app-header-home>
-<app-side-bar></app-side-bar>
-<div [ngClass]="{'navbar-expanded': isNavOpen}" class="container">
+<ng-template #buttonTemplate>
+    <button class="btn-side-bar" type="button" (click)="onClick()">
+        <img class="img" *ngIf="!sideBarOpen" src="/assets/shared/Menu.svg" />
+        <img class="img" *ngIf="sideBarOpen" src="/assets/shared/BackTo.svg" />
+    </button>
+</ng-template>
+
+<div [ngStyle]="{'display': sideBarOpen ? 'block' : 'none'}" style="width: 100%; display: flex; flex-direction: row;">
+    <div style="width: 90%; margin-left: auto;">
+        <app-header-home id="app-header"></app-header-home>
+    </div>
+</div>
+
+<div [ngStyle]="{'display': !sideBarOpen ? 'block' : 'none'}" style="display: flex; width: 100%; flex-direction: row;">
+    <div style="width: 100%;">
+        <app-header-home id="app-header"></app-header-home>
+    </div>
+</div>
+<app-side-bar id="app-side-bar" [buttonTemplate]="buttonTemplate" [isSidebarOpen]="sideBarOpen"></app-side-bar>
+<div [ngClass]="{'navbar-expanded': sideBarOpen}" class="container">
 
     <h2>Gerenciador de API Keys</h2>
     <p>Gerencie suas keys que usa para autenticar suas chamadas à APIs.</p>

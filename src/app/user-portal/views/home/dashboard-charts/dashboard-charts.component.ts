@@ -9,16 +9,18 @@ import { IndicatorChartComponent } from '../../../../shared/components/charts/in
 import { DonutChartComponent } from '../../../../shared/components/charts/donut-chart/donut-chart.component';
 import { HeaderHomeComponent } from '../../../components/header-home/header-home.component';
 import { SideBarComponent } from '../../../components/side-bar/side-bar.component';
+import { SideBarButtonComponent } from '../../../components/side-bar-button/side-bar-button.component';
 
 @Component({
   selector: 'app-dashboard-charts',
   standalone: true,
-  imports: [ReactiveFormsModule, StackedBarChartComponent, LineShartComponent, IndicatorChartComponent, CommonModule, DonutChartComponent, HeaderHomeComponent, SideBarComponent],
+  imports: [ReactiveFormsModule, StackedBarChartComponent, LineShartComponent, IndicatorChartComponent, CommonModule, DonutChartComponent, HeaderHomeComponent, SideBarComponent, SideBarButtonComponent],
   templateUrl: './dashboard-charts.component.html',
   styleUrls: ['./dashboard-charts.component.css']
 })
 export class DashboardChartsComponent implements OnDestroy {
   isNavOpen = false;
+  sideBarOpen = false;
   sidebarOpenSubscription: Subscription;
   selectedOption = 'Últimos 7 dias';
   options = [
@@ -49,5 +51,11 @@ export class DashboardChartsComponent implements OnDestroy {
   selectOption(option: any) {
     this.selectedOption = option.label;
     this.menuVisible = false;
+  }
+
+  onClick() {
+    
+    this.sideBarOpen = !this.sideBarOpen;
+
   }
 }
