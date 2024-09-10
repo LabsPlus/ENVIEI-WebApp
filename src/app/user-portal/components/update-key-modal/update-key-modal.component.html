@@ -13,8 +13,18 @@
       </div>
   
       <div class="buttons-container">
-          <div class="button-container">
-            <button class="register-button" (click)="submit()">Registrar</button>
+          <div id=" button-container" class="button-container">
+            <button 
+              class="register-button"
+              id="register-button" 
+              (click)="submit()"
+              [ngClass]="{'isLoading': isLoading}"
+              [disabled]="isLoading"
+              style = "cursor: isLoading 'not-allowed' 'pointer' " >
+              
+              <div class="register" *ngIf="!isLoading">Registrar</div>
+              <div *ngIf="isLoading" class="spinner"></div>
+            </button>
           </div>
           <div class="button-container">
             <button class="cancel-button" mat-dialog-close>Cancelar</button>
