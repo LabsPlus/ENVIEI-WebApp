@@ -28,6 +28,7 @@ export class UpdateKeyModalComponent {
   private accessToken: string = '';
   private afterClosedSubject = new Subject<{ success: boolean }>();
   private key: IKey;
+  isLoading = false;
 
   constructor(
     public dialog: MatDialog,
@@ -109,6 +110,9 @@ export class UpdateKeyModalComponent {
       return;
     }
 
+    this.applyLoadingIndicator();
+    this.disableInputFieldAfterSubmi();
+    
     this.apiKeysService.updateApiKey(this.accessToken, key).subscribe(
       (response) => {
 
@@ -127,6 +131,13 @@ export class UpdateKeyModalComponent {
         this.toarstNotification.showError('Erro ao atualizar o API Key', 'Erro');
       }
     );
+  }
+  applyLoadingIndicator(): void{
+    this.isLoading = true;
+  }
+  disableInputFieldAfterSubmi(): void{
+    let inputField = document.getElementById('name') as HTMLInputElement;
+    inputField.disabled = true;
   }
 
 }
