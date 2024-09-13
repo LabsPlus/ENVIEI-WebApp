@@ -20,6 +20,10 @@
     padding: 0 5% 0 5%;
     background-color: #fff;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+
+    @media (max-width:875px){
+        padding: 0 2% 0 2%;
+    }
 }
 
 .header-home-page > a {
@@ -27,25 +31,64 @@
     color: #2C3F47;
 }
 
+@media (max-width:800px){
+
+ 
+    .hamburger-menu {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        gap: 10px;
+        cursor: pointer;
+        font-size: 2rem;
+        color: #FFFFFF;
+    }
+    
+    .bar{
+        height: 3px;
+        width: 40px;
+        background-color: #2C3F47;
+    }
+}
+
 .second-column {
     display: flex;
     justify-content: row;
     width: 35%;
-    gap: 20%;
+    gap: 20%;   
+
+
+    @media (max-width:800px){
+            display: none;
+        }
+    
 }
 
 .third-column {
     display: flex;
     justify-content: flex-start;
-    gap: 20%;
+    gap: 10%;
+    align-items: center;
     padding: 0 0% 0 0;
-    width: 35%;
+    width: 40%;
+
+    @media (max-width : 1004px){
+        width: 46%;
+    }
+    
+    @media (max-width:800px){
+        a{
+            display: none;
+        }
+        justify-content: center;
+        width: auto;
+    }
 }
 
 .third-column > a {
     text-decoration: none;
     color: #2C3F47;
-    padding: 2% 0 0 0;
 }
 
 .singInLink {
