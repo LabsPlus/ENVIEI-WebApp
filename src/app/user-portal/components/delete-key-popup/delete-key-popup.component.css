@@ -88,6 +88,10 @@ p{
     cursor: pointer;
     border: none;
     box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+    position: relative;
+}
+.delete{
+    color: #fff;
 }
 
 .cancelar-button{
@@ -101,4 +105,35 @@ p{
     cursor: pointer;
     color: #316C87;
     font-family: "Inter-Bold";
+}
+.spinner {
+    position: absolute;
+    top: 25%;
+    left: 40%;
+    transform: translate(-50%, -50%);
+    width: 20px;
+    height: 20px;
+    border: 3px solid rgba(255, 255, 255, 0.3);
+    border-top-color: #ffffff;
+    border-radius: 50%;
+    animation: spin 1s linear infinite;
+    cursor: not-allowed;
+}
+
+@keyframes spin {
+
+    0% {
+        transform: rotate(0deg);
+    }
+
+    100% {
+        transform: rotate(360deg);
+    }
+}
+
+.register-button.loading {
+    color: transparent; /* Esconde o texto do botão enquanto carrega */
+}
+.register{
+    color: #ffffff;
 }

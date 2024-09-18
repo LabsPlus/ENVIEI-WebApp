@@ -11,7 +11,16 @@
 
     <div class="button-container">
         <button class="cancelar-button" mat-button (click)="onCancel()">Cancelar</button>
-        <button class="deletar-button" mat-button (click)="onConfirm()" cdkFocusInitial>Deletar</button>
+        <button 
+            class="deletar-button" 
+            mat-button (click)="onConfirm()" 
+            cdkFocusInitial
+            [ngClass]="{'isLoading': isLoading}"
+            [disabled]="isLoading"
+            style = "cursor: isLoading 'not-allowed' 'pointer' " >
+            <div class= "delete" *ngIf="!isLoading">Deletar</div>
+            <div *ngIf="isLoading" class="spinner"></div>
+        </button>
     </div>
 
 </mat-dialog-content>
