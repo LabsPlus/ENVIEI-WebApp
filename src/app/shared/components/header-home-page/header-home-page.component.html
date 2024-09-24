@@ -1,10 +1,19 @@
 <div>
     <div class="header-home-page">
-        <div class="hamburger-menu" onclick="toggleMenu()">
-            <div class="bar"></div>
-            <div class="bar"></div>
-            <div class="bar"></div>
-        </div>
+        <div class="hamburger-menu" (click)="openSideBar()">&#9776;</div>
+        <ul id="side-bar" class="side-bar">
+            <div class="close-menu-icon" (click)="closeSideBar()">&#9747;</div>
+            <div class="side-bar_container">
+                <li><a routerLink="/" routerLinkActive="active">Home</a></li>
+                <li><a routerLink="/about" routerLinkActive="active">Recursos</a></li>
+                <li><a routerLink="/devs" routerLinkActive="active">Devs</a></li>
+                <li><a routerLink="/contact" routerLinkActive="active">Contate-nos</a></li>
+                <li><a class="singInLink" (click)="accessLogin()" routerLinkActive="active">Logar</a></li>
+                <div class="side-bar_button">
+                    <app-button-start-home-page routerLink="/register" [props]="{ text: 'Inicie Gratis', disabled: false }" />
+                </div>
+            </div>
+        </ul>
         <div class="header-home-page_logo">
             <img src="../../../../assets/images/logo.svg" alt="logo" />
         </div>
