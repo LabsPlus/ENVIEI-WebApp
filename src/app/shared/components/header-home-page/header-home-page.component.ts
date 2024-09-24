@@ -19,7 +19,21 @@ export class HeaderHomePageComponent {
   @Output('submit') onSubmit = new EventEmitter();
   @Output('navigate') onNavigate = new EventEmitter();
 
+openSideBar(){
+  const sideBar = document.getElementById('side-bar');
+  if(!sideBar){
+    return
+  }
+  sideBar.classList.add('open');
 
+}
+closeSideBar(){
+  const sideBar = document.getElementById('side-bar');
+  if(!sideBar){
+    return
+  }
+  sideBar.classList.remove('open');
+}
   navigate() {
     this.onNavigate.emit();
   }
